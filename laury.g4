@@ -8,7 +8,7 @@ fichier :
     decl* EOF;
 
 decl :
-    decl_typ | decl_fct; //est ce qu'on met aussi decl_vars ?
+    decl_typ | decl_fct; //est ce qu on met aussi decl_vars ?
 
 decl_vars :
       'int' (IDENT',')+ IDENT ';' 
@@ -49,7 +49,7 @@ bloc :
 OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
 
 CHIFFRE : ('0'..'9');
-ENTIER : '0' | ('1'..'9') CHIFFRE* | '\''CARACTERE'\''; //problème d'echappement
+ENTIER : '0' | ('1'..'9') CHIFFRE* | '\''CARACTERE'\''; //problème d echappement
 IDENT : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 CARACTERE : ' '|'!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
             | CHIFFRE|':'|';'|'<'|'='|'>'|'?'|'@'|'['|']'|'^'
@@ -57,11 +57,5 @@ CARACTERE : ' '|'!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
             |'\\'
             |'\''
             |'\"';
-
-<<<<<<< HEAD
 WS : ('\n'|' '|'\t'|'\r'|'*/' * '/*' | '//' * '/n')+ -> skip;
-||||||| 51087b4
-WS : ('\n'|' '|'\t'|'\r')+ -> skip;
-=======
-WS : ('\n'|' '|'\t'|'\r')+ -> skip;
->>>>>>> 754631363cb120b565597ebbe7ebec8f6449086f
+
