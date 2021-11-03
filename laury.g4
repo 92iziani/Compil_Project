@@ -1,4 +1,4 @@
-grammar expr;
+grammar laury;
 
 @header{
 package parser;
