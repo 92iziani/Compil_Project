@@ -8,17 +8,17 @@ fichier :
     decl* EOF;
 
 decl :
-    decl_typ | decl_fct;
+    decl_typ | decl_fct; //est ce qu'on met aussi decl_vars ?
 
 decl_vars :
-      'int' IDENT ','+ ';' 
-    | 'struct' IDENT '(*' IDENT ')'','+ ';';
+      'int' (IDENT',')+ IDENT ';' 
+    | 'struct' IDENT ('(' '*' IDENT ')'',')+ ';';
 
 decl_typ :
-    'struct' IDENT '{' decl_vars* '};';
+    'struct' IDENT '{' decl_vars* '}' ';';
 
 decl_fct :
-    'int' IDENT '(' param ','* ')' bloc
+    'int' IDENT '(' (param ',')* param?')' bloc //param? pas surs
     | 'struct' IDENT '*' IDENT '(' param ','* ')' bloc;
 
 param :
@@ -28,9 +28,9 @@ expr :
       ENTIER
     | IDENT
     | expr '->' IDENT
-    | IDENT '(' expr* ',' ')'
+    | IDENT '(' (expr',')* ')' //bizarre la virgule
     | '!' expr | '-' expr
-    | expr operateur expr
+    | expr OPERATEUR expr
     | 'sizeof' '(' 'struct' IDENT ')'
     | '(' expr ')';
 
@@ -41,21 +41,21 @@ instruction :
     | 'if' '(' expr ')' instruction 'else' instruction
     | 'while' '(' expr ')' instruction
     | bloc
-    | 'return' expr;
+    | 'return' expr ';';
 
 bloc : 
     '{' decl_vars* instruction* '}';
 
-operateur : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
+OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
 
 CHIFFRE : ('0'..'9');
-ENTIER : '0' | ('1'..'9') CHIFFRE* | '\''CARACTERE'\'';
-IDENT : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9')*;
-CARACTERE : ' '|'!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'
+ENTIER : '0' | ('1'..'9') CHIFFRE* | '\''CARACTERE'\''; //problème d'echappement
+IDENT : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+CARACTERE : ' '|'!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
             | CHIFFRE|':'|';'|'<'|'='|'>'|'?'|'@'|'['|']'|'^'
-            | '_'|'`'|'{'|'}'|'~'|'a'..'z'|'A'..'Z'
-            |'\\' 
+            | '_'|'`'|'{'|'}'|'~'|'a'..'z'|'A'..'Z'|'/'|'|'
+            |'\\'
             |'\''
             |'\"';
 
-WS : ('\n'|' '|'\t'|'\r')+ -> skip;
+WS : ('\n'|' '|'\t'|'\r'|'*/' * '/*' | '//' * '/n')+ -> skip;
