@@ -11,7 +11,7 @@ decl :
     decl_typ | decl_fct; //est ce qu on met aussi decl_vars ?
 
 decl_vars :
-      'int' (IDENT',')+ IDENT ';' #A
+      'int' (IDENT',')* IDENT ';' #A
     | 'struct' IDENT ('(' '*' IDENT ')'',')+ ';' #B; 
 
 decl_typ :
