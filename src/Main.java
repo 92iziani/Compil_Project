@@ -12,7 +12,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 
 import parser.*;
-import parser.exprParser.FichierContext;
+import parser.exprParser.ProgramContext;
 
 public class Main {
 
@@ -26,14 +26,13 @@ public class Main {
         String testFile = args[0];
 
         try {
-
             //chargement du fichier et construction du parser
             CharStream input = CharStreams.fromFileName(testFile);
-            exprLexer lexer = new exprLexer(input); 
-            CommonTokenStream stream = new CommonTokenStream(lexer);
+            exprLexer lexer0 = new exprLexer(input);
+            CommonTokenStream stream = new CommonTokenStream(lexer0);
             exprParser parser = new exprParser(stream);
 
-            FichierContext program = parser.fichier();
+            ProgramContext program = parser.program();
 
             // code d'affichage de l'arbre syntaxique
             JFrame frame = new JFrame("Antlr AST");
@@ -46,8 +45,6 @@ public class Main {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
-
-
         } 
         catch (IOException e) {
             e.printStackTrace();
@@ -55,8 +52,6 @@ public class Main {
         catch (RecognitionException e) {
             e.printStackTrace();
         }
-        
-
     }
     
 }
