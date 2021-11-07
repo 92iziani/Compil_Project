@@ -71,5 +71,10 @@ dkms.conf
 # Ignore all local history of files
 .history
 .ionide
+   
+# Compiled class file
+*.class
+
+src/parser
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,c
