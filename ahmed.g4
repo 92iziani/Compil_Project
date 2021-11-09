@@ -1,74 +1,61 @@
-grammar ahmed;
+grammar expr;
 
 @header{
-    package parser;
+package parser;
 }
 
-file : declaration* EOF ;
+program :
+    decl* EOF;
 
-declaration : declaration_type
-            | declaration_fonction 
-            | declaration_variable
+decl :
+    decl_typ | decl_fct | decl_vars; 
+
+decl_vars :
+      'int' (IDENT',')* IDENT ';' 
+    | 'struct' IDENT ('(' '*' IDENT ')'',')+ ';' 
+    | 'int' IDENT '=' ENTIER';' 
+    | 'int' IDENT '=' CHIFFRE';' ;
+
+decl_typ :
+    'struct' IDENT '{' decl_vars* '}' ';';
+
+decl_fct :
+    'int' IDENT '(' (param ',')* param?')' bloc 
+    | 'struct' IDENT '*' IDENT '(' param ','* ')' bloc;
+
+param :
+    'int' IDENT | 'struct' IDENT  '*' IDENT;
+
+expr :
+      ENTIER
+    | IDENT
+    | expr '->' IDENT
+    | IDENT '(' (expr',')* ')' 
+    | '!' expr | '-' expr
+    | expr OPERATEUR expr
+    | 'sizeof' '(' 'struct' IDENT ')'
+    | '(' expr ')';
+
+instruction :
+    ';' 
+    | expr ';'
+    | 'if' '(' expr ')' '{'instruction'}'     
+    | 'if' '(' expr ')' '{'instruction'}' 'else' '{'instruction'}'
+    | 'while' '(' expr ')' instruction  
+    | bloc  
+    | 'return' expr ';'   ;
+
+bloc : 
+    '{' decl_vars* instruction* '}';
+
+OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
+
+CHIFFRE : ('0'..'9');
+ENTIER : '0' | ('1'..'9') CHIFFRE* | '\''CARACTERE'\''; 
+IDENT : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
+CARACTERE : '!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
+            | CHIFFRE|':'|';'|'<'|'='|'>'|'?'|'@'|'['|']'|'^'
+            | '_'|'`'|'{'|'}'|'~'|'a'..'z'|'A'..'Z'|'/'|'|'
             ;
-
-declaration_fonction : 'int' IDF '('(parameter',')*')' bloc
-                    | 'struct' IDF '*' IDF '('(parameter',')*')' bloc 
-                    ;
-
-declaration_variable : 'int' (IDF',')+ ';'
-                    | 'struct' IDF ('(''*'IDF')'',')+ ';'  
-                    ;
-
-declaration_type : 'struct' IDF '{'declaration_variable*'};' ;
-                    
-
-parameter : 'int' IDF
-            | 'struct' IDF '*' IDF
-            ;
-
-expression : INTEGER
-            | IDF
-            | expression '->' IDF
-            | IDF '('(expression',')*')'
-            | '!'expression
-            | '-'expression
-            | expression OPERATOR expression
-            | 'sizeof' '(' 'struct' IDF ')'
-            | '('expression')'
-            ;
-
-bloc : '{' declaration_variable* instruction* '}' ;
-
-instruction : ';'
-            | expression ';'
-            | 'if' '('expression')' instruction
-            | 'if' '('expression')' instruction 'else' instruction
-            | 'while' '('expression')' instruction
-            | 'return' expression ';'
-            | bloc
-            ;
-
-NUMBER : ('0'..'9');
-
-INTEGER : 0
-        | ('1'..'9') NUMBER*
-        | '’'CHARACTER'’'
-        ;
-
-IDF : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9')*;
-
-OPERATOR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||' ;
-
-CHARACTER : ' '|'!'|'#'|'&'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'/'| NUMBER
-               |':'|';'|'<'|'='|'>'|'?'|'@'| ('A'..'Z') |'['|']'| '^'
-               | '_'| '`'| ('a'..'z') | '{'|'}'|'~' | '|'
-               |'\\' 
-               |'\’'
-               |'\"';
-
-WS : ('\n'|' '|'\t'|'\r' | '*/' * '/*' | '//' * '/n')+ -> skip;
-
-
-
-
+WS : ('\n'|' '|'\t'|'\r'|'*/' * '/*' | '//' * '/n')+ -> skip;
 
