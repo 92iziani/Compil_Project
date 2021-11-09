@@ -29,6 +29,7 @@ param :
 expr :
       ENTIER
     | IDENT
+    | CHIFFRE
     | expr '->' IDENT
     | IDENT '(' (expr',')* ')' 
     | '!' expr | '-' expr
@@ -39,8 +40,7 @@ expr :
 instruction :
     ';' 
     | expr ';'
-    | 'if' '(' expr ')' '{'instruction'}'     
-    | 'if' '(' expr ')' '{'instruction'}' 'else' '{'instruction'}'
+    | 'if' '(' expr ')' instruction ('else' instruction)?
     | 'while' '(' expr ')' instruction  
     | bloc  
     | 'return' expr ';'   ;
