@@ -15,7 +15,7 @@ decl_vars :
     | 'struct' IDENT ('(' '*' IDENT ')'',')+ ';'
     | 'int' IDENT '=' ENTIER';'
     | 'int' IDENT '=' CHIFFRE';' ;
-
+//'int' (IDENT,',')+ ';'
 decl_typ :
     'struct' IDENT '{' decl_vars* '}' ';';
 
@@ -26,17 +26,9 @@ decl_fct :
 param :
     'int' IDENT | 'struct' IDENT  '*' IDENT;
 
-expr :
-      ENTIER
-    | IDENT
-    | CHIFFRE
-    | expr '->' IDENT
-    | IDENT '(' (expr',')* ')'
-    | '!' expr | '-' expr
-    | expr OPERATEUR expr
-    | 'sizeof' '(' 'struct' IDENT ')'
-    | '(' expr ')'
-    ;
+
+expr : ENTIER expr1 | IDENT expr1 | CHIFFRE expr1 | IDENT '(' (expr',')* ')' expr1 | '!' expr expr1 | '-' expr expr1 | 'sizeof' '(' 'struct' IDENT ')' expr1 | '(' expr ')' expr1 | ENTIER | IDENT | CHIFFRE | IDENT '(' (expr',')* ')' | '!' expr | '-' expr | 'sizeof' '(' 'struct' IDENT ')' | '(' expr ')' ;
+expr1 : '->' IDENT expr1 | OPERATEUR expr expr1 | '->' IDENT | OPERATEUR expr ;
 
 
 instruction :
