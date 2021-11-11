@@ -1,9 +1,10 @@
 
-
 .idea
 .vscode
 .antlr
 bin
+lib
+src/parser
 
 ./.idea
 ./.vscode
