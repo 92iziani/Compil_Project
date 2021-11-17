@@ -58,8 +58,15 @@ instruction :
 
 affectation : IDENT '=' expr2 ';' ;
 // donc il faut obligatoirement déclarer les vars au début
+
+liste_decl_vars :
+    decl_vars*;
+
+liste_instruction :
+    instruction*;
+
 bloc :
-    '{' decl_vars* instruction* '}';
+    '{' liste_decl_vars liste_instruction '}';
 
 OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
 
