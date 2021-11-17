@@ -27,7 +27,10 @@ Ces deux classes permettent d'analyser un texte et de vérifier s'il peut être 
 
 ### Linux
 Compiler Main.java avec la commande :
-```javac  -cp ./lib/antlr-4.9.2-complete.jar:./src ./src/Main.java -d ./bin```
+```
+javac  -cp ./lib/antlr-4.9.2-complete.jar:./src ./src/Main.java -d ./bin```
+```
+
 Vous devriez générer des fichiers .class dans le dossier bin
 
 Vous pouvez tester avec les programmes du dossier examples avec la commande :
@@ -39,7 +42,9 @@ java -cp ./lib/antlr-4.9.2-complete.jar:./bin Main ./examples/good.exp
 ### Windows
 
 Compiler Main.java avec la commande :
-```javac  -cp "./lib/antlr-4.9.2-complete.jar;./src" ./src/Main.java -d ./bin```
+```
+javac  -cp "./lib/antlr-4.9.2-complete.jar;./src" ./src/Main.java -d ./bin```
+```
 Vous devriez générer des fichiers .class dans le dossier bin
 
 
@@ -47,7 +52,7 @@ Vous devriez générer des fichiers .class dans le dossier bin
 Vous pouvez tester avec les programmes du dossier examples avec la commande :
 
 ```
-java -cp "./lib/antlr-4.9.2-complete.jar;./bin" Main ./examples/good.exp
+java -cp "./lib/antlr-4.9.2-complete.jar;./bin" Main ./examples/good.c
 ```
 
 
