@@ -13,8 +13,7 @@ decl :
 decl_vars :
       'int' (IDENT',')* IDENT ';'
     | 'struct' IDENT IDENT* ('(' '*' IDENT ')'',')* ';'
-    | 'int' IDENT '=' ENTIER';'
-    | 'int' IDENT '=' CHIFFRE';' ;
+    | 'int' IDENT '=' ENTIER';';
 //'int' (IDENT,',')+ ';'
 decl_typ :
     'struct' IDENT '{' decl_vars* '}' ';';
@@ -32,12 +31,13 @@ expr1 : '->' IDENT expr1 | OPERATEUR expr expr1 | '->' IDENT | OPERATEUR expr ;
 
 //deleted ; in instruction
 instruction :
-
-     expr ';'
-    | 'if' '(' expr ')' instruction ('else' instruction)?
-    | 'while' '(' expr ')' instruction
-    | bloc  | affectation
-    | 'return' expr ';'   ;
+     expr ';' #ExprSeule
+    | 'if' '(' expr ')' instruction #IfThen
+    | 'if' '(' expr ')' instruction 'else' instruction #IfThenElse
+    | 'while' '(' expr ')' instruction #While
+    | bloc  #BlocInstruct
+    | affectation #AffectInstruct
+    | 'return' expr ';'    #Return ;
 
 affectation : IDENT '=' expr2 ';' ;
 // donc il faut obligatoirement déclarer les vars au début
@@ -46,11 +46,11 @@ bloc :
 
 OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
 
-CHIFFRE : ('0'..'9');
-ENTIER : '0' | ('1'..'9') CHIFFRE* | CARACTERE;
+
+ENTIER : '0' | ('1'..'9') ('0'..'9')* | CARACTERE;
 IDENT : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
 CARACTERE : '\''('!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
-            | CHIFFRE|':'|';'|'<'|'='|'>'|'?'|'@'|'['|']'|'^'
+            | ('0'..'9')|':'|';'|'<'|'='|'>'|'?'|'@'|'['|']'|'^'
             | '_'|'`'|'{'|'}'|'~'|'a'..'z'|'A'..'Z'|'/'|'|')'\''
             ;
 WS : ('\n'|' '|'\t'|'\r'|'/*' .*? '*/' | '//' ~[\r\n]*)+ -> skip;
