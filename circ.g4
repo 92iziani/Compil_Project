@@ -43,10 +43,8 @@ expr :  ENTIER expr1?                            #EntierExpr
 //        | '(' expr ')'                          #ParenthExpr ;
             ;
 
-expr1 : '->' IDENT expr1
-        | OPERATEUR expr expr1
-        | '->' IDENT
-        | OPERATEUR expr ;
+expr1 : '->' IDENT expr1?           #Fleche
+        | OPERATEUR expr expr1?     #OpExpr;
 
 //deleted ; in instruction
 instruction :
