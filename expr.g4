@@ -12,7 +12,7 @@ decl :
 
 decl_vars :
       'int' (IDENT',')* IDENT ';'
-    | 'struct' IDENT ('(' '*' IDENT ')'',')+ ';'
+    | 'struct' IDENT IDENT* ('(' '*' IDENT ')'',')* ';'
     | 'int' IDENT '=' ENTIER';'
     | 'int' IDENT '=' CHIFFRE';' ;
 //'int' (IDENT,',')+ ';'
