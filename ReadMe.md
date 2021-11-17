@@ -7,12 +7,12 @@
 
 Sur __Linux__, compilez avec la commande :
 ```bash
-java -jar ./lib/antlr-4.9.2-complete.jar expr.g4 -no-listener -no-visitor -o ./src/parser
+java -jar ./lib/antlr-4.9.2-complete.jar expr.g4 -no-listener -visitor -o ./src/parser
 ```
 
 Sur __Windows__, compilez avec la commande :
 ```bash
-java -jar ./lib/antlr-4.9.2-complete.jar expr.g4 -no-listener -no-visitor -o ./src/parser
+java -jar ./lib/antlr-4.9.2-complete.jar expr.g4 -no-listener -visitor -o ./src/parser
 ```
 
 Si tout se passe bien, cette commande doit générer dans le dossier src un sous dossier parser ainsi que 2 classes java :
