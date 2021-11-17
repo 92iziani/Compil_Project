@@ -1,4 +1,4 @@
-grammar expr;
+grammar circ;
 
 @header{
 package parser;

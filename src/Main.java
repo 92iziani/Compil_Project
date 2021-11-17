@@ -1,4 +1,3 @@
-
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,7 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 
 import parser.*;
-import parser.exprParser.ProgramContext;
+import parser.circParser.ProgramContext;
 
 public class Main {
 
@@ -28,9 +27,9 @@ public class Main {
         try {
             //chargement du fichier et construction du parser
             CharStream input = CharStreams.fromFileName(testFile);
-            exprLexer lexer0 = new exprLexer(input);
+            circLexer lexer0 = new circLexer(input);
             CommonTokenStream stream = new CommonTokenStream(lexer0);
-            exprParser parser = new exprParser(stream);
+            circParser parser = new circParser(stream);
 
             ProgramContext program = parser.program();
 
@@ -45,7 +44,7 @@ public class Main {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
-        } 
+        }
         catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,5 +52,6 @@ public class Main {
             e.printStackTrace();
         }
     }
-    
+
 }
+
