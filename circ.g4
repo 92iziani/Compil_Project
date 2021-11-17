@@ -28,10 +28,10 @@ param :
 
 
 expr :  ENTIER expr1?                            #EntierExpr
-        |IDENT expr1                            #IdentExpr
-        | IDENT ('(' (expr',')* ')' expr1? )?       #IdentExprPointeurExpr1
-        | '!' expr expr1?                        #ExclaExprExpr
-        | '-' expr expr1?                        #TiretExprExpr
+        |IDENT expr1                             #IdentExpr
+        | IDENT ('(' (expr',')* ')' expr1? )?    #IdentExprPointeur
+        | '!' expr expr1?                        #ExclaExpr
+        | '-' expr expr1?                        #TiretExpr
         | 'sizeof' '(' 'struct' IDENT ')' expr1? #SizeofExpr
         | '(' expr ')' expr1?                    #ExprExpr
 //        | ENTIER                                #Entier
