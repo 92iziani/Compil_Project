@@ -1,31 +1,21 @@
 package ast;
 
+import parser.circBaseVisitor;
+import parser.circParser;
+import parser.circParser.*;
+
 import java.util.ArrayList;
 
-import parser.exprBaseVisitor;
-import parser.exprParser;
-import parser.exprParser.Instr_listContext;
-
-public class AstCreator extends exprBaseVisitor<Ast>{
-
-    	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public Ast visitProgram(exprParser.ProgramContext ctx) { 
-		Ast instr_list = ctx.getChild(0).accept(this);
-		return new Program(instr_list);
-	 }
+public class AstCreator extends circBaseVisitor<Ast>{
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitInstr(exprParser.InstrContext ctx) { 
-		return ctx.getChild(0).accept(this); //retourne l'AST produit par le noeud fils
+	@Override public Ast visitProgram(circParser.ProgramContext ctx) {
+		Ast decl_list = ctx.getChild(0).accept(this);
+		return new Program(decl_list);
 	}
 	/**
 	 * {@inheritDoc}
@@ -33,23 +23,8 @@ public class AstCreator extends exprBaseVisitor<Ast>{
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitPrint_litteral(exprParser.Print_litteralContext ctx) { 
-		Ast value = ctx.getChild(1).accept(this);
-
-		return new Print(value);
-	 }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public Ast visitIfThenElse(exprParser.IfThenElseContext ctx) { 
-		Ast condition = ctx.getChild(2).accept(this); //condition
-		Ast thenB = ctx.getChild(5).accept(this); 
-		Ast elseB = ctx.getChild(9).accept(this);
-
-		return new IfThenElse(condition, thenB, elseB);
+	@Override public Ast visitDecl(circParser.DeclContext ctx) {
+		return ctx.getChild(0).accept(this); //retourne l'ast produit par le noeud fils
 	}
 
 	/**
@@ -58,137 +33,180 @@ public class AstCreator extends exprBaseVisitor<Ast>{
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitIfThen(exprParser.IfThenContext ctx) { 
-		Ast condition = ctx.getChild(2).accept(this); //condition
-		Ast thenB = ctx.getChild(5).accept(this); 
-		return new IfThen(condition, thenB);
-	}
+	@Override public T visitDecla(circParser.DeclaContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitInstr_list(exprParser.Instr_listContext ctx) { 
-		ArrayList<Ast> liste = new ArrayList<Ast>();
-		int i=0;
-		while(ctx.getChild(i) != null){
-			Ast expr = ctx.getChild(i).accept(this);
-			liste.add(expr);
-			i++;
-		}
-		return new InstrList(liste);
-	}
+	@Override public T visitStruct(circParser.StructContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitAffect(exprParser.AffectContext ctx) { 
-		
-		//Récupération des noeuds fils
-		String idfString = ctx.getChild(0).toString(); // récupère la valeur du terminal Idf
-		Ast expr = ctx.getChild(2).accept(this); //on génère l'AST
-		
-		//creation des sous AST
-		Idf idf = new Idf(idfString);
-		
-		return new Affect(idf, expr);
-	}
+	@Override public T visitDeclaAffect(circParser.DeclaAffectContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitExpr(exprParser.ExprContext ctx) {
-		return ctx.getChild(0).accept(this);
-		}
+	@Override public T visitDecl_typ(circParser.Decl_typContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitPlus(exprParser.PlusContext ctx) { 
-		Ast noeudTemporaire = ctx.getChild(0).accept(this);
-
-        for (int i=0;2*i<ctx.getChildCount()-1;i++){
-            
-            String operation = ctx.getChild(2*i+1).toString();
-            Ast right = ctx.getChild(2*(i+1)).accept(this);
-
-            switch (operation) {
-                case "-":
-                    noeudTemporaire = new Minus(noeudTemporaire,right);
-                    break;
-                case "+":
-                    noeudTemporaire = new Plus(noeudTemporaire,right);
-                    break;
-                default:
-					//gérer quand c'est ni un moins ni un plus
-                    break;
-            }
-        }    
-        return noeudTemporaire;
-
-	}
+	@Override public T visitDecl_fct(circParser.Decl_fctContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitMult(exprParser.MultContext ctx) { 
-		Ast noeudTemporaire = ctx.getChild(0).accept(this);
-
-        for (int i=0;2*i<ctx.getChildCount()-1;i++){
-            
-            String operation = ctx.getChild(2*i+1).toString();
-            Ast right = ctx.getChild(2*(i+1)).accept(this);
-
-            switch (operation) {
-                case "*":
-                    noeudTemporaire = new Mult(noeudTemporaire,right);
-                    break;
-                case "/":
-                    noeudTemporaire = new Divide(noeudTemporaire,right);
-                    break;
-                default:
-					//gérer quand c'est ni un moins ni un plus
-                    break;
-            }
-        }    
-        return noeudTemporaire;
-	 }
+	@Override public T visitParam(circParser.ParamContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitInteger(exprParser.IntegerContext ctx) { 
-		int integer = Integer.parseInt(ctx.getChild(0).toString());
-		return new IntNode(integer);
-	}
+	@Override public T visitEntiercirc(circParser.EntierExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitIdentifier(exprParser.IdentifierContext ctx) { 
-		String idf = ctx.getChild(0).toString();
-		return new Idf(idf);
-	 }
+	@Override public T visitIdentcirc(circParser.IdentExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public Ast visitParenthesis(exprParser.ParenthesisContext ctx) { 
-		return ctx.getChild(1).accept(this);
-	}
+	@Override public T visitIdentcircPointeurcirc1(circParser.IdentExprPointeurExpr1Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitExclacirc(circParser.ExclaExprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTiretcirc(circParser.TiretExprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitSizeofcirc(circParser.SizeofExprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitcirc(circParser.ExprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitcirc1(circParser.Expr1Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitcircSeule(circParser.ExprSeuleContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitIfThen(circParser.IfThenContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitIfThenElse(circParser.IfThenElseContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitWhile(circParser.WhileContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitBlocInstruct(circParser.BlocInstructContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAffectInstruct(circParser.AffectInstructContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitReturn(circParser.ReturnContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitAffectation(circParser.AffectationContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitBloc(circParser.BlocContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitcirc2(circParser.Expr2Context ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitPlus(circParser.PlusContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitMult(circParser.MultContext ctx) { return visitChildren(ctx); }
 }
