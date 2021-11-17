@@ -11,9 +11,9 @@ decl :
     decl_typ | decl_fct | decl_vars ;
 
 decl_vars :
-      'int' (IDENT',')* IDENT ';'
-    | 'struct' IDENT IDENT* ('(' '*' IDENT ')'',')* ';'
-    | 'int' IDENT '=' ENTIER';';
+      'int' (IDENT',')* IDENT ';'                       #Decla
+    | 'struct' IDENT IDENT* ('(' '*' IDENT ')'',')* ';' #Struct
+    | 'int' IDENT '=' ENTIER';'                         #DeclaAffect ;
 //'int' (IDENT,',')+ ';'
 decl_typ :
     'struct' IDENT '{' decl_vars* '}' ';';
@@ -23,11 +23,28 @@ decl_fct :
     | 'struct' IDENT '*' IDENT '(' param ','* ')' bloc;
 
 param :
-    'int' IDENT | 'struct' IDENT  '*' IDENT;
+    'int' IDENT
+    | 'struct' IDENT  '*' IDENT;
 
 
-expr : ENTIER expr1 | IDENT expr1 | CHIFFRE expr1 | IDENT '(' (expr',')* ')' expr1 | '!' expr expr1 | '-' expr expr1 | 'sizeof' '(' 'struct' IDENT ')' expr1 | '(' expr ')' expr1 | ENTIER | IDENT | CHIFFRE | IDENT '(' (expr',')* ')' | '!' expr | '-' expr | 'sizeof' '(' 'struct' IDENT ')' | '(' expr ')' ;
-expr1 : '->' IDENT expr1 | OPERATEUR expr expr1 | '->' IDENT | OPERATEUR expr ;
+expr :  ENTIER expr1
+        |IDENT expr1
+        | IDENT '(' (expr',')* ')' expr1
+        | '!' expr expr1
+        | '-' expr expr1
+        | 'sizeof' '(' 'struct' IDENT ')' expr1
+        | '(' expr ')' expr1
+        | ENTIER
+        | IDENT
+        | IDENT '(' (expr',')* ')'
+        | '!' expr
+        | '-' expr
+        | 'sizeof' '(' 'struct' IDENT ')'
+        | '(' expr ')' ;
+expr1 : '->' IDENT expr1
+        | OPERATEUR expr expr1
+        | '->' IDENT
+        | OPERATEUR expr ;
 
 //deleted ; in instruction
 instruction :
