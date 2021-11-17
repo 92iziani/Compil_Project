@@ -30,17 +30,17 @@ param :
 expr : ENTIER expr1 | IDENT expr1 | CHIFFRE expr1 | IDENT '(' (expr',')* ')' expr1 | '!' expr expr1 | '-' expr expr1 | 'sizeof' '(' 'struct' IDENT ')' expr1 | '(' expr ')' expr1 | ENTIER | IDENT | CHIFFRE | IDENT '(' (expr',')* ')' | '!' expr | '-' expr | 'sizeof' '(' 'struct' IDENT ')' | '(' expr ')' ;
 expr1 : '->' IDENT expr1 | OPERATEUR expr expr1 | '->' IDENT | OPERATEUR expr ;
 
-
+//deleted ; in instruction
 instruction :
-    ';'
-    | expr ';'
+
+     expr ';'
     | 'if' '(' expr ')' instruction ('else' instruction)?
     | 'while' '(' expr ')' instruction
     | bloc  | affectation
     | 'return' expr ';'   ;
 
-affectation : IDENT '=' expr;
-
+affectation : IDENT '=' expr2 ';' ;
+// donc il faut obligatoirement déclarer les vars au début
 bloc :
     '{' decl_vars* instruction* '}';
 
@@ -53,5 +53,13 @@ CARACTERE : '!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
             | CHIFFRE|':'|';'|'<'|'='|'>'|'?'|'@'|'['|']'|'^'
             | '_'|'`'|'{'|'}'|'~'|'a'..'z'|'A'..'Z'|'/'|'|'
             ;
-WS : ('\n'|' '|'\t'|'\r'|'*/' * '/*' | '//' * '/n')+ -> skip;
+WS : ('\n'|' '|'\t'|'\r'|'/*' .*? '*/' | '//' ~[\r\n]*)+ -> skip;
 
+
+expr2 : plus;
+
+plus:  mult (('+'|'-') mult)*;
+
+mult : expr (('*'|'/') expr)*;
+
+//BlockComment :   '/*' .*? '*/' -> skip;
