@@ -27,20 +27,21 @@ param :
     | 'struct' IDENT  '*' IDENT;
 
 
-expr :  ENTIER expr1
-        |IDENT expr1
-        | IDENT '(' (expr',')* ')' expr1
-        | '!' expr expr1
-        | '-' expr expr1
-        | 'sizeof' '(' 'struct' IDENT ')' expr1
-        | '(' expr ')' expr1
-        | ENTIER
-        | IDENT
-        | IDENT '(' (expr',')* ')'
-        | '!' expr
-        | '-' expr
-        | 'sizeof' '(' 'struct' IDENT ')'
-        | '(' expr ')' ;
+expr :  ENTIER expr1                            #EntierExpr
+        |IDENT expr1                            #IdentExpr
+        | IDENT '(' (expr',')* ')' expr1        #IdentExprPointeurExpr1
+        | '!' expr expr1                        #ExclaExprExpr
+        | '-' expr expr1                        #TiretExprExpr
+        | 'sizeof' '(' 'struct' IDENT ')' expr1 #SizeofExpr
+        | '(' expr ')' expr1                    #ExprExpr
+        | ENTIER                                #Entier
+        | IDENT                                 #Ident
+        | IDENT '(' (expr',')* ')'              #IdentExprPointeur
+        | '!' expr                              #ExclaExpr
+        | '-' expr                              #TiretExpr
+        | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
+        | '(' expr ')'                          #ParenthExpr ;
+
 expr1 : '->' IDENT expr1
         | OPERATEUR expr expr1
         | '->' IDENT
