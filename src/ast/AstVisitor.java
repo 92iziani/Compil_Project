@@ -17,5 +17,9 @@ public interface AstVisitor<T> {
     public T visit(ListeDeclVars liste);
     public T visit(ListeInstruction liste);
     public T visit(Bloc bloc);
+    public T visit(Plus plus);
+    public T visit(Minus minus);
+    public T visit(Divide divide);
+    public T visit(Mult mult);
 
 }
