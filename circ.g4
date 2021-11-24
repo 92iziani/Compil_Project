@@ -32,11 +32,11 @@ param :
 
 expr :  ENTIER expr1                            #EntierExpr
         |IDENT expr1                             #IdentExpr
-        | IDENT '(' (expr',')* ')' expr1          #IdentExprPointeur
-        | '!' expr expr1?                        #ExclaExpr
-        | '-' expr expr1?                        #TiretExpr
+        | IDENT '(' (expr',')* ')' expr1          #IdentExprPointeurExpr
+        | '!' expr expr1                        #ExclaExprExpr
+        | '-' expr expr1                        #TiretExprExpr
         | 'sizeof' '(' 'struct' IDENT ')' expr1 #SizeofExpr
-        | '(' expr ')' expr1                    #ExprExpr
+        | '(' expr ')' expr1                    #ParenthExprExpr
         | ENTIER                                #Entier
         | IDENT                                 #Ident
         | IDENT '(' (expr',')* ')'              #IdentExprPointeur
@@ -46,8 +46,11 @@ expr :  ENTIER expr1                            #EntierExpr
         | '(' expr ')'                          #ParenthExpr ;
 
 
-expr1 : '->' IDENT expr1?           #Fleche
-        | OPERATEUR expr expr1?     #OpExpr;
+expr1 : '->' IDENT expr1    #FlecheExpr
+        |   '->' IDENT         #Fleche
+        | OPERATEUR expr expr1     #OpExprExpr
+        | OPERATEUR expr    #OpExpr
+        ;
 
 //deleted ; in instruction
 instruction :
