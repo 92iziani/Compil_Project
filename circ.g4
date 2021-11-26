@@ -16,32 +16,35 @@ decl_vars :
     | 'int' IDENT '=' ENTIER';'                         #DeclaAffect ;
 //'int' (IDENT,',')+ ';'
 decl_typ :
-    'struct' IDENT '{' decl_vars* '}' ';';
+    'struct' IDENT '{' liste_decl_vars '}' ';';
 
 decl_fct :
-    'int' IDENT '(' (param ',')* param?')' bloc
-    | 'struct' IDENT '*' IDENT '(' param ','* ')' bloc;
+    'int' IDENT '(' liste_param ')' bloc
+    | 'struct' IDENT '*' IDENT '(' liste_param ')' bloc;
+
+liste_param :
+    param*;
 
 param :
     'int' IDENT
     | 'struct' IDENT  '*' IDENT;
 
 
-expr :  ENTIER expr1?                            #EntierExpr
+expr :  ENTIER expr1                            #EntierExpr
         |IDENT expr1                             #IdentExpr
-        | IDENT ('(' (expr',')* ')' expr1? )?    #IdentExprPointeur
+        | IDENT '(' (expr',')* ')' expr1          #IdentExprPointeur
         | '!' expr expr1?                        #ExclaExpr
         | '-' expr expr1?                        #TiretExpr
-        | 'sizeof' '(' 'struct' IDENT ')' expr1? #SizeofExpr
-        | '(' expr ')' expr1?                    #ExprExpr
-//        | ENTIER                                #Entier
-//        | IDENT                                 #Ident
-//        | IDENT '(' (expr',')* ')'              #IdentExprPointeur
-//        | '!' expr                              #ExclaExpr
-//        | '-' expr                              #TiretExpr
-//        | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
-//        | '(' expr ')'                          #ParenthExpr ;
-            ;
+        | 'sizeof' '(' 'struct' IDENT ')' expr1 #SizeofExpr
+        | '(' expr ')' expr1                    #ExprExpr
+        | ENTIER                                #Entier
+        | IDENT                                 #Ident
+        | IDENT '(' (expr',')* ')'              #IdentExprPointeur
+        | '!' expr                              #ExclaExpr
+        | '-' expr                              #TiretExpr
+        | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
+        | '(' expr ')'                          #ParenthExpr ;
+
 
 expr1 : '->' IDENT expr1?           #Fleche
         | OPERATEUR expr expr1?     #OpExpr;
@@ -58,8 +61,15 @@ instruction :
 
 affectation : IDENT '=' expr2 ';' ;
 // donc il faut obligatoirement déclarer les vars au début
+
+liste_decl_vars :
+    decl_vars*;
+
+liste_instruction :
+    instruction*;
+
 bloc :
-    '{' decl_vars* instruction* '}';
+    '{' liste_decl_vars liste_instruction '}';
 
 OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
 
