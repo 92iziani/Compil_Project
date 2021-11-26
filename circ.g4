@@ -25,6 +25,8 @@ decl_fct :
 liste_param :
     param*;
 
+liste_expr : (expr',')* ;
+
 param :
     'int' IDENT
     | 'struct' IDENT  '*' IDENT;
@@ -32,14 +34,14 @@ param :
 
 expr :  ENTIER expr1                            #EntierExpr
         |IDENT expr1                             #IdentExpr
-        | IDENT '(' (expr',')* ')' expr1          #IdentExprPointeurExpr
+        | IDENT '(' liste_expr ')' expr1          #IdentExprPointeurExpr
         | '!' expr expr1                        #ExclaExprExpr
         | '-' expr expr1                        #TiretExprExpr
         | 'sizeof' '(' 'struct' IDENT ')' expr1 #SizeofExpr
         | '(' expr ')' expr1                    #ParenthExprExpr
         | ENTIER                                #Entier
         | IDENT                                 #Ident
-        | IDENT '(' (expr',')* ')'              #IdentExprPointeur
+        | IDENT '(' liste_expr ')'              #IdentExprPointeur
         | '!' expr                              #ExclaExpr
         | '-' expr                              #TiretExpr
         | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
