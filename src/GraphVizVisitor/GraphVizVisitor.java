@@ -97,7 +97,10 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String cond = whil.condition.accept(this);
         String ins = whil.instruction.accept(this);
 
-        this.addTransition(cond,ins);
+        this.addTransition(nodeIdentifier,cond);
+        this.addTransition(nodeIdentifier,ins);
+
+
 
         return nodeIdentifier;
     }
