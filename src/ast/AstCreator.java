@@ -255,10 +255,24 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		return noeudTemporaire;
 	}
 
-	public Ast visitDecla(circParser.MultContext ctx) {
+	public Ast visitDecla(exprParser.Instr_listContext ctx) {
 
+		int sizea = ctx.getChildCount();
+		int sizeb = sizea - 3
+		ArrayList<Ident> Listedident = new ArrayList<>();
 
-	}
+		for (int i=1 ; i< sizeb; i++) {
+			if (i%2==1){
+				String identString = ctx.getChild(i).toString();
+				Ident ident = new Ident(identString)
+				Listedident.add(ident)}
+		}
+
+		String identString = ctx.getChild(sizea-1).toString();
+		Ident ident = new Ident(identString)
+		Listedident.add(ident)}
+		return new DeclaList(Listedident); }
+
 
 	public Ast visitStruct(circParser.MultContext ctx) {
 
@@ -273,9 +287,6 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		return new Affect(ident,entier);
 	}
 
-	public Ast visitDecla(circParser.MultContext ctx) {
-
-	}
 
 	public Ast visitDecl_typ(circParser.MultContext ctx) {
 
