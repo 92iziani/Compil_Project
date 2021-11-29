@@ -17,7 +17,7 @@ decl_vars :
 //'int' (IDENT,',')+ ';'
 decl_typ :
     'struct' IDENT '{' liste_decl_vars '}' ';';
-
+git
 decl_fct :
     'int' IDENT '(' liste_param ')' bloc            #IntParam
     | 'struct' IDENT '*' IDENT '(' liste_param ')' bloc  #StructParam ;
@@ -27,7 +27,7 @@ liste_param :
 
 param :
     'int' IDENT                           #Paramint
-    | 'struct' IDENT  '*' IDENT;          #Paramstruct
+    | 'struct' IDENT  '*' IDENT          #Paramstruct;
 
 
 expr :  ENTIER expr1                            #EntierExpr
