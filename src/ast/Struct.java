@@ -2,17 +2,17 @@ package ast;
 
 import java.util.ArrayList;
 
-public class DeclaList implements Ast {
+public class Struct implements Ast {
     
     // Utile pour la dernière partie
     public <T> T accept(AstVisitor<T> visitor){
         return visitor.visit(this);
     }
 
-    public ArrayList<Ident> declaList;
+    public ArrayList<Ident> structList;
 
-    public DeclaList(ArrayList<Ident> declaList) {
-        this.declaList = declaList;
+    public Struct(ArrayList<Ident> structList) {
+        this.structList = structList;
 
     }
 

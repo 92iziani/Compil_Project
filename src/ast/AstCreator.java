@@ -275,6 +275,24 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 
 	public Ast visitStruct(circParser.MultContext ctx) {
+		int sizea = ctx.getChildCount();
+		String a = new String;
+		ArrayList<Ident> ListeStruct = new ArrayList<>();
+
+		String identString = ctx.getChild(1).toString();
+		Ident ident = new Ident(identString);
+		Listedident.add(ident);
+	}
+
+		for (int i=1 ; i< sizea-1; i++) {
+			a=ctx.getChild(i).toString()
+			if ((a!='(')&(a!=')')&(a!='*')&(a!=',')){
+				Ident ident = new Ident(a;)
+				Listedident.add(ident);
+			}
+		}
+
+		return new Struct(Listedident); 
 
 	}
 
@@ -289,15 +307,44 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 
 	public Ast visitDecl_typ(circParser.MultContext ctx) {
+		String identString = ctx.getChild(1).toString();
+		Ident ident = new Ident(identString);
+		Ast liste_decl_vars =ctx.getChild(3);
 
+	return new DeclTyp(ident,liste_decl_vars);
 	}
 
-	public Ast visitDecl_fct(circParser.MultContext ctx) {
+	public Ast visitIntParam(circParser.MultContext ctx) {
+		String identString = ctx.getChild(1).toString();
+		Ident ident = new Ident(identString);
 
+		Ast liste_param =ctx.getChild(3);
+		Ast bloc=ctx.getChild(5);
+
+	return new IntParam(ident,liste_param,bloc);
 	}
 
-	public Ast visitParam(circParser.MultContext ctx) {
+	public Ast visitStructParam(circParser.MultContext ctx) {
+		String identString1 = ctx.getChild(1).toString();
+		Ident ident1 = new Ident(identString1);
 
+		String identString2 = ctx.getChild(3).toString();
+		Ident ident2 = new Ident(identString2);
+
+		Ast liste_param =ctx.getChild(5);
+		Ast bloc=ctx.getChild(7);
+
+	return new StructParam(ident1,ident2,liste_param,bloc);
 	}
 
+	public Ast visitListeParam(circParser.MultContext ctx) {
+		ArrayList<Ast> listeparam = new ArrayList<Ast>();
+		int i = 0;
+		while (ctx.getChild(i) != null) {
+		Ast param = ctx.getChild(i).accept(this);
+		listeparam.add(param);
+		i++;
+		}
+		return new ListeParam(liste);
+	}
 }

@@ -19,15 +19,15 @@ decl_typ :
     'struct' IDENT '{' liste_decl_vars '}' ';';
 
 decl_fct :
-    'int' IDENT '(' liste_param ')' bloc
-    | 'struct' IDENT '*' IDENT '(' liste_param ')' bloc;
+    'int' IDENT '(' liste_param ')' bloc            #IntParam
+    | 'struct' IDENT '*' IDENT '(' liste_param ')' bloc  #StructParam ;
 
 liste_param :
     param*;
 
 param :
-    'int' IDENT
-    | 'struct' IDENT  '*' IDENT;
+    'int' IDENT                           #Paramint
+    | 'struct' IDENT  '*' IDENT;          #Paramstruct
 
 
 expr :  ENTIER expr1                            #EntierExpr
