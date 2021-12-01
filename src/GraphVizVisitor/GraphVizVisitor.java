@@ -356,4 +356,122 @@ public class GraphVizVisitor implements AstVisitor<String> {
         return nodeIdentifier;
     }
 
+
+
+
+    public String visit(IntNode x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Int");
+
+        String v = x.value.accept(this);
+
+        this.addTransition(nodeIdentifier, v);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(ExclaExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "!");
+
+        String v = x.expr.accept(this);
+
+        this.addTransition(nodeIdentifier, v);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(Fleche x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "->");
+
+        String v = x.ident.accept(this);
+
+        this.addTransition(nodeIdentifier, v);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(Ident x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Ident");
+
+        String v = x.name.accept(this);
+
+        this.addTransition(nodeIdentifier, v);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(IdentExprPointeur x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "IdentExprPointeur");
+
+        String a = x.ident.accept(this);
+        String b = x.listexpr.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(Operateur x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Operateur");
+
+        String v = x.name.accept(this);
+
+        this.addTransition(nodeIdentifier, v);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(OpExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "OpExpr");
+
+        String a = x.operateur.accept(this);
+        String b = x.expr.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(ParenthExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "ParenthExpr");
+
+        String a = x.expr.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(Sizeof x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Sizeof");
+
+        String a = x.ident.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(TiretExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "-");
+
+        String a = x.expr.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+
+        return nodeIdentifier;
+    }
+
+
 }
