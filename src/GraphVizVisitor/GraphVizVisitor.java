@@ -489,8 +489,23 @@ public String visit(DeclaAffect declaff){
 
 @Override
 public String visit(ListeExpr listexpr) {
-    // TODO Auto-generated method stub
-    return null;
+    
+        String nodeIdentifier = this.nextState();
+
+        this.addNode(nodeIdentifier, "Expressions"); 
+
+        for (Ast ast:listexpr.list){
+
+            String astState = ast.accept(this);
+            //ajout d'un lien pour chaque fils
+            this.addTransition(nodeIdentifier, astState);
+
+        }
+
+
+        return nodeIdentifier;
+    
+
 }
 
 }
