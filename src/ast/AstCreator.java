@@ -254,90 +254,96 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		}
 		return noeudTemporaire;
 	}
-
-	public Ast visitDecla(exprParser.Instr_listContext ctx) {
+	@Override
+	public Ast visitDecla(circParser.DeclaContext ctx) {
 
 		int sizea = ctx.getChildCount();
-		int sizeb = sizea - 3
+		int sizeb = sizea - 3;
 		ArrayList<Ident> Listedident = new ArrayList<>();
 
 		for (int i=1 ; i< sizeb; i++) {
 			if (i%2==1){
 				String identString = ctx.getChild(i).toString();
-				Ident ident = new Ident(identString)
-				Listedident.add(ident)}
-		}
-
-		String identString = ctx.getChild(sizea-1).toString();
-		Ident ident = new Ident(identString)
-		Listedident.add(ident)}
-		return new DeclaList(Listedident); }
-
-
-	public Ast visitStruct(circParser.MultContext ctx) {
-		int sizea = ctx.getChildCount();
-		String a = new String;
-		ArrayList<Ident> ListeStruct = new ArrayList<>();
-
-		String identString = ctx.getChild(1).toString();
-		Ident ident = new Ident(identString);
-		Listedident.add(ident);
-	}
-
-		for (int i=1 ; i< sizea-1; i++) {
-			a=ctx.getChild(i).toString()
-			if ((a!='(')&(a!=')')&(a!='*')&(a!=',')){
-				Ident ident = new Ident(a;)
+				Ident ident = new Ident(identString);
 				Listedident.add(ident);
 			}
 		}
 
-		return new Struct(Listedident); 
+		String identString = ctx.getChild(sizea-1).toString();
+		Ident ident = new Ident(identString);
+		Listedident.add(ident);
+		return new DeclaList(Listedident); }
+
+	@Override
+	public Ast visitStruct(circParser.StructContext ctx) {
+		int sizea = ctx.getChildCount();
+		String a = new String("");
+		ArrayList<Ident> ListeStruct = new ArrayList<>();
+
+		String identString = ctx.getChild(1).toString();
+		Ident ident = new Ident(identString);
+		ListeStruct.add(ident);
+	
+
+		for (int i=1 ; i< sizea-1; i++) {
+
+			a=ctx.getChild(i).toString();
+
+			if ((a!="(")&(a!=")")&(a!="*")&(a!=",")){
+				Ident ident2 = new Ident(a);
+				ListeStruct.add(ident2);
+			}
+		}
+
+		return new Struct(ListeStruct); 
 
 	}
-
-	public Ast visitDeclaAffect(circParser.MultContext ctx) {
+	@Override
+	public Ast visitDeclaAffect(circParser.DeclaAffectContext ctx) {
 		String identString = ctx.getChild(1).toString();
 		String entierString = ctx.getChild(2).toString();
 
 		Ident ident = new Ident(identString);
-		Entier entier = new Entier(entierString)
-		return new Affect(ident,entier);
+		Entier entier = new Entier(entierString);
+		return new DeclaAffect(ident,entier);
 	}
 
-
-	public Ast visitDecl_typ(circParser.MultContext ctx) {
+	@Override
+	public Ast visitDecl_typ(circParser.Decl_typContext ctx) {
 		String identString = ctx.getChild(1).toString();
 		Ident ident = new Ident(identString);
-		Ast liste_decl_vars =ctx.getChild(3);
+		Ast liste_decl_vars =ctx.getChild(3).accept(this);
 
 	return new DeclTyp(ident,liste_decl_vars);
 	}
 
-	public Ast visitIntParam(circParser.MultContext ctx) {
+	@Override
+	public Ast visitIntParam(circParser.IntParamContext ctx) {
 		String identString = ctx.getChild(1).toString();
 		Ident ident = new Ident(identString);
 
-		Ast liste_param =ctx.getChild(3);
-		Ast bloc=ctx.getChild(5);
+		Ast liste_param =ctx.getChild(3).accept(this);
+		Ast bloc=ctx.getChild(5).accept(this);
 
 	return new IntParam(ident,liste_param,bloc);
 	}
 
-	public Ast visitStructParam(circParser.MultContext ctx) {
+	@Override
+	public Ast visitStructParam(circParser.StructParamContext ctx) {
 		String identString1 = ctx.getChild(1).toString();
 		Ident ident1 = new Ident(identString1);
 
 		String identString2 = ctx.getChild(3).toString();
 		Ident ident2 = new Ident(identString2);
 
-		Ast liste_param =ctx.getChild(5);
-		Ast bloc=ctx.getChild(7);
+		Ast listeParam =ctx.getChild(5).accept(this);
+		Ast bloc=ctx.getChild(7).accept(this);
 
-	return new StructParam(ident1,ident2,liste_param,bloc);
+	return new StructParam(ident1,ident2,listeParam,bloc);
 	}
 
-	public Ast visitListeParam(circParser.MultContext ctx) {
+	@Override
+	public Ast visitListeParam(circParser.Liste_paramContext ctx) {
 		ArrayList<Ast> listeparam = new ArrayList<Ast>();
 		int i = 0;
 		while (ctx.getChild(i) != null) {
@@ -345,6 +351,6 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		listeparam.add(param);
 		i++;
 		}
-		return new ListeParam(liste);
+		return new ListeParam(listeparam);
 	}
 }
