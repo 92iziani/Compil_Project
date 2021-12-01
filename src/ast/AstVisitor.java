@@ -27,6 +27,17 @@ public interface AstVisitor<T> {
     public T visit(ListeParam listeParam);
     public T visit(Struct struct);
     public T visit(StructParam structParam);
+    public T visit(IntNode x); 
+    public T visit(ExclaExpr x);
+    public T visit(Fleche x); 
+    public T visit(Ident x); 
+    public T visit(IdentExprPointeur x); 
+    public T visit(Operateur x);
+    public T visit(OpExpr x);
+    public T visit(ParenthExpr x);
+    public T visit(Sizeof x);
+    public T visit(TiretExpr x); 
+
 
 
 }

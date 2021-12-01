@@ -353,4 +353,137 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		}
 		return new ListeParam(listeparam);
 	}
+
+	@Override public Ast visitEntier(circParser.EntierContext ctx) { 
+		
+		int integer = ctx.parseInt(ctx.getChild(0).toString());
+		return new IntNode(integer);
+	 }
+
+	@Override public Ast visitIdent(circParser.IdentContext ctx) { 
+		
+		String ident = ctx.getChild(0).toString();
+		return new Ident(ident);
+	 }
+
+	 @Override public Ast visitParenthExpr(circParser.ParenthExprContext ctx) { 
+		Ast expr = ctx.getChild(1).accept(this);
+		return ParenthExpr(expr);
+	 }
+
+	 @Override public Ast visitExclaExpr(circParser.ExclaExprContext ctx) { 
+		
+		Ast expr = ctx.getChild(1).accept(this);
+		return new ExclaExpr(expr);
+	 }
+
+	 @Override public Ast visitTiretExpr(circParser.TiretExprContext ctx) { 
+		
+		Ast expr = ctx.getChild(1).accept(this);
+		return new TiretExpr(expr);
+	 }
+
+	 @Override public Ast visitSizeof(circParser.SizeofContext ctx) { 
+		
+		String idf = ctx.getChild(3).toString();
+		Ident ident = new Ident(idf);
+		return new Sizeof(ident);
+	 }
+	 //not sure
+	 @Override public Ast visitIdentExprPointeur(circParser.IdentExprPointeurContext ctx) { 
+		
+		String idf = ctx.getChild(0).toString();
+		Ident ident = new Ident(idf);
+		Ast listexpr = ctx.getChild(2).accept(this);
+		return new IdentExprPointeur(ident, listexpr);
+	 }
+
+//2eme partie de expr (avec les expr1) c'est la meme chose car on prends pas les expr1 dans l'ast (i think so..)
+	 @Override public Ast visitEntierExpr(circParser.EntierExprContext ctx) { 
+		
+		int integer = ctx.parseInt(ctx.getChild(0).toString());
+		//Ast expr = ctx.getChild(1).accept(this);
+		return new IntNode(integer);
+	 }
+
+	@Override public Ast visitIdentExpr(circParser.IdentExprContext ctx) { 
+		
+		String idf = ctx.getChild(0).toString();
+		Ident ident = new Ident(idf);
+		return new Ident(ident);
+	 }
+
+	 @Override public Ast visitParenthExprExpr(circParser.ParenthExprExprContext ctx) { 
+		
+		return ctx.getChild(1).accept(this);
+	 }
+
+	 @Override public Ast visitExclaExprExpr(circParser.ExclaExprExprContext ctx) { 
+		
+		Ast expr = ctx.getChild(1).accept(this);
+		return new ExclaExpr(expr);
+	 }
+
+	 @Override public Ast visitTiretExprExpr(circParser.TiretExprExprContext ctx) { 
+		
+		Ast expr = ctx.getChild(1).accept(this);
+		return new TiretExpr(expr);
+	 }
+
+	 @Override public Ast visitSizeofExpr(circParser.SizeofExprContext ctx) { 
+		
+		String idf = ctx.getChild(3).toString();
+		Ident ident = new Ident(idf);
+		return new Sizeof(ident);
+	 }
+	 @Override public Ast visitIdentExprPointeurExpr(circParser.IdentExprPointeurExprContext ctx) { 
+		
+		String idf = ctx.getChild(0).toString();
+		Ident ident = new Ident(idf);
+		Ast listexpr = ctx.getChild(2).accept(this);
+		return new IdentExprPointeur(ident, listexpr);
+	 }
+
+	 @Override public Ast visitListeExpr(circParser.ListeExprContext ctx) { 
+		ArrayList<Ast> liste = new ArrayList<Ast>();
+		int nb = ctx.getChildCount();
+		for(int j =0 ; j < nb ; j=j+2) {   //j=j+2 car les expr ont un indice père
+			Ast expr = ctx.getChild(j).accept(this);
+			liste.add(expr);
+		}
+		return new ListeExpr(liste);
+	 }
+
+	 ////règle expr1
+	
+	 @Override public Ast visitFleche(circParser.FlecheContext ctx) { 
+		
+		String idf = ctx.getChild(1).toString();
+		Ident ident = new Ident(idf);
+		return new Fleche(ident);
+	 }
+
+	 @Override public Ast visitOpExpr(circParser.OpExprContext ctx) { 
+		
+		String op = ctx.getChild(0).toString();
+		Operateur operateur = new Operateur(op);
+		Ast expr = ctx.getChild(1).accept(this);
+		return new OpExpr(operateur,expr);
+	 }
+
+	 @Override public Ast visitFlecheExpr(circParser.FlecheExprContext ctx) { 
+		
+		String idf = ctx.getChild(1).toString();
+		Ident ident = new Ident(idf);
+		return new Fleche(ident);
+	 }
+
+	 @Override public Ast visitOpExprExpr(circParser.OpExprExprContext ctx) { 
+		
+		String op = ctx.getChild(0).toString();
+		Operateur operateur = new Operateur(op);
+		Ast expr = ctx.getChild(1).accept(this);
+		return new OpExpr(operateur,expr);
+	 }
+
 }
