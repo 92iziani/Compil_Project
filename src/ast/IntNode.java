@@ -7,9 +7,9 @@ public class IntNode implements Ast {
         return visitor.visit(this);
     }
 
-    public int value;
+    public String value;
 
-    public IntNode(int val){
+    public IntNode(String val){
         this.value = val;
     }
     
