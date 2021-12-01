@@ -8,7 +8,9 @@ program :
     decl* EOF;
 
 decl :
-    decl_typ | decl_fct | decl_vars ;
+    decl_typ        #Type
+    | decl_fct      #Fonction
+    | decl_vars     #Vars ;
 
 decl_vars :
       'int' (IDENT',')* IDENT ';'                       #Decla
