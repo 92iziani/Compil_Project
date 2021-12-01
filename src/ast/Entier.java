@@ -8,7 +8,7 @@ public class Entier implements Ast {
 
     public String num;
 
-    public Entier(String name){
+    public Entier(String num){
         this.num = num;
     }
 }
