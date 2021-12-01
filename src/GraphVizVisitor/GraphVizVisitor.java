@@ -248,4 +248,112 @@ public class GraphVizVisitor implements AstVisitor<String> {
         return nodeIdentifier;
     }
 
+    public String visit(Entier entier) {
+        String nodeIdentifier = this.nextState();
+
+        this.addNode(nodeIdentifier, entier.num);
+
+        return nodeIdentifier;
+
+    }
+
+    
+    public String visit(DeclaList declL) {
+        String nodeIdentifier = this.nextState();
+
+        String declaListe = declL.declaList.accept(this);
+
+
+
+        this.addNode(nodeIdentifier, "decl liste d'ident"); 
+
+        this.addTransition(nodeIdentifier,declaListe);
+
+       
+        return nodeIdentifier;
+    }
+
+    public String visit(DeclTyp declTyp) {
+        String nodeIdentifier = this.nextState();
+
+        String identdecl = declTyp.ident.accept(this);
+        String listdec = declTyp.listDeclVar.accept(this);
+
+
+        this.addNode(nodeIdentifier, "decl Struct"); //affectation
+        
+        this.addTransition(nodeIdentifier,identdecl);
+        this.addTransition(nodeIdentifier,listdec);
+
+        
+        return nodeIdentifier;
+    }
+
+    public String visit(IntParam intpar) {
+        String nodeIdentifier = this.nextState();
+
+        String ident = intpar.ident.accept(this);
+        String listp = intpar.listParam.accept(this);
+        String blocparam = intpar.bloc.accept(this);
+
+
+        this.addNode(nodeIdentifier, "Int Param"); 
+
+        this.addTransition(nodeIdentifier,ident);
+        this.addTransition(nodeIdentifier,listp);
+        this.addTransition(nodeIdentifier,blocparam);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(ListeParam listepar) {
+        String nodeIdentifier = this.nextState();
+
+ 
+        String listeparam = listepar.paramList.accept(this);
+
+
+        this.addNode(nodeIdentifier, "Paramètres"); 
+
+        this.addTransition(nodeIdentifier,listeparam);
+
+        return nodeIdentifier;
+    }
+
+    public String visit(Struct struct) {
+        String nodeIdentifier = this.nextState();
+
+ 
+        String structliste = struct.structList.accept(this);
+
+
+        this.addNode(nodeIdentifier, "Liste de struct"); 
+
+        this.addTransition(nodeIdentifier,structliste);
+
+        return nodeIdentifier;
+    }
+
+
+    public String visit(StructParam structpa) {
+        String nodeIdentifier = this.nextState();
+
+        String identstruct1 = structpa.ident1.accept(this);
+        String identstruct2 = structpa.ident2.accept(this);
+        String listecparam = structpa.listParam.accept(this);
+        String blocstruc = structpa.bloc.accept(this);
+        
+
+
+        this.addNode(nodeIdentifier, "struct param"); 
+
+        this.addTransition(nodeIdentifier,identstruct1);
+        this.addTransition(nodeIdentifier,identstruct2);
+        this.addTransition(nodeIdentifier,listecparam);
+        this.addTransition(nodeIdentifier,blocstruc);
+
+
+        return nodeIdentifier;
+    }
+
 }
