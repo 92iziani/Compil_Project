@@ -22,6 +22,7 @@ public interface AstVisitor<T> {
     public T visit(Mult mult);
     public T visit(DeclaList declaList);
     public T visit(DeclTyp declTyp);
+    public T visit(DeclaAffect dAffect);
     public T visit(Entier entier);
     public T visit(IntParam intParam);
     public T visit(ListeParam listeParam);
