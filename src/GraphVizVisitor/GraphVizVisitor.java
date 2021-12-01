@@ -474,6 +474,23 @@ public class GraphVizVisitor implements AstVisitor<String> {
 
         return nodeIdentifier;
     }
+public String visit(DeclaAffect declaff){
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "int");
 
+        String a = declaff.ident.accept(this);
+        String b = declaff.entier.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
+
+        return nodeIdentifier;
+    }
+
+@Override
+public String visit(ListeExpr listexpr) {
+    // TODO Auto-generated method stub
+    return null;
+}
 
 }

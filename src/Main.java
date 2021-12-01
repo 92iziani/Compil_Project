@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 
 import GraphVizVisitor.GraphVizVisitor;
+import ast.Ast;
 import ast.AstCreator;
 import parser.*;
 import parser.circParser.ProgramContext;

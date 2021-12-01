@@ -356,7 +356,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 	@Override public Ast visitEntier(circParser.EntierContext ctx) { 
 		
-		int integer = ctx.parseInt(ctx.getChild(0).toString());
+		String integer = ctx.getChild(0).toString();
 		return new IntNode(integer);
 	 }
 
@@ -368,7 +368,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 	 @Override public Ast visitParenthExpr(circParser.ParenthExprContext ctx) { 
 		Ast expr = ctx.getChild(1).accept(this);
-		return ParenthExpr(expr);
+		return new ParenthExpr(expr);
 	 }
 
 	 @Override public Ast visitExclaExpr(circParser.ExclaExprContext ctx) { 
@@ -401,7 +401,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 //2eme partie de expr (avec les expr1) c'est la meme chose car on prends pas les expr1 dans l'ast (i think so..)
 	 @Override public Ast visitEntierExpr(circParser.EntierExprContext ctx) { 
 		
-		int integer = ctx.parseInt(ctx.getChild(0).toString());
+		String integer = ctx.getChild(0).toString();
 		//Ast expr = ctx.getChild(1).accept(this);
 		return new IntNode(integer);
 	 }
@@ -410,7 +410,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		
 		String idf = ctx.getChild(0).toString();
 		Ident ident = new Ident(idf);
-		return new Ident(ident);
+		return ident;
 	 }
 
 	 @Override public Ast visitParenthExprExpr(circParser.ParenthExprExprContext ctx) { 
@@ -444,7 +444,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		return new IdentExprPointeur(ident, listexpr);
 	 }
 
-	 @Override public Ast visitListeExpr(circParser.ListeExprContext ctx) { 
+	 @Override public Ast visitListe_expr(circParser.Liste_exprContext ctx) { 
 		ArrayList<Ast> liste = new ArrayList<Ast>();
 		int nb = ctx.getChildCount();
 		for(int j =0 ; j < nb ; j=j+2) {   //j=j+2 car les expr ont un indice père
