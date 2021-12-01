@@ -289,7 +289,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 			a=ctx.getChild(i).toString();
 
-			if ((a!="(")&(a!=")")&(a!="*")&(a!=",")){
+			if ((!"(".equals(a))&&(!")".equals(a)) && (!"*".equals(a)) && (!",".equals(a))){
 				Ident ident2 = new Ident(a);
 				ListeStruct.add(ident2);
 			}
@@ -343,7 +343,7 @@ public class AstCreator extends circBaseVisitor<Ast> {
 	}
 
 	@Override
-	public Ast visitListeParam(circParser.Liste_paramContext ctx) {
+	public Ast visitListe_param(circParser.Liste_paramContext ctx) {
 		ArrayList<Ast> listeparam = new ArrayList<Ast>();
 		int i = 0;
 		while (ctx.getChild(i) != null) {
