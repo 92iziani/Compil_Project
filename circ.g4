@@ -10,7 +10,7 @@ program :
 decl :
     decl_typ        #Type
     | decl_fct      #Fonction
-    | decl_vars ;   #Vars
+    | decl_vars     #Vars ;
 
 decl_vars :
       'int' (IDENT',')* IDENT ';'                       #Decla
