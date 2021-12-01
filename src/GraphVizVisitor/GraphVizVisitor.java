@@ -487,4 +487,10 @@ public String visit(DeclaAffect declaff){
         return nodeIdentifier;
     }
 
+@Override
+public String visit(ListeExpr listexpr) {
+    // TODO Auto-generated method stub
+    return null;
+}
+
 }
