@@ -108,7 +108,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
         this.addNode(nodeIdentifier, "Return");
 
         String value = retur.retour.accept(this);
-        
+
         this.addTransition(nodeIdentifier,value);
         return nodeIdentifier;
     }
