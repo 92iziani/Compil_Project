@@ -248,7 +248,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
         return nodeIdentifier;
     }
 
-    public String visit(Entier entier) {
+        public String visit(Entier entier) {
         String nodeIdentifier = this.nextState();
 
         this.addNode(nodeIdentifier, entier.num);
@@ -261,13 +261,15 @@ public class GraphVizVisitor implements AstVisitor<String> {
     public String visit(DeclaList declL) {
         String nodeIdentifier = this.nextState();
 
-        String declaListe = declL.declaList.accept(this);
-
-
-
         this.addNode(nodeIdentifier, "decl liste d'ident"); 
 
-        this.addTransition(nodeIdentifier,declaListe);
+        for (Ast ast:declL.declaList){
+
+            String astState = ast.accept(this);
+            //ajout d'un lien pour chaque fils
+            this.addTransition(nodeIdentifier, astState);
+
+        }
 
        
         return nodeIdentifier;
@@ -309,27 +311,34 @@ public class GraphVizVisitor implements AstVisitor<String> {
     public String visit(ListeParam listepar) {
         String nodeIdentifier = this.nextState();
 
- 
-        String listeparam = listepar.paramList.accept(this);
-
-
         this.addNode(nodeIdentifier, "Paramètres"); 
 
-        this.addTransition(nodeIdentifier,listeparam);
+        for (Ast ast:listepar.paramList){
+
+            String astState = ast.accept(this);
+            //ajout d'un lien pour chaque fils
+            this.addTransition(nodeIdentifier, astState);
+
+        }
+
 
         return nodeIdentifier;
     }
 
     public String visit(Struct struct) {
         String nodeIdentifier = this.nextState();
-
- 
-        String structliste = struct.structList.accept(this);
-
-
         this.addNode(nodeIdentifier, "Liste de struct"); 
+ 
 
-        this.addTransition(nodeIdentifier,structliste);
+        for (Ast ast:struct.structList){
+
+            String astState = ast.accept(this);
+            //ajout d'un lien pour chaque fils
+            this.addTransition(nodeIdentifier, astState);
+
+        }
+
+
 
         return nodeIdentifier;
     }
@@ -355,7 +364,6 @@ public class GraphVizVisitor implements AstVisitor<String> {
 
         return nodeIdentifier;
     }
-
 
 
 
