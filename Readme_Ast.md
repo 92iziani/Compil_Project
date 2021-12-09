@@ -7,7 +7,7 @@ make parser
 
 Sur __Windows__, utilisez la commande : 
 ```bash
-java -jar ./lib/antlr-4.9.2-complete.jar expr.g4 -no-listener -visitor -o ./src/parser
+java -jar ./lib/antlr-4.9.2-complete.jar circ.g4 -no-listener -visitor -o ./src/parser
  ```
 
 Dans le dossier ```src/parser```, vous venez de générer 4 fichiers java : ```exprBaseVisitor```, ```exprLexer```, ```exprParser``` et ```exprVisitor```.
