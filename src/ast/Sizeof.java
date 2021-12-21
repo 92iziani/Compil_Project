@@ -6,9 +6,9 @@ public class Sizeof implements Ast {
         return visitor.visit(this);
     }
 
-    public Ast ident;
+    public Ident ident;
 
-    public Sizeof(Ast ident){
+    public Sizeof(Ident ident){
         this.ident = ident;
     }
 }

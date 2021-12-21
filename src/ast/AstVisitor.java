@@ -25,20 +25,25 @@ public interface AstVisitor<T> {
     public T visit(DeclaAffect dAffect);
     public T visit(Entier entier);
     public T visit(IntParam intParam);
-    public T visit(ListeParam listeParam);
+    //public T visit(ListeParam listeParam);   DELETED
     public T visit(Struct struct);
     public T visit(StructParam structParam);
-    public T visit(IntNode x); 
+    //public T visit(IntNode x);
     public T visit(ExclaExpr x);
-    public T visit(Fleche x); 
+    public T visit(Fleche x);
+    //public T visit(FlecheExpr x);
     //public T visit(Ident x); 
     public T visit(IdentExprPointeur x); 
     public T visit(Operateur x);
     public T visit(OpExpr x);
+    //public T visit(OpExprExpr x); // ADDED
     public T visit(ParenthExpr x);
     public T visit(Sizeof x);
     public T visit(TiretExpr x); 
     public T visit(ListeExpr listexpr);
+
+    public T visit(Paramint x);
+    public T visit(Paramstruct x);
 
 
 }

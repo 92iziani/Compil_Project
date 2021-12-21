@@ -8,9 +8,9 @@ public class ListeParam implements Ast{
         return visitor.visit(this);
     }
 
-    public ArrayList<Ast> paramList;
+    public Ast paramList;
 
-    public ListeParam(ArrayList<Ast> paramList){
+    public ListeParam(Ast paramList){
 
         this.paramList = paramList;
     }

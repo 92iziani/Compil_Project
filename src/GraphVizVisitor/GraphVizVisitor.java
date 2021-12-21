@@ -47,13 +47,19 @@ public class GraphVizVisitor implements AstVisitor<String> {
 
     }
 
+
     public String visit(Program program) {
         String nodeIdentifier = this.nextState();
 
-        String instructionsState =program.declarations.accept(this);
-
         this.addNode(nodeIdentifier, "Program");
-        this.addTransition(nodeIdentifier, instructionsState);
+
+        for (Ast decl:program.declarations){
+            if (decl !=null){
+                String instructionState = decl.accept(this);
+                this.addTransition(nodeIdentifier, instructionState);
+            }
+            
+        }
 
         return nodeIdentifier;
     }
@@ -126,7 +132,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
         //ici partie de droite expression
         String expressionState = affect.expr.accept(this);
 
-        this.addNode(nodeIdentifier, "="); //affectation
+        this.addNode(nodeIdentifier, "affect"); //affectation
         //ajout d'un lien entre le noeud courant et ident
         this.addTransition(nodeIdentifier,identState);
         //ajout d'un lien entre le noeud courant et expression
@@ -148,7 +154,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
     public String visit(ListeDeclVars liste) {
         String nodeIdentifier = this.nextState();
 
-        this.addNode(nodeIdentifier, "InstrList");
+        this.addNode(nodeIdentifier, "ListeDeclVars");
 
         for (Ast ast:liste.instrList){
 
@@ -164,7 +170,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
     public String visit(ListeInstruction liste) {
         String nodeIdentifier = this.nextState();
 
-        this.addNode(nodeIdentifier, "InstrList");
+        this.addNode(nodeIdentifier, "ListeInstruction");
 
         for (Ast ast:liste.instrList){
 
@@ -248,10 +254,18 @@ public class GraphVizVisitor implements AstVisitor<String> {
         return nodeIdentifier;
     }
 
-        public String visit(Entier entier) {
+    /*    public String visit(IntNode entier) {
         String nodeIdentifier = this.nextState();
 
-        this.addNode(nodeIdentifier, entier.num);
+        this.addNode(nodeIdentifier, entier.value);
+
+        return nodeIdentifier;
+
+    }*/
+    public String visit(Entier entier) {
+        String nodeIdentifier = this.nextState();
+
+        this.addNode(nodeIdentifier, entier.value);
 
         return nodeIdentifier;
 
@@ -299,7 +313,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String blocparam = intpar.bloc.accept(this);
 
 
-        this.addNode(nodeIdentifier, "Int Param"); 
+        this.addNode(nodeIdentifier, "Fonction");
 
         this.addTransition(nodeIdentifier,ident);
         this.addTransition(nodeIdentifier,listp);
@@ -308,22 +322,18 @@ public class GraphVizVisitor implements AstVisitor<String> {
         return nodeIdentifier;
     }
 
-    public String visit(ListeParam listepar) {
+    //MODIFIED
+   /* public String visit(ListeParam listepar) {
+
         String nodeIdentifier = this.nextState();
 
-        this.addNode(nodeIdentifier, "Paramètres"); 
+        this.addNode(nodeIdentifier, "Paramètres");
 
-        for (Ast ast:listepar.paramList){
-
-            String astState = ast.accept(this);
-            //ajout d'un lien pour chaque fils
-            this.addTransition(nodeIdentifier, astState);
-
-        }
-
-
+        String value = listepar.paramList.accept(this);
+        this.addTransition(nodeIdentifier,value);
         return nodeIdentifier;
-    }
+
+    }*/
 
     public String visit(Struct struct) {
         String nodeIdentifier = this.nextState();
@@ -367,13 +377,13 @@ public class GraphVizVisitor implements AstVisitor<String> {
 
 
 
-    public String visit(IntNode x) {
+    /*public String visit(IntNode x) {
         String nodeIdentifier = this.nextState();
 
         this.addNode(nodeIdentifier, String.valueOf(x.value));
 
         return nodeIdentifier;
-    }
+    }*/
 
     public String visit(ExclaExpr x) {
         String nodeIdentifier = this.nextState();
@@ -390,12 +400,27 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String nodeIdentifier = this.nextState();
         this.addNode(nodeIdentifier, "->");
 
-        String v = x.ident.accept(this);
+        String a = x.expr.accept(this);
+        String b = x.ident.accept(this);
 
-        this.addTransition(nodeIdentifier, v);
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
 
         return nodeIdentifier;
     }
+
+    /*public String visit(FlecheExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "->");
+
+        String a = x.ident.accept(this);
+        String b = x.expr1.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
+
+        return nodeIdentifier;
+    }*/
 
     /*public String visit(Ident x) {
         String nodeIdentifier = this.nextState();
@@ -423,9 +448,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
 
     public String visit(Operateur x) {
         String nodeIdentifier = this.nextState();
-
-        this.addNode(nodeIdentifier, String.valueOf(x.name));
-
+        this.addNode(nodeIdentifier, x.name);
         return nodeIdentifier;
     }
 
@@ -433,14 +456,31 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String nodeIdentifier = this.nextState();
         this.addNode(nodeIdentifier, "OpExpr");
 
-        String a = x.operateur.accept(this);
-        String b = x.expr.accept(this);
+        String a = x.expr1.accept(this);
+        String b = x.operateur.accept(this);
+        String c = x.expr2.accept(this);
 
         this.addTransition(nodeIdentifier, a);
         this.addTransition(nodeIdentifier, b);
+        this.addTransition(nodeIdentifier, c);
 
         return nodeIdentifier;
     }
+
+    /*public String visit(OpExprExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "OpExprExpr");
+
+        String a = x.operateur.accept(this);
+        String b = x.expr.accept(this);
+        String c = x.expr1.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
+        this.addTransition(nodeIdentifier, c);
+
+        return nodeIdentifier;
+    }*/
 
     public String visit(ParenthExpr x) {
         String nodeIdentifier = this.nextState();
@@ -476,7 +516,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
     }
 public String visit(DeclaAffect declaff){
         String nodeIdentifier = this.nextState();
-        this.addNode(nodeIdentifier, "int");
+        this.addNode(nodeIdentifier, "declaraffect");
 
         String a = declaff.ident.accept(this);
         String b = declaff.entier.accept(this);
@@ -489,23 +529,37 @@ public String visit(DeclaAffect declaff){
 
 @Override
 public String visit(ListeExpr listexpr) {
-    
         String nodeIdentifier = this.nextState();
-
-        this.addNode(nodeIdentifier, "Expressions"); 
-
+        this.addNode(nodeIdentifier, "Expressions");
         for (Ast ast:listexpr.list){
-
             String astState = ast.accept(this);
             //ajout d'un lien pour chaque fils
             this.addTransition(nodeIdentifier, astState);
-
         }
-
-
         return nodeIdentifier;
-    
-
 }
+
+    public String visit(Paramint x){
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Paramint");
+
+        for (Ident ident : x.list){
+            String a = ident.accept(this);
+            this.addTransition(nodeIdentifier, a);
+        }
+        return nodeIdentifier;
+    }
+
+    @Override
+    public String visit(Paramstruct x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Paramstruct");
+        String a = x.ident1.accept(this);
+        String b = x.ident2.accept(this);
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, b);
+        return nodeIdentifier;
+    }
+
 
 }

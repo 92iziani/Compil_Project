@@ -6,10 +6,10 @@ public class DeclaAffect implements Ast{
         return visitor.visit(this);
     }
 
-    public Ast ident;
+    public Ident ident;
     public Ast entier;
 
-    public DeclaAffect(Ast ident, Ast entier){
+    public DeclaAffect(Ident ident, Ast entier){
         this.ident = ident;
         this.entier = entier;
     }

@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.ArrayList;
+
 public class Program implements Ast {
 
 
@@ -7,9 +9,9 @@ public class Program implements Ast {
         return visitor.visit(this);
     }
 
-    public Ast declarations;
+    public ArrayList<Ast> declarations;
 
-    public Program(Ast decl){
+    public Program(ArrayList<Ast> decl){
         this.declarations = decl;
     }
 

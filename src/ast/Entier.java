@@ -2,13 +2,15 @@ package ast;
 
 public class Entier implements Ast {
 
+    // Utile pour la dernière partie
     public <T> T accept(AstVisitor<T> visitor){
         return visitor.visit(this);
     }
 
-    public String num;
+    public String value;
 
-    public Entier(String num){
-        this.num = num;
+    public Entier(String val){
+        this.value = val;
     }
+
 }

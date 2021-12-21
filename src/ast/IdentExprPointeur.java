@@ -6,10 +6,10 @@ public class IdentExprPointeur implements Ast {
         return visitor.visit(this);
     }
 
-    public Ast ident;
+    public Ident ident;
     public Ast listexpr;
 
-    public IdentExprPointeur(Ast ident,Ast listexpr) {
+    public IdentExprPointeur(Ident ident,Ast listexpr) {
         this.ident = ident;
         this.listexpr = listexpr;
     }

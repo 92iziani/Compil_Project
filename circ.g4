@@ -24,17 +24,21 @@ decl_fct :
     'int' IDENT '(' liste_param ')' bloc    #IntParam
     | 'struct' IDENT '*' IDENT '(' liste_param ')' bloc    #StructParam ;
 
-liste_param :
-    param*;
+//MODIFIED
+//liste_param :
+  //  param;
 
 liste_expr : (expr',')* ;
 
-param :
-    'int' IDENT                         #Paramint
+//MODIFIED param
+liste_param :
+    ('int' IDENT ',' )* ('int' IDENT)                        #Paramint
     | 'struct' IDENT  '*' IDENT         #Paramstruct;
 
-
-expr :  ENTIER expr1                            #EntierExpr
+//int ident , int ident , int ident
+//int ident
+// int ident , int ident
+/*expr :  ENTIER expr1                            #EntierExpr
         |IDENT expr1                             #IdentExpr
         | IDENT '(' liste_expr ')' expr1          #IdentExprPointeurExpr
         | '!' expr expr1                        #ExclaExprExpr
@@ -47,14 +51,27 @@ expr :  ENTIER expr1                            #EntierExpr
         | '!' expr                              #ExclaExpr
         | '-' expr                              #TiretExpr
         | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
-        | '(' expr ')'                          #ParenthExpr ;
+        | '(' expr ')'                          #ParenthExpr
+        ;*/
+
+expr :           ENTIER                                #Entier
+               | IDENT                                 #Ident
+               | IDENT '(' liste_expr ')'              #IdentExprPointeur
+               | '!' expr                              #ExclaExpr
+               | '-' expr                              #TiretExpr
+               | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
+               | '(' expr ')'                          #ParenthExpr
+               |  expr OPERATEUR expr                   #OpExpr
+               | expr '->' IDENT                        #Fleche
+               ;
 
 
-expr1 : '->' IDENT expr1    #FlecheExpr
+
+/*expr1 : '->' IDENT expr1    #FlecheExpr
         |   '->' IDENT         #Fleche
         | OPERATEUR expr expr1     #OpExprExpr
         | OPERATEUR expr    #OpExpr
-        ;
+        ;*/
 
 //deleted ; in instruction
 instruction :

@@ -1,20 +1,18 @@
 package ast;
 
-public class OpExpr implements Ast {
+public class OpExprExpr implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
         return visitor.visit(this);
     }
 
     public Operateur operateur;
+    public Ast expr;
     public Ast expr1;
-    public Ast expr2;
 
-    public OpExpr(Ast expr1, Operateur operateur,Ast expr2){
+    public OpExprExpr(Operateur operateur,Ast expr,Ast expr1){
         this.operateur = operateur;
+        this.expr = expr;
         this.expr1 = expr1;
-        this.expr2 = expr2;
-
     }
 }
-
