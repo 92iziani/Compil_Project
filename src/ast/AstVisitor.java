@@ -44,6 +44,7 @@ public interface AstVisitor<T> {
 
     public T visit(Paramint x);
     public T visit(Paramstruct x);
+    public T visit(List x); //ADDED
 
-
+    public T visit(Vide x); //ADDED
 }

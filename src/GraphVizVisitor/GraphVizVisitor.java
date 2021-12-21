@@ -340,9 +340,9 @@ public class GraphVizVisitor implements AstVisitor<String> {
         this.addNode(nodeIdentifier, "Liste de struct"); 
  
 
-        for (Ast ast:struct.structList){
+        for (Ident id:struct.structList){
 
-            String astState = ast.accept(this);
+            String astState = id.accept(this);
             //ajout d'un lien pour chaque fils
             this.addTransition(nodeIdentifier, astState);
 
@@ -361,11 +361,8 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String identstruct2 = structpa.ident2.accept(this);
         String listecparam = structpa.listParam.accept(this);
         String blocstruc = structpa.bloc.accept(this);
-        
 
-
-        this.addNode(nodeIdentifier, "struct param"); 
-
+        this.addNode(nodeIdentifier, "struct Fonction ");
         this.addTransition(nodeIdentifier,identstruct1);
         this.addTransition(nodeIdentifier,identstruct2);
         this.addTransition(nodeIdentifier,listecparam);
@@ -542,11 +539,8 @@ public String visit(ListeExpr listexpr) {
     public String visit(Paramint x){
         String nodeIdentifier = this.nextState();
         this.addNode(nodeIdentifier, "Paramint");
-
-        for (Ident ident : x.list){
-            String a = ident.accept(this);
-            this.addTransition(nodeIdentifier, a);
-        }
+        String a = x.ident.accept(this);
+        this.addTransition(nodeIdentifier, a);
         return nodeIdentifier;
     }
 
@@ -561,5 +555,23 @@ public String visit(ListeExpr listexpr) {
         return nodeIdentifier;
     }
 
+    @Override
+    public String visit(List x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "List");
+        for (Ast ast:x.astlist){
+            String astState = ast.accept(this);
+            //ajout d'un lien pour chaque fils
+            this.addTransition(nodeIdentifier, astState);
+        }
+        return nodeIdentifier;
+    }
+
+    @Override
+    public String visit(Vide x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "Vide");
+        return nodeIdentifier;
+    }
 
 }

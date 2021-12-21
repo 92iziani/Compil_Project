@@ -203,26 +203,23 @@ public class AstCreator extends circBaseVisitor<Ast> {
 	//XXXXXXXX NOT DONE
 	@Override
 	public Ast visitStruct(circParser.StructContext ctx) {
-		int sizea = ctx.getChildCount();
-		String a = new String("");
-		ArrayList<Ident> ListeStruct = new ArrayList<>();
-
-		String identString = ctx.getChild(1).toString();
-		Ident ident = new Ident(identString);
-		ListeStruct.add(ident);
-	
-
-		for (int i=1 ; i< sizea-1; i++) {
-
-			a=ctx.getChild(i).toString();
-
-			if ((!"(".equals(a))&&(!")".equals(a)) && (!"*".equals(a)) && (!",".equals(a))){
-				Ident ident2 = new Ident(a);
-				ListeStruct.add(ident2);
+		int size = ctx.getChildCount();
+		ArrayList<Ident> list = new ArrayList<Ident>();
+		int i=1;
+		//String a = ctx.getChild(1).toString();
+		while(i<size){
+			if (i==1){
+				String a = ctx.getChild(1).toString();
+				Ident id = new Ident(a);
+				list.add(id);
+				i = i+2;
 			}
+			String a = ctx.getChild(i).toString();
+			Ident id = new Ident(a);
+			list.add(id);
+			i = i + 3 ;
 		}
-
-		return new Struct(ListeStruct); 
+		return new Struct(list);
 
 	}
 
@@ -427,17 +424,9 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 	//DONE
 	@Override public Ast visitParamint(circParser.ParamintContext ctx) {
-
-		int nb = ctx.getChildCount();
-		ArrayList<Ident> list = new ArrayList<Ident>();
-		int i =1 ;
-		while(i < nb){
-			String x = ctx.getChild(i).toString();
-			Ident ident = new Ident(x);
-			list.add(ident);
-			i = i+3;
-		}
-		return new Paramint(list);
+		String a = ctx.getChild(1).toString();
+		Ident id = new Ident(a);
+		return new Paramint(id);
 	}
 
 
@@ -451,5 +440,21 @@ public class AstCreator extends circBaseVisitor<Ast> {
 		//Ast expr = ctx.getChild(1).accept(this);
 		return new Paramstruct(ident1,ident2);
 	}
+
+	@Override public Ast visitList(circParser.ListContext ctx) {
+		ArrayList<Ast> list = new ArrayList<Ast>();
+		int size = ctx.getChildCount();
+		for (int i=0 ; i<size ; i=i+2){
+			Ast expr = ctx.getChild(i).accept(this);
+			list.add(expr);
+		}
+		return new List(list);
+	}
+
+	@Override public Ast visitVide(circParser.VideContext ctx) {
+
+		return new Vide();
+	}
+
 
 }
