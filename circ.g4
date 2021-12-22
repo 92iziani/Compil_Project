@@ -14,11 +14,14 @@ decl :
 
 decl_vars :
       'int' (IDENT',')* IDENT ';'                       #Decla
-    | 'struct' IDENT IDENT* ('(' '*' IDENT ')'',')* ';' #Struct
+    | 'struct' IDENT ('*' IDENT ',')* '*' IDENT  ';'    #Struct //MODIFIED
     | 'int' IDENT '=' ENTIER';'                         #DeclaAffect ;
 //'int' (IDENT,',')+ ';'
 decl_typ :
     'struct' IDENT '{' liste_decl_vars '}' ';';
+
+// struct ident * ident , * ident , * ident ;   size = 11
+// struct ident * ident ; size = 4
 
 decl_fct :
     'int' IDENT '(' liste_param ')' bloc    #IntParam
@@ -30,10 +33,19 @@ decl_fct :
 
 liste_expr : (expr',')* ;
 
+param : 'int' IDENT    #Paramint
+        | 'struct' IDENT '*' IDENT      #Paramstruct;
+
+liste_param :   (param ',')* param  #List       // param , param , param
+                |                   #Vide
+                ;      //RESTE A MODIFIER
+
+//list : liste_param* ; //ADDED
+
 //MODIFIED param
-liste_param :
+/*liste_param :
     ('int' IDENT ',' )* ('int' IDENT)                        #Paramint
-    | 'struct' IDENT  '*' IDENT         #Paramstruct;
+    | 'struct' IDENT  '*' IDENT   */      /*#Paramstruct;*/
 
 //int ident , int ident , int ident
 //int ident
