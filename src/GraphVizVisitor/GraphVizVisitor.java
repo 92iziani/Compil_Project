@@ -70,7 +70,8 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String conditionState = ifthen.condition.accept(this);
         String thenBlockState = ifthen.thenBlock.accept(this);
 
-        this.addNode(nodeIdentifier, "IfThen");
+        this.addNode(nodeIdentifier, "If");
+        this.addNode(thenBlockState, "Then");
 
         this.addTransition(nodeIdentifier, conditionState);
         this.addTransition(nodeIdentifier, thenBlockState);
@@ -85,7 +86,9 @@ public class GraphVizVisitor implements AstVisitor<String> {
         String thenBlockState = ifthenelse.thenBlock.accept(this);
         String elseBlockState = ifthenelse.elseBlock.accept(this);
 
-        this.addNode(nodeIdentifier, "IfThenElse");
+        this.addNode(nodeIdentifier, "If");
+        this.addNode(thenBlockState, "Then");
+        this.addNode(elseBlockState, "Else");
 
         //ici il y a 3 branches reliees au noeud courant
         this.addTransition(nodeIdentifier, conditionState);
