@@ -8,6 +8,9 @@ int x,y,z;
 
 /* test de commentaire */
 //gros test
+int basique(){
+    return x;
+}
 
 int main (int t,int b){
 int d;
