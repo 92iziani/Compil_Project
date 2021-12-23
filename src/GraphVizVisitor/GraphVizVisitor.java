@@ -188,7 +188,7 @@ public class GraphVizVisitor implements AstVisitor<String> {
 
     public String visit(Bloc bloc) {
         String nodeIdentifier = this.nextState();
-
+        this.addNode(nodeIdentifier,"Bloc");
         String dec = bloc.declarations.accept(this);
         String instr = bloc.instructions.accept(this);
 
