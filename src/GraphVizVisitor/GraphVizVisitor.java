@@ -189,13 +189,25 @@ public class GraphVizVisitor implements AstVisitor<String> {
     public String visit(Bloc bloc) {
         String nodeIdentifier = this.nextState();
         this.addNode(nodeIdentifier,"Bloc");
-        String dec = bloc.declarations.accept(this);
-        String instr = bloc.instructions.accept(this);
 
-        this.addTransition(nodeIdentifier,dec);
-        this.addTransition(nodeIdentifier,instr);
-
-        return nodeIdentifier;
+        ListeDeclVars ldv = (ListeDeclVars) bloc.declarations;
+        ListeInstruction li = (ListeInstruction) bloc.instructions;
+        if (ldv.instrList.size()==0 && li.instrList.size()>0){
+            String instr = bloc.instructions.accept(this);
+            this.addTransition(nodeIdentifier,instr);
+            return nodeIdentifier;
+        }
+        if (ldv.instrList.size()>0 && li.instrList.size()==0){
+            String instr = bloc.declarations.accept(this);
+            this.addTransition(nodeIdentifier,instr);
+            return nodeIdentifier;
+        }
+            //SI LES DEUX FILS SONT ONT TOUS LES DEUX DES FILS
+            String dec = bloc.declarations.accept(this);
+            String instr = bloc.instructions.accept(this);
+            this.addTransition(nodeIdentifier, dec);
+            this.addTransition(nodeIdentifier, instr);
+            return nodeIdentifier;
     }
 
     public String visit(Plus plus) {
@@ -561,13 +573,22 @@ public String visit(ListeExpr listexpr) {
     @Override
     public String visit(List x) {
         String nodeIdentifier = this.nextState();
-        this.addNode(nodeIdentifier, "List");
-        for (Ast ast:x.astlist){
-            String astState = ast.accept(this);
-            //ajout d'un lien pour chaque fils
-            this.addTransition(nodeIdentifier, astState);
+        this.addNode(nodeIdentifier, "Liste paramètres");
+        for (Ast ast : x.astlist) {
+            if (ast instanceof Paramint) {
+                //System.out.println("oui");
+                Paramint a = (Paramint) ast;
+                String st = a.ident.accept(this);
+                this.addTransition(nodeIdentifier, st);
+                // this.addTransition(nodeIdentifier, a);
+            } else {
+                String astState = ast.accept(this);
+                //ajout d'un lien pour chaque fils
+                this.addTransition(nodeIdentifier, astState);
+            }
         }
         return nodeIdentifier;
+
     }
 
     @Override

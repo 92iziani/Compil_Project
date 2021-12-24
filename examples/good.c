@@ -12,7 +12,7 @@ int basique(){
     return x;
 }
 
-int main (int t,int b){
+int main (int t,int f, struct person_t* person){
 int d;
 int f=0;
 if (a) {
