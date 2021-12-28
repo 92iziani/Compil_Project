@@ -36,6 +36,8 @@ public class Main {
 
             ProgramContext program = parser.program();
 
+            //CommonTree tree = (CommonTree)parser.program().getTree();
+
             // code d'affichage de l'arbre syntaxique
 
 
