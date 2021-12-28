@@ -1,7 +1,7 @@
 package tds;
 import ast.IfThen;
 
-public class TdsIfThen extends Tds {
+public class TdsIfThen extends TdsAbs {
     private TdsVisitor visitor;
 
     /*public TdsIfThen(IfThen ifthen){
@@ -11,7 +11,7 @@ public class TdsIfThen extends Tds {
     public TdsIfThen(){
         super();
     }
-    public TdsIfThen(Tds parent){
+    public TdsIfThen(TdsAbs parent){
         super(parent);
     }
 

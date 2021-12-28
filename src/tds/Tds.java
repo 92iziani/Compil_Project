@@ -1,72 +1,42 @@
 package tds;
 
-import ast.Ident;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public abstract class Tds {
+import ast.Ast;
 
-    private Tds father ;
-    private ArrayList<Tds> fils;
-    private HashMap<String, Ident> ident;
+public class Tds{
+
+    //nom associé à la tds
+    private String nom;
+    //numero de region
     private static int num_region = 0;
+    //niveau d'imbrication
     private int nv_imbrication;
-    //private int num_table_mere;
-    private ArrayList contenu;
+    private ArrayList<Ast> contenu;
+    private Tds father;
 
-    
-   /* public Tds(){
-    }*/
-
-    public Tds(Tds parent) {
-        this();
-        this.father = parent;
-        this.nv_imbrication = parent.getNiveau()+1;
+    public Tds(String nom){
+        this.nom = nom;
+        num_region++; // car nouvelle table créee
+        this.father = null; //n'a pas de père
+        this.nv_imbrication = 0; //car n'a pas de père
+        this.contenu = new ArrayList<Ast>();
     }
 
-    public int getNiveau(){
+    public Tds(String nom, Tds parent){
+        this(nom);
+        this.father = parent;
+        this.nv_imbrication = parent.getNiveau()+1;
+
+    }
+
+    private int getNiveau() {
         return this.nv_imbrication;
     }
 
-    public Tds(){
-        num_region++; //car nouvelle table créée
-        this.father = null; // n'a pas de père
-        this.nv_imbrication = 0;
-        this.ident = new HashMap<>();
-        this.fils = new ArrayList<Tds>();
+    public void addElement(Ast elem){
+        this.contenu.add(elem);
     }
 
-    /*public void ajouterIdentificateur(Ident identificateur)
-    {
-        ident.put(identificateur.name,identificateur);
-    }*/
-
-    public int addEntry(Tds entry) { fils.add(entry); return fils.size(); }
-
-    protected abstract String nomBloc();
-
-
-
-
-
-    public Tds getFather() {
-        return father;
-    }
-
-    public ArrayList<Tds> getFils() {
-        return fils;
-    }
-
-    public HashMap<String, Ident> getIdent() {
-        return ident;
-    }
-
-    public  int getNum_region() {
-        return num_region;
-    }
-
-    public ArrayList getContenu() {
-        return contenu;
-    }
+    
 }

@@ -1,64 +1,39 @@
 package tds;
 
-import ast.Affectation;
-import ast.AstVisitor;
-import ast.Bloc;
-import ast.DeclTyp;
-import ast.DeclaAffect;
-import ast.DeclaList;
-import ast.Divide;
-import ast.Entier;
-import ast.ExclaExpr;
-import ast.Fleche;
-import ast.Ident;
-import ast.IdentExprPointeur;
-import ast.IfThen;
-import ast.IfThenElse;
-import ast.IntParam;
-import ast.List;
-import ast.ListeDeclVars;
-import ast.ListeExpr;
-import ast.ListeInstruction;
-import ast.Minus;
-import ast.Mult;
-import ast.OpExpr;
-import ast.Operateur;
-import ast.Paramint;
-import ast.Paramstruct;
-import ast.ParenthExpr;
-import ast.Plus;
-import ast.Program;
-import ast.Return;
-import ast.Sizeof;
-import ast.Struct;
-import ast.StructParam;
-import ast.TiretExpr;
-import ast.Vide;
-import ast.While;
+import ast.*;
 
 public class Parcours implements AstVisitor {
 
+    Tds parent;
     @Override
     public Object visit(Program program) {
-        // TODO Auto-generated method stub
-        return null;
+        parent = new Tds("Tds principale");
+        return parent;
     }
 
     @Override
     public Object visit(IfThen ifthen) {
-        // TODO Auto-generated method stub
-        return null;
+        //comment trouver son father ?
+        Tds tdsIf = new Tds("tds if then", parent);
+        //je dois ajouter le contenu
+
+        return tdsIf;
     }
 
     @Override
     public Object visit(IfThenElse ifthenelse) {
-        // TODO Auto-generated method stub
-        return null;
+        //comment trouver son father ?
+
+        Tds tdsifthenelse =  new Tds("tds if then else",parent);
+        //je dois ajouter le contenu
+        return tdsifthenelse;
     }
 
     @Override
     public Object visit(While whil) {
-        // TODO Auto-generated method stub
+        //comment trouver son father ?
+
+        Tds tdswhile = new Tds("tds While", parent);
         return null;
     }
 
