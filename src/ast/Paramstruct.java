@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class Paramstruct implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor) {
@@ -14,5 +17,8 @@ public class Paramstruct implements Ast {
         this.ident1 = ident1;
         this.ident2 = ident2;
 
+    }
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 }

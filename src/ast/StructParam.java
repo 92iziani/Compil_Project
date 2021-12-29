@@ -1,5 +1,9 @@
 package ast;
 
+
+import tds.Parcours;
+import tds.Tds;
+
 public class StructParam implements Ast{
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -16,5 +20,9 @@ public class StructParam implements Ast{
         this.ident2 = ident2; 
         this.listParam = listParam;
         this.bloc = bloc;
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 }

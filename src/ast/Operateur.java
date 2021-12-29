@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class Operateur implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -10,5 +13,9 @@ public class Operateur implements Ast {
 
     public Operateur(String name){
         this.name = name;
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 }

@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class Divide implements Ast{
 
     // Utile pour la dernière partie
@@ -15,4 +18,7 @@ public class Divide implements Ast{
         this.right = right;
     }
     
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
+    }
 }

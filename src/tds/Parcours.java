@@ -2,16 +2,19 @@ package tds;
 
 import ast.*;
 
-public class Parcours implements AstVisitor {
+public class Parcours {
 
     Tds parent;
-    @Override
-    public Object visit(Program program) {
+
+
+    
+    //en paramètre la tds que je dois remplir
+    // ici ça va être la tds parent
+    public Object visit(Program program, Tds tds) {
         parent = new Tds("Tds principale");
         return parent;
     }
 
-    @Override
     public Object visit(IfThen ifthen) {
         //comment trouver son father ?
         Tds tdsIf = new Tds("tds if then", parent);
@@ -20,7 +23,6 @@ public class Parcours implements AstVisitor {
         return tdsIf;
     }
 
-    @Override
     public Object visit(IfThenElse ifthenelse) {
         //comment trouver son father ?
 
@@ -29,190 +31,151 @@ public class Parcours implements AstVisitor {
         return tdsifthenelse;
     }
 
-    @Override
-    public Object visit(While whil) {
+    public Object visit(While whil, Tds tds) {
         //comment trouver son father ?
 
         Tds tdswhile = new Tds("tds While", parent);
         return null;
     }
 
-    @Override
-    public Object visit(Return retur) {
+    public void visit(Return retur, Tds tds) {
+        //il fait rien
+    }
+
+    public Object visit(Affectation affect, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Affectation affect) {
+    public Object visit(Ident ident, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Ident ident) {
+    public Object visit(ListeDeclVars liste, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(ListeDeclVars liste) {
+    public Object visit(ListeInstruction liste, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(ListeInstruction liste) {
+    public Object visit(Bloc bloc, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Bloc bloc) {
+    public Object visit(Plus plus, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Plus plus) {
+    public Object visit(Minus minus, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Minus minus) {
+    public Object visit(Divide divide, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Divide divide) {
+    public Object visit(Mult mult, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Mult mult) {
+    public Object visit(DeclaList declaList, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(DeclaList declaList) {
+    public Object visit(DeclTyp declTyp, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(DeclTyp declTyp) {
+    public Object visit(DeclaAffect dAffect, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(DeclaAffect dAffect) {
+    public Object visit(Entier entier, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Entier entier) {
+    public Object visit(IntParam intParam, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(IntParam intParam) {
+    public Object visit(Struct struct, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Struct struct) {
+    public Object visit(StructParam structParam, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(StructParam structParam) {
+    public Object visit(ExclaExpr x, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(ExclaExpr x) {
+    public Object visit(Fleche x, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Fleche x) {
+    public Object visit(IdentExprPointeur x, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(IdentExprPointeur x) {
+    public Object visit(Operateur x, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(Operateur x) {
+    public void visit(OpExpr x, Tds tds) {
+        //utile pour sémantique
+    }
+
+    public void visit(ParenthExpr x, Tds tds) {
+        //utile pour sémantique
+    }
+
+    public void visit(Sizeof x, Tds tds) {
+        //utile pour semantique
+    }
+
+    public void visit(TiretExpr x, Tds tds) {
+        //utile pour semantique
+    }
+
+    public void visit(ListeExpr listexpr, Tds tds) {
+        // utile pour semantique
+    }
+
+    public void visit(Paramint x, Tds tds) {
+        // utile pour semantique
+    }
+
+    public void visit(Paramstruct x, Tds tds) {
+        // utile pour semantique
+    }
+
+    public Object visit(List x, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    @Override
-    public Object visit(OpExpr x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(ParenthExpr x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(Sizeof x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(TiretExpr x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(ListeExpr listexpr) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(Paramint x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(Paramstruct x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(List x) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Object visit(Vide x) {
+    public Object visit(Vide x, Tds tds) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -1,5 +1,9 @@
 package ast;
 
+
+import tds.Parcours;
+import tds.Tds;
+
 public class Return implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -10,5 +14,9 @@ public class Return implements Ast {
 
     public Return(Ast cond){
         this.retour = cond;
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 }

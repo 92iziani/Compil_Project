@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class OpExpr implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -15,6 +18,10 @@ public class OpExpr implements Ast {
         this.expr1 = expr1;
         this.expr2 = expr2;
 
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 }
 

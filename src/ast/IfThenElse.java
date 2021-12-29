@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class IfThenElse implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -14,5 +17,9 @@ public class IfThenElse implements Ast {
         this.condition = cond;
         this.thenBlock = thenB;
         this.elseBlock = elseB;
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 }

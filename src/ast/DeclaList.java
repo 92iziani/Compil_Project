@@ -2,6 +2,9 @@ package ast;
 
 import java.util.ArrayList;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class DeclaList implements Ast {
     
     // Utile pour la dernière partie
@@ -16,7 +19,9 @@ public class DeclaList implements Ast {
 
     }
 
-
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
+    }
 
 
 }

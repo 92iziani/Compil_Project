@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class Minus implements Ast {
 
     // Utile pour la dernière partie
@@ -13,6 +16,10 @@ public class Minus implements Ast {
     public Minus(Ast left, Ast right){
         this.left = left;
         this.right = right;
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 
 }

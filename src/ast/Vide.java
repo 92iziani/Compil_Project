@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 import java.util.ArrayList;
 
 public class Vide implements Ast {
@@ -12,6 +15,10 @@ public class Vide implements Ast {
 
     public Vide(){
 
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 
 }

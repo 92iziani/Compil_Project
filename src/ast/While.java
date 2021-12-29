@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 public class While implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -12,6 +15,10 @@ public class While implements Ast {
     public While(Ast cond, Ast inst){
         this.condition = cond;
         this.instruction = inst;
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 
 }

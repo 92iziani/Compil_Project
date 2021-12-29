@@ -1,5 +1,8 @@
 package ast;
 
+import tds.Parcours;
+import tds.Tds;
+
 import java.util.ArrayList;
 
 public class Struct implements Ast {
@@ -14,6 +17,10 @@ public class Struct implements Ast {
     public Struct(ArrayList<Ident> structList) {
         this.structList = structList;
 
+    }
+
+    public void acceptTDS(Parcours p, Tds tds){
+        p.visit(this, tds);
     }
 
 
