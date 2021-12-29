@@ -15,7 +15,7 @@ public class Parcours {
         return parent;
     }
 
-    public Object visit(IfThen ifthen) {
+    public Object visit(IfThen ifthen, Tds tds) {
         //comment trouver son father ?
         Tds tdsIf = new Tds("tds if then", parent);
         //je dois ajouter le contenu
@@ -23,7 +23,7 @@ public class Parcours {
         return tdsIf;
     }
 
-    public Object visit(IfThenElse ifthenelse) {
+    public Object visit(IfThenElse ifthenelse, Tds tds) {
         //comment trouver son father ?
 
         Tds tdsifthenelse =  new Tds("tds if then else",parent);
