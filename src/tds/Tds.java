@@ -12,7 +12,7 @@ public class Tds{
     private static int num_region = 0;
     //niveau d'imbrication
     private int nv_imbrication;
-    private ArrayList<Ast> contenu;
+    private ArrayList<Ligne> contenu;
     private Tds father;
 
     public Tds(String nom){
@@ -20,7 +20,7 @@ public class Tds{
         num_region++; // car nouvelle table créee
         this.father = null; //n'a pas de père
         this.nv_imbrication = 0; //car n'a pas de père
-        this.contenu = new ArrayList<Ast>();
+        this.contenu = new ArrayList<Ligne>();
     }
 
     public Tds(String nom, Tds parent){
@@ -34,7 +34,7 @@ public class Tds{
         return this.nv_imbrication;
     }
 
-    public void addElement(Ast elem){
+    public void addLigne(Ligne elem){
         this.contenu.add(elem);
     }
 
