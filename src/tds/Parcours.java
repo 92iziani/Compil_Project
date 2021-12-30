@@ -6,8 +6,6 @@ public class Parcours {
 
     Tds parent;
 
-
-    
     //en paramètre la tds que je dois remplir
     // ici ça va être la tds parent
     public Object visit(Program program, Tds tds) {
