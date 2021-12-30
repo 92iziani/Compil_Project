@@ -5,12 +5,15 @@ import ast.*;
 public class Parcours {
 
     Tds parent;
+    //constructeur de parcours
 
     //en paramètre la tds que je dois remplir
     // ici ça va être la tds parent
     public Object visit(Program program, Tds tds) {
+        // créer la tds si besoin
         parent = new Tds("Tds principale");
         return parent;
+        //trouver un exemple
     }
 
     public Object visit(IfThen ifthen, Tds tds) {
@@ -22,10 +25,10 @@ public class Parcours {
     }
 
     public Object visit(IfThenElse ifthenelse, Tds tds) {
-        //comment trouver son father ?
+        // creation de deux TDS, une pour then et une pour else
 
         Tds tdsifthenelse =  new Tds("tds if then else",parent);
-        //je dois ajouter le contenu
+        //je dois ajouter le contenumais pas maitnenant je pense ?
         return tdsifthenelse;
     }
 
@@ -41,7 +44,7 @@ public class Parcours {
     }
 
     public Object visit(Affectation affect, Tds tds) {
-        // TODO Auto-generated method stub
+        
         return null;
     }
 
@@ -91,12 +94,12 @@ public class Parcours {
     }
 
     public Object visit(DeclTyp declTyp, Tds tds) {
-        // TODO Auto-generated method stub
+        // creation ligne
         return null;
     }
 
     public Object visit(DeclaAffect dAffect, Tds tds) {
-        // TODO Auto-generated method stub
+        // creation ligne
         return null;
     }
 
@@ -106,17 +109,19 @@ public class Parcours {
     }
 
     public Object visit(IntParam intParam, Tds tds) {
-        // TODO Auto-generated method stub
+        // creation de tds ?
+        // creation de ligne fonction
         return null;
     }
 
     public Object visit(Struct struct, Tds tds) {
-        // TODO Auto-generated method stub
+        // creation ligne
         return null;
     }
 
     public Object visit(StructParam structParam, Tds tds) {
-        // TODO Auto-generated method stub
+        // creation d'une tds ?
+        // creation ligne fonction avec type de retour struct
         return null;
     }
 
