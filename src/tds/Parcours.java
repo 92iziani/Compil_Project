@@ -4,39 +4,41 @@ import ast.*;
 
 public class Parcours {
 
-    Tds parent;
     //constructeur de parcours
+    public Parcours(){
+
+    }
 
     //en paramètre la tds que je dois remplir
     // ici ça va être la tds parent
-    public Object visit(Program program, Tds tds) {
+    public void visit(Program program, Tds tds) {
         // créer la tds si besoin
-        parent = new Tds("Tds principale");
-        return parent;
-        //trouver un exemple
+        Tds principale = new Tds("Tds principale");
     }
 
-    public Object visit(IfThen ifthen, Tds tds) {
-        //comment trouver son father ?
-        Tds tdsIf = new Tds("tds if then", parent);
+    public void visit(IfThen ifthen, Tds tds) {
+        //je suis dans tds donc c'est le pere  de tdsThen
+        Tds tdsthen = new Tds("tds if then", tds);
         //je dois ajouter le contenu
 
-        return tdsIf;
     }
 
-    public Object visit(IfThenElse ifthenelse, Tds tds) {
+    public void visit(IfThenElse ifthenelse, Tds tds) {
         // creation de deux TDS, une pour then et une pour else
 
-        Tds tdsifthenelse =  new Tds("tds if then else",parent);
-        //je dois ajouter le contenumais pas maitnenant je pense ?
-        return tdsifthenelse;
+        Tds tdsifthenelse =  new Tds("tds if then else",tds);
+        //je dois ajouter le contenu
+        
     }
 
-    public Object visit(While whil, Tds tds) {
+    public void visit(While whil, Tds tds) {
         //comment trouver son father ?
 
-        Tds tdswhile = new Tds("tds While", parent);
-        return null;
+        Tds tdswhile = new Tds("tds While", tds);
+
+        //je fais des acceptTDS sur ce que j'ai dans mon instance de While
+        whil.condition.acceptTDS(this,tdswhile);
+        whil.instruction.acceptTDS(this,tdswhile);
     }
 
     public void visit(Return retur, Tds tds) {
