@@ -6,12 +6,10 @@ import ast.Ast;
 
 public class Tds{
 
-    //nom associé à la tds
     private String nom;
-    //numero de region
     private static int num_region = 0;
-    //niveau d'imbrication
     private int nv_imbrication;
+    private ArrayList<Tds> sons;
     private ArrayList<Ligne> contenu;
     private Tds father;
 
@@ -37,6 +35,12 @@ public class Tds{
     public void addLigne(Ligne elem){
         this.contenu.add(elem);
     }
+
+    public void addChild(Tds tds) { this.sons.add(tds); }
+
+    public Tds getFather() { return this.father;}
+
+    public int getNum_region() { return this.num_region; }
 
     
 }

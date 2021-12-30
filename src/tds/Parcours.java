@@ -33,9 +33,8 @@ public class Parcours {
 
     public void visit(While whil, Tds tds) {
         //comment trouver son father ?
-
         Tds tdswhile = new Tds("tds While", tds);
-
+        LigneBloc ligne = new LigneBloc();
         //je fais des acceptTDS sur ce que j'ai dans mon instance de While
         whil.condition.acceptTDS(this,tdswhile);
         whil.instruction.acceptTDS(this,tdswhile);
