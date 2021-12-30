@@ -1,4 +1,5 @@
 package ast;
+import tds.*;
 
 public interface Ast {
 
