@@ -13,4 +13,5 @@ public class ListeDeclVars implements Ast{
     public ListeDeclVars(ArrayList<Ast> instrList){
         this.instrList = instrList;
     }
+
 }

@@ -1,245 +1,219 @@
 package tds;
 
-import ast.Affectation;
-import ast.AstVisitor;
-import ast.Bloc;
-import ast.DeclTyp;
-import ast.DeclaAffect;
-import ast.DeclaList;
-import ast.Divide;
-import ast.Entier;
-import ast.ExclaExpr;
-import ast.Fleche;
-import ast.Ident;
-import ast.IdentExprPointeur;
-import ast.IfThen;
-import ast.IfThenElse;
-import ast.IntParam;
-import ast.List;
-import ast.ListeDeclVars;
-import ast.ListeExpr;
-import ast.ListeInstruction;
-import ast.Minus;
-import ast.Mult;
-import ast.OpExpr;
-import ast.Operateur;
-import ast.Paramint;
-import ast.Paramstruct;
-import ast.ParenthExpr;
-import ast.Plus;
-import ast.Program;
-import ast.Return;
-import ast.Sizeof;
-import ast.Struct;
-import ast.StructParam;
-import ast.TiretExpr;
-import ast.Vide;
-import ast.While;
+import ast.*;
 
-public class Parcours implements AstVisitor {
+public class Parcours implements AstVisitor<Void> {
+    private Tds table;
+
+    //constructeur de parcours
+    public Parcours() {
+        table = new Tds("Table initiale");
+    }
+
+    public void addLigne(Ligne ligne) {
+        this.table.addLigne(ligne);
+    }
+
+    public Tds getTable() {
+        return this.table;
+    }
 
     @Override
-    public Object visit(Program program) {
-        // TODO Auto-generated method stub
+    public Void visit(Program program) {
+        for (Ast ast : program.declarations) {
+            ast.accept(this);
+        }
         return null;
     }
 
     @Override
-    public Object visit(IfThen ifthen) {
-        // TODO Auto-generated method stub
+    public Void visit(IfThen ifThen) {
+        LigneIf entry = new LigneIf(ifThen, this.table);
+        if (entry.thenBloc != null) {
+            //this.addEntry(entry.thenBloc);
+        }
+        this.addLigne(entry);
         return null;
     }
 
     @Override
-    public Object visit(IfThenElse ifthenelse) {
-        // TODO Auto-generated method stub
+    public Void visit(IfThenElse ifThenElse) {
+
+        LigneIf entry = new LigneIf(ifThenElse, this.table);
+        if (entry.thenBloc != null) {
+            // this.addEntry(entry.thenBloc);
+        }
+        if (entry.elseBloc != null) {
+            //this.addEntry(entry.elseBloc);
+        }
+        this.addLigne(entry);
         return null;
     }
 
     @Override
-    public Object visit(While whil) {
-        // TODO Auto-generated method stub
+    public Void visit(While whil) {
+        //LigneBloc ligne = new LigneBloc(whil, this.table);
+
+        //this.addLigne(ligne);
         return null;
     }
 
     @Override
-    public Object visit(Return retur) {
-        // TODO Auto-generated method stub
+    public Void visit(Return retur) {
         return null;
     }
 
     @Override
-    public Object visit(Affectation affect) {
-        // TODO Auto-generated method stub
+    public Void visit(Affectation affect) {
         return null;
     }
 
     @Override
-    public Object visit(Ident ident) {
-        // TODO Auto-generated method stub
+    public Void visit(Ident ident) {
         return null;
     }
 
     @Override
-    public Object visit(ListeDeclVars liste) {
-        // TODO Auto-generated method stub
+    public Void visit(ListeDeclVars liste) {
         return null;
     }
 
     @Override
-    public Object visit(ListeInstruction liste) {
-        // TODO Auto-generated method stub
+    public Void visit(ListeInstruction liste) {
         return null;
     }
 
     @Override
-    public Object visit(Bloc bloc) {
-        // TODO Auto-generated method stub
+    public Void visit(Bloc bloc) {
+        this.addLigne(new LigneBloc(bloc));
         return null;
     }
 
     @Override
-    public Object visit(Plus plus) {
-        // TODO Auto-generated method stub
+    public Void visit(Plus plus) {
         return null;
     }
 
     @Override
-    public Object visit(Minus minus) {
-        // TODO Auto-generated method stub
+    public Void visit(Minus minus) {
         return null;
     }
 
     @Override
-    public Object visit(Divide divide) {
-        // TODO Auto-generated method stub
+    public Void visit(Divide divide) {
         return null;
     }
 
     @Override
-    public Object visit(Mult mult) {
-        // TODO Auto-generated method stub
+    public Void visit(Mult mult) {
         return null;
     }
 
     @Override
-    public Object visit(DeclaList declaList) {
-        // TODO Auto-generated method stub
+    public Void visit(DeclaList declaList) {
         return null;
     }
 
     @Override
-    public Object visit(DeclTyp declTyp) {
-        // TODO Auto-generated method stub
+    public Void visit(DeclTyp declTyp) {
+
+        this.addLigne(new LigneStruct(declTyp, this.table));
         return null;
     }
 
     @Override
-    public Object visit(DeclaAffect dAffect) {
-        // TODO Auto-generated method stub
+    public Void visit(DeclaAffect dAffect) {
         return null;
     }
 
     @Override
-    public Object visit(Entier entier) {
-        // TODO Auto-generated method stub
+    public Void visit(Entier entier) {
         return null;
     }
 
     @Override
-    public Object visit(IntParam intParam) {
-        // TODO Auto-generated method stub
+    public Void visit(IntParam intParam) {
         return null;
     }
 
     @Override
-    public Object visit(Struct struct) {
-        // TODO Auto-generated method stub
+    public Void visit(Struct struct) {
         return null;
     }
 
     @Override
-    public Object visit(StructParam structParam) {
-        // TODO Auto-generated method stub
+    public Void visit(StructParam structParam) {
         return null;
     }
 
     @Override
-    public Object visit(ExclaExpr x) {
-        // TODO Auto-generated method stub
+    public Void visit(ExclaExpr x) {
         return null;
     }
 
     @Override
-    public Object visit(Fleche x) {
-        // TODO Auto-generated method stub
+    public Void visit(Fleche x) {
         return null;
     }
 
     @Override
-    public Object visit(IdentExprPointeur x) {
-        // TODO Auto-generated method stub
+    public Void visit(IdentExprPointeur x) {
         return null;
     }
 
     @Override
-    public Object visit(Operateur x) {
-        // TODO Auto-generated method stub
+    public Void visit(Operateur x) {
         return null;
     }
 
     @Override
-    public Object visit(OpExpr x) {
-        // TODO Auto-generated method stub
+    public Void visit(OpExpr x) {
         return null;
     }
 
     @Override
-    public Object visit(ParenthExpr x) {
-        // TODO Auto-generated method stub
+    public Void visit(ParenthExpr x) {
         return null;
     }
 
     @Override
-    public Object visit(Sizeof x) {
-        // TODO Auto-generated method stub
+    public Void visit(Sizeof x) {
         return null;
     }
 
     @Override
-    public Object visit(TiretExpr x) {
-        // TODO Auto-generated method stub
+    public Void visit(TiretExpr x) {
         return null;
     }
 
     @Override
-    public Object visit(ListeExpr listexpr) {
-        // TODO Auto-generated method stub
+    public Void visit(ListeExpr listexpr) {
         return null;
     }
 
     @Override
-    public Object visit(Paramint x) {
-        // TODO Auto-generated method stub
+    public Void visit(Paramint x) {
         return null;
     }
 
     @Override
-    public Object visit(Paramstruct x) {
-        // TODO Auto-generated method stub
+    public Void visit(Paramstruct x) {
         return null;
     }
 
     @Override
-    public Object visit(List x) {
-        // TODO Auto-generated method stub
+    public Void visit(List x) {
         return null;
     }
 
     @Override
-    public Object visit(Vide x) {
-        // TODO Auto-generated method stub
+    public Void visit(Vide x) {
         return null;
     }
-    
+
+
+    //en paramètre la tds que je dois remplir
+    // ici ça va être la tds parent
+
 }
+

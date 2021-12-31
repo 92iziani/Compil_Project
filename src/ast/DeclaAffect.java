@@ -13,4 +13,5 @@ public class DeclaAffect implements Ast{
         this.ident = ident;
         this.entier = entier;
     }
+
 }

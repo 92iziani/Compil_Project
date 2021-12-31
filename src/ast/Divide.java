@@ -14,5 +14,5 @@ public class Divide implements Ast{
         this.left = left;
         this.right = right;
     }
-    
+
 }
