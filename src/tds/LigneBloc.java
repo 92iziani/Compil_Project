@@ -18,5 +18,11 @@ public class LigneBloc extends Ligne{
 
     }*/
 
+    public String toString() {
+        return "LigneBloc{" +
+                "while'"  + '}';
+    }
+
+
 
 }
