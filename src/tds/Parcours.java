@@ -18,23 +18,29 @@ public class Parcours {
 
     public void visit(IfThen ifthen, Tds tds) {
         //je suis dans tds donc c'est le pere  de tdsThen
-        Tds tdsthen = new Tds("tds if then", tds);
+        Tds tdsifthen = new Tds("tds if then", tds);
         //je dois ajouter le contenu
+
+        ifthen.condition.acceptTDS(this,tdsifthen);
+        ifthen.thenBlock.acceptTDS(this,tdsifthen);
+
 
     }
 
     public void visit(IfThenElse ifthenelse, Tds tds) {
         // creation de deux TDS, une pour then et une pour else
-
         Tds tdsifthenelse =  new Tds("tds if then else",tds);
         //je dois ajouter le contenu
-        
+        ifthenelse.condition.acceptTDS(this,tdsifthenelse);
+        ifthenelse.elseBlock.acceptTDS(this,tdsifthenelse);
+        ifthenelse.thenBlock.acceptTDS(this,tdsifthenelse);
+
     }
 
     public void visit(While whil, Tds tds) {
         //comment trouver son father ?
         Tds tdswhile = new Tds("tds While", tds);
-        LigneBloc ligne = new LigneBloc();
+        LigneBloc ligne = new LigneBloc(this);
         //je fais des acceptTDS sur ce que j'ai dans mon instance de While
         whil.condition.acceptTDS(this,tdswhile);
         whil.instruction.acceptTDS(this,tdswhile);
@@ -44,106 +50,90 @@ public class Parcours {
         //il fait rien
     }
 
-    public Object visit(Affectation affect, Tds tds) {
+    public void visit(Affectation affect, Tds tds) {
         
-        return null;
     }
 
-    public Object visit(Ident ident, Tds tds) {
+    public void visit(Ident ident, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(ListeDeclVars liste, Tds tds) {
+    public void visit(ListeDeclVars liste, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(ListeInstruction liste, Tds tds) {
+    public void visit(ListeInstruction liste, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Bloc bloc, Tds tds) {
+    public void visit(Bloc bloc, Tds tds) {
+        Tds tdsbloc = new Tds("tds Bloc", tds);
+        bloc.declarations.acceptTDS(this,tdsbloc);
+        bloc.instructions.acceptTDS(this,tdsbloc);
+
+        //return null;
+    }
+
+    public void visit(Plus plus, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Plus plus, Tds tds) {
+    public void visit(Minus minus, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Minus minus, Tds tds) {
+    public void visit(Divide divide, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Divide divide, Tds tds) {
+    public void visit(Mult mult, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Mult mult, Tds tds) {
+    public void visit(DeclaList declaList, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(DeclaList declaList, Tds tds) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public Object visit(DeclTyp declTyp, Tds tds) {
+    public void visit(DeclTyp declTyp, Tds tds) {
         // creation ligne
-        return null;
     }
 
-    public Object visit(DeclaAffect dAffect, Tds tds) {
+    public void visit(DeclaAffect dAffect, Tds tds) {
         // creation ligne
-        return null;
     }
 
-    public Object visit(Entier entier, Tds tds) {
+    public void visit(Entier entier, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(IntParam intParam, Tds tds) {
+    public void visit(IntParam intParam, Tds tds) {
         // creation de tds ?
         // creation de ligne fonction
-        return null;
     }
 
-    public Object visit(Struct struct, Tds tds) {
+    public void visit(Struct struct, Tds tds) {
         // creation ligne
-        return null;
     }
 
-    public Object visit(StructParam structParam, Tds tds) {
+    public void visit(StructParam structParam, Tds tds) {
         // creation d'une tds ?
         // creation ligne fonction avec type de retour struct
-        return null;
     }
 
-    public Object visit(ExclaExpr x, Tds tds) {
+    public void visit(ExclaExpr x, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Fleche x, Tds tds) {
+    public void visit(Fleche x, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(IdentExprPointeur x, Tds tds) {
+    public void visit(IdentExprPointeur x, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Operateur x, Tds tds) {
+    public void visit(Operateur x, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
     public void visit(OpExpr x, Tds tds) {
@@ -174,14 +164,12 @@ public class Parcours {
         // utile pour semantique
     }
 
-    public Object visit(List x, Tds tds) {
+    public void visit(List x, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
 
-    public Object visit(Vide x, Tds tds) {
+    public void visit(Vide x, Tds tds) {
         // TODO Auto-generated method stub
-        return null;
     }
     
 }

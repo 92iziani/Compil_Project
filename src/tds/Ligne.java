@@ -3,10 +3,18 @@ package tds;
 //représente une ligne de la tds par exemple une variable
 // chaque type de ligne extends cette classe car chaque ligne n'a pas les mêmes informations
 
+import ast.Ident;
+
+import java.util.HashMap;
+
 public abstract class Ligne {
 
-    private int numero; //num de la ligne
+    private static int numero= 0; //num de la ligne
     private String type; //type = int, fonction, struct, param..
-
+    private HashMap<String, Ident> map;
     
+    public Ligne(){
+        this.numero++;
+        this.map = new HashMap<String, Ident>();
+    }
 }

@@ -1,12 +1,22 @@
 package tds;
 
 public class LigneVariable extends Ligne{
-    private String nom; //nom de la variable
+
+    private Parcours visitor;
+    private String nomvar; //nom de la variable
+    private String nom="variable";
+
+    public LigneVariable(Parcours visitor, String nomvar){
+        super();
+        this.visitor=visitor;
+        this.nomvar = nomvar;
+    }
 
     @Override
     public String toString() {
         return "LigneVariable{" +
-                "nom='" + nom + '\'' +
+                "nomvar='" + nomvar + '\'' +
+                ", nom='" + nom + '\'' +
                 '}';
     }
 }
