@@ -3,7 +3,7 @@ package tds;
 import ast.*;
 
 public class Parcours implements AstVisitor<Void> {
-    private Tds table;
+    public Tds table;
 
     //constructeur de parcours
     public Parcours() {
@@ -26,7 +26,9 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Program program) {
         for (Ast ast : program.declarations) {
-            ast.accept(this);
+            if (ast != null){
+                ast.accept(this);
+            }
         }
         return null;
     }

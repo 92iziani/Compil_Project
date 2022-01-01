@@ -50,7 +50,7 @@ public class Main2 {
 
             graphViz.dumpGraph("./out/tree.dot");
 
-            Tds tds = new Tds();
+            //Tds tds = new Tds();
             Parcours par =  new Parcours();
             ast.accept(par);
             //par.table.toString();

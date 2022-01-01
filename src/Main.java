@@ -15,6 +15,7 @@ import ast.Ast;
 import ast.AstCreator;
 import parser.*;
 import parser.circParser.ProgramContext;
+import tds.Parcours;
 
 public class Main {
 
@@ -61,6 +62,10 @@ public class Main {
         
             graphViz.dumpGraph("./out/tree.dot");
 
+            Parcours par =  new Parcours();
+            ast.accept(par);
+           // par.toString();
+            System.out.println(par.table.toString());
         }
         catch (IOException e) {
             e.printStackTrace();
