@@ -14,24 +14,35 @@ public class LigneVariable extends Ligne{
     private String nom="variable";
 
     private ArrayList<Ident> id1 = new ArrayList<Ident>(); //pour declalist
-    private ArrayList<Ident> id2 = new ArrayList<Ident>(); //pour declaffect
-    private ArrayList<Entier> entier = new ArrayList<Entier>(); //pour stocker les affect
+    private Ident id2 = null ; //pour declaffect
+    private Entier entier ; //pour stocker les affect
 
    public LigneVariable(DeclaList dcl){
        this.id1.addAll(dcl.declaList);
         //father.addLigne(this); //ici?
    }
    public LigneVariable(DeclaAffect dcl){
-       this.id2.add(dcl.ident);
+       this.id2=dcl.ident;
+       //this.id2.addAll(dcl.ident);
        if(dcl.entier instanceof Entier){
-           this.entier.add((Entier) dcl.entier);
+           this.entier=(Entier) dcl.entier;
        }
         //father.addLigne(this); //on l'ajoute au père ici ?
    }
-   public String toString(){
-    //afficher les infos
-       String res;
-       res = "Variable de type int, nom = "+id1.get(0).name;
-       return res;
+   public String toString() {
+       //afficher les infos
+       String res = "";
+       if (id1 != null) {
+           for (int i = 0; i < id1.size(); i++) {
+               res += " Variable de type int, nom = " + id1.get(i).name + "\n";
+
+           }
+       }
+       if (id2 != null) {
+           res += " Variable de type int, nom = " +id2.name + ", valeur = "+ entier.value + "\n";
+       }
+        return res;
    }
+
 }
+
