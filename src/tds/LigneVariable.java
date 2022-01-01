@@ -14,7 +14,6 @@ public class LigneVariable extends Ligne{
     private String nom="variable";
 
     private ArrayList<Ident> id1 = new ArrayList<Ident>(); //pour declalist
-
     private ArrayList<Ident> id2 = new ArrayList<Ident>(); //pour declaffect
     private ArrayList<Entier> entier = new ArrayList<Entier>(); //pour stocker les affect
 
@@ -31,5 +30,8 @@ public class LigneVariable extends Ligne{
    }
    public String toString(){
     //afficher les infos
+       String res;
+       res = "Variable de type int, nom = "+id1.get(0).name;
+       return res;
    }
 }

@@ -7,7 +7,7 @@ public class Parcours implements AstVisitor<Void> {
 
     //constructeur de parcours
     public Parcours() {
-        table = new Tds("Table initiale");
+        this.table = new Tds();
     }
 
     public void addLigne(Ligne ligne) {
@@ -17,7 +17,12 @@ public class Parcours implements AstVisitor<Void> {
     public Tds getTable() {
         return this.table;
     }
+    public String toString() {
+        return table.toString();
+    }
 
+
+    ////////////////////METHODES/////////////////
     @Override
     public Void visit(Program program) {
         for (Ast ast : program.declarations) {
@@ -55,6 +60,11 @@ public class Parcours implements AstVisitor<Void> {
         //LigneBloc ligne = new LigneBloc(whil, this.table);
 
         //this.addLigne(ligne);
+        LigneWhile entry = new LigneWhile(whil, this.table);
+        if (entry.bloc != null) {
+            //this.addEntry(entry.bloc);
+        }
+        this.addLigne(entry);
         return null;
     }
 
@@ -75,11 +85,13 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ListeDeclVars liste) {
+
         return null;
     }
 
     @Override
     public Void visit(ListeInstruction liste) {
+
         return null;
     }
 
@@ -111,18 +123,20 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(DeclaList declaList) {
+        this.addLigne(new LigneVariable(declaList));
         return null;
     }
 
     @Override
     public Void visit(DeclTyp declTyp) {
-
+        //REGLE POUR LA CREATION DE TYPE(STRUCT)
         this.addLigne(new LigneStruct(declTyp, this.table));
         return null;
     }
 
     @Override
     public Void visit(DeclaAffect dAffect) {
+        this.addLigne(new LigneVariable(dAffect));
         return null;
     }
 
@@ -133,16 +147,22 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IntParam intParam) {
+
+        LigneFonction entry = new LigneFonction(intParam, this.table);
+        this.addLigne(entry);
         return null;
     }
 
     @Override
     public Void visit(Struct struct) {
+        ////A REMPLIR
         return null;
     }
 
     @Override
     public Void visit(StructParam structParam) {
+        LigneFonction entry = new LigneFonction(structParam, this.table);
+        this.addLigne(entry);
         return null;
     }
 
@@ -158,6 +178,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IdentExprPointeur x) {
+
         return null;
     }
 
@@ -188,21 +209,25 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ListeExpr listexpr) {
+
         return null;
     }
 
     @Override
     public Void visit(Paramint x) {
+
         return null;
     }
 
     @Override
     public Void visit(Paramstruct x) {
+
         return null;
     }
 
     @Override
     public Void visit(List x) {
+
         return null;
     }
 

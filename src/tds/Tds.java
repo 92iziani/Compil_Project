@@ -6,14 +6,20 @@ import ast.Ast;
 
 public class Tds{
 
-    private String nom;
-    private static int num_region = 0;
     private int nv_imbrication;
-    private ArrayList<Tds> sons;
     private ArrayList<Ligne> contenu;
-    private Tds father;
+    private Tds father=null;
 
-    public Tds(String nom){
+    public Tds() {
+        this.contenu = new ArrayList<>();
+    }
+
+    public int addEntry(Ligne entry) {
+        contenu.add(entry);
+        return contenu.size();
+    }
+
+   /* public Tds(String nom){
         this.nom = nom;
         num_region++; // car nouvelle table créee
         this.father = null; //n'a pas de père
@@ -27,7 +33,7 @@ public class Tds{
         this.nv_imbrication = parent.getNiveau()+1;
 
     }
-
+*/
     private int getNiveau() {
         return this.nv_imbrication;
     }
@@ -36,13 +42,40 @@ public class Tds{
         this.contenu.add(elem);
     }
 
+/*
     public void addChild(Tds tds) { this.sons.add(tds); }
+*/
 
     public Tds getFather() { return this.father;}
 
+/*
     public int getNum_region() { return this.num_region; }
+*/
 
-
-    public void setFatherTDS(Tds father) { this.father = father;
+    public Tds getFatherTDS() {
+        return this.father;
     }
+
+    public void setFatherTDS(Tds father) { this.father = father;}
+
+
+    public String toString() {
+        return toString2(0);
+    }
+
+    public String toString2(int ind) {
+        String strind = "";
+        for (int i = 0 ; i < ind ; i++) {
+            strind += " |";
+        }
+        String ret = strind + "TDS :";
+        if (this.father == null) ret += "root\n";
+        else ret += "son of another one\n";
+        for (Ligne entry : contenu) {
+            ret += strind + "Entry: ";
+            ret += entry.toString() + "\n";
+        }
+        return ret;
+    }
+
 }
