@@ -78,7 +78,7 @@ public class Tds{
 
         for (Ligne entry: contenu) {
             if (entry instanceof LigneWhile) {
-                ret += strind + "containing following TDS (While):\n";
+                ret += strind + "Nouvelle TDS (While):\n";
                 LigneWhile fentry = (LigneWhile)entry;
                 if (fentry.bloc != null && fentry.bloc.getTable().toString() != null) {
                     ret += strind + fentry.bloc.getTable().toString2(ind + 1);
@@ -87,10 +87,9 @@ public class Tds{
         }
 
 
-
         for (Ligne entry: contenu) {
             if (entry instanceof LigneFonction) {
-                ret += strind + "containing following TDS (Func):\n";
+                ret += strind + "Nouvelle table de Fonction : \n";
                 LigneFonction fentry = (LigneFonction)entry;
                 if (fentry.bloc != null && fentry.bloc.getTable().toString() != null) {
                     ret += strind + fentry.bloc.getTable().toString2(ind + 1);

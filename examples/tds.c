@@ -1,9 +1,9 @@
-int b;
-int a=3;
+int b=3;
 
 int main(){
-    while(a != 3){
-        int f;
+    int f;
+    while(b !=3){
+        int a;
     }
 return a;
 }

@@ -5,9 +5,6 @@ import ast.*;
 public class LigneFonction extends Ligne{
 
     private Parcours visitor;
-    private String nomFonction;
-    private String typeRetour;
-    private String nom="Fonction";
     private Ident ident=null,ident1=null,ident2=null;
     private String type;
 
@@ -25,7 +22,7 @@ public class LigneFonction extends Ligne{
 
         bloc.getTable().setFatherTDS(father);
         Parcours blocVisitor = bloc.getVisitor();
-        intparam.bloc.accept(blocVisitor);
+        //intparam.bloc.accept(blocVisitor);
     }
 
     public LigneFonction(StructParam fct, Tds father){

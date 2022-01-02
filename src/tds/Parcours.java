@@ -64,7 +64,7 @@ public class Parcours implements AstVisitor<Void> {
         //this.addLigne(ligne);
         LigneWhile entry = new LigneWhile(whil, this.table);
         if (entry.bloc != null) {
-            //this.addEntry(entry.bloc);
+            //this.addLigne(entry.bloc);
         }
         this.addLigne(entry);
         return null;

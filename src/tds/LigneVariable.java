@@ -34,12 +34,12 @@ public class LigneVariable extends Ligne{
        String res = "";
        if (id1 != null) {
            for (int i = 0; i < id1.size(); i++) {
-               res += " Variable de type int, nom = " + id1.get(i).name + "\n";
+               res += " Variable de type int, nom = " + id1.get(i).name ;
 
            }
        }
        if (id2 != null) {
-           res += " Variable de type int, nom = " +id2.name + ", valeur = "+ entier.value + "\n";
+           res += " Variable de type int, nom = " +id2.name + ", valeur = "+ entier.value ;
        }
         return res;
    }
