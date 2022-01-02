@@ -87,13 +87,22 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ListeDeclVars liste) {
+        for(Ast child : liste.instrList){
+            if (child != null){
+                child.accept(this);
+            }
+        }
 
         return null;
     }
 
     @Override
     public Void visit(ListeInstruction liste) {
-
+        for(Ast child : liste.instrList){
+            if (child != null){
+                child.accept(this);
+            }
+        }
         return null;
     }
 

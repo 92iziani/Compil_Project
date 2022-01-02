@@ -11,7 +11,7 @@ public class LigneFonction extends Ligne{
     private Ident ident=null,ident1=null,ident2=null;
     private String type;
 
-    private LigneBloc bloc;
+    public LigneBloc bloc;
 
     /*public LigneFonction(Parcours visitor, String nomFonction, String typeRetour){
         super();

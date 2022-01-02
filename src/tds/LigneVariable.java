@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class LigneVariable extends Ligne{
 
-    private Parcours visitor;
-    private String nomvar; //nom de la variable
-    private String nom="variable";
+    public Parcours visitor;
+    public String nomvar; //nom de la variable
+    public String nom="variable";
 
-    private ArrayList<Ident> id1 = new ArrayList<Ident>(); //pour declalist
-    private Ident id2 = null ; //pour declaffect
-    private Entier entier ; //pour stocker les affect
+    public ArrayList<Ident> id1 = new ArrayList<Ident>(); //pour declalist
+    public Ident id2 = null ; //pour declaffect
+    public Entier entier ; //pour stocker les affect
 
    public LigneVariable(DeclaList dcl){
        this.id1.addAll(dcl.declaList);

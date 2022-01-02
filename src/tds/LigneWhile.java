@@ -8,7 +8,6 @@ public class LigneWhile extends Ligne{
 
     public LigneWhile(While whil, Tds father){
         if (whil.instruction instanceof Bloc){
-            //bloc = new LigneBloc(father, (Bloc) whil.instruction);
             bloc = new LigneBloc((Bloc) whil.instruction);
             bloc.getTable().setFatherTDS(father);
         }

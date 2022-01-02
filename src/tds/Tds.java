@@ -75,6 +75,28 @@ public class Tds{
             ret += strind + "Entry: ";
             ret += entry.toString() + "\n";
         }
+
+        for (Ligne entry: contenu) {
+            if (entry instanceof LigneWhile) {
+                ret += strind + "containing following TDS (While):\n";
+                LigneWhile fentry = (LigneWhile)entry;
+                if (fentry.bloc != null && fentry.bloc.getTable().toString() != null) {
+                    ret += strind + fentry.bloc.getTable().toString2(ind + 1);
+                }
+            }
+        }
+
+
+
+        for (Ligne entry: contenu) {
+            if (entry instanceof LigneFonction) {
+                ret += strind + "containing following TDS (Func):\n";
+                LigneFonction fentry = (LigneFonction)entry;
+                if (fentry.bloc != null && fentry.bloc.getTable().toString() != null) {
+                    ret += strind + fentry.bloc.getTable().toString2(ind + 1);
+                }
+            }
+        }
         return ret;
     }
 
