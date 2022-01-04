@@ -75,6 +75,7 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
         
         ifThenElse.thenBlock.accept(this);
+        stack.pop();
         ifThenElse.elseBlock.accept(this);
 
         stack.pop();
@@ -144,7 +145,7 @@ public class Parcours implements AstVisitor<Void> {
         //pas de creation de ligne je pense
         //listetds.add(this.table);
         //stack.push(this.table);
-        Tds tds = new Tds(i);
+        Tds tds = new Tds(stack.peek(),i);
         i++;
         
 
@@ -152,8 +153,11 @@ public class Parcours implements AstVisitor<Void> {
         listetds.add(tds);
         stack.push(tds);
 
+        //ca peut etre un probleme
         bloc.declarations.accept(this);
         bloc.instructions.accept(this);
+
+        //stack.pop();
 
         return null;
     }
@@ -189,7 +193,7 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(new LigneStruct(declTyp));
 
         //creation d'une tds avec une liste de decl vars
-        Tds tds= new Tds(i);
+        Tds tds= new Tds(stack.peek(),i);
         i++;
 
         listetds.add(tds);

@@ -22,7 +22,6 @@ public class Tds{
         this.nv_imbrication=father.getNiveau()+1;
         this.numero=i;
         this.contenu = new ArrayList<Ligne>();
-
     }
 
     public int addEntry(Ligne entry) {
@@ -43,9 +42,6 @@ public class Tds{
 
     public Tds getFather() { return this.father;}
 
-    public Tds getFatherTDS() {
-        return this.father;
-    }
 
     public void setFatherTDS(Tds father) { this.father = father;}
 
