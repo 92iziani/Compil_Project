@@ -197,6 +197,8 @@ public class Parcours implements AstVisitor<Void> {
 
         declTyp.listDeclVar.accept(this);
         
+        stack.pop();
+
         return null;
     }
 
@@ -231,9 +233,11 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Struct struct) {
         // pas de creation de tds
         // creation d'une ligne ou plusieurs
-        //Ident type = struct.structList.get(0);
-        LigneVariable entry = new LigneVariable(struct);
-
+        Ident type = struct.structList.get(0);
+        for (int i=1; i<struct.structList.size(); i++){
+            LigneVariable entry = new LigneVariable(struct.structList.get(i),type);
+            this.addLigne(entry);
+        }
         return null;
     }
 
@@ -241,6 +245,13 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(StructParam structParam) {
         LigneFonction entry = new LigneFonction(structParam);
         this.addLigne(entry);
+        
+        //creer une tds avec bloc
+
+        structParam.bloc.accept(this);
+
+        stack.pop();
+        
         return null;
     }
 

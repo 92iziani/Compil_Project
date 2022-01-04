@@ -1,11 +1,13 @@
 package tds;
 
 import ast.DeclTyp;
+import ast.Ident;
 
 public class LigneStruct extends Ligne{
-    private Parcours visitor;
     private String name;
-    public LigneBloc bloc = null;
+    private Ident type;
+    
+
 
     public LigneStruct(DeclTyp declTyp) {
         this.name = declTyp.ident.name;

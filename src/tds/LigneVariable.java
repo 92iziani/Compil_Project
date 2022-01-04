@@ -13,6 +13,8 @@ public class LigneVariable extends Ligne{
     public Ident id2 = null ; //pour declaffect
     public Entier entier ; //pour stocker les affect
     public Ident idparam=null;
+    public Ident struct = null; //pour struct
+    public Ident typeStruct = null; //utile pour l'affichage
 
    public LigneVariable(DeclaList dcl){
        this.id1.addAll(dcl.declaList);
@@ -32,6 +34,10 @@ public class LigneVariable extends Ligne{
        }
         //father.addLigne(this); //on l'ajoute au père ici ?
    }
+   public LigneVariable(Ident ident, Ident type){
+        this.typeStruct = type;
+        this.struct = ident;
+   }
    public String toString() {
        //afficher les infos
        String res = "";
@@ -48,6 +54,11 @@ public class LigneVariable extends Ligne{
        if (idparam != null) {
            res += " Variable de type int, nom = " +idparam.name  ;
        }
+
+       if (struct != null) {
+           res += " Variable de type struct "+typeStruct.name+", nom = "+struct.name;
+       }
+
         return res;
    }
 
