@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class LigneVariable extends Ligne{
 
     public Parcours visitor;
-    public String nomvar; //nom de la variable
     public String nom="variable";
 
     public ArrayList<Ident> id1 = new ArrayList<Ident>(); //pour declalist

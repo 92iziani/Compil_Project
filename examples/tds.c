@@ -1,9 +1,6 @@
-int b=3;
-
 int main(){
-    int f;
-    while(b !=3){
-        int a;
-    }
-return a;
+int b=3;
+}
+int fork(){
+int a;
 }

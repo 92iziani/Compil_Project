@@ -2,12 +2,19 @@ package tds;
 
 import ast.*;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 public class Parcours implements AstVisitor<Void> {
     public Tds table;
+    public  ArrayList<Tds> listetds;
+    public Stack<Tds> stack;
 
     //constructeur de parcours
     public Parcours() {
         this.table = new Tds();
+        listetds = new ArrayList<Tds>();
+        //listetds.add(this.table); //not sure...
     }
 
     public void addLigne(Ligne ligne) {
@@ -35,6 +42,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IfThen ifThen) {
+        //CREER TDS !!!!!
         LigneIf entry = new LigneIf(ifThen, this.table);
         if (entry.thenBloc != null) {
             //this.addEntry(entry.thenBloc);
@@ -45,6 +53,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IfThenElse ifThenElse) {
+        //CREER TDS !!!!!
 
         LigneIf entry = new LigneIf(ifThenElse, this.table);
         if (entry.thenBloc != null) {
@@ -59,6 +68,9 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(While whil) {
+
+        //CREER TDS !!!!!
+
         //LigneBloc ligne = new LigneBloc(whil, this.table);
 
         //this.addLigne(ligne);
@@ -108,6 +120,8 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Bloc bloc) {
+        //CREER TDS !!!!!
+        Tds tdsbloc = new Tds(this.table);
         this.addLigne(new LigneBloc(bloc));
         return null;
     }
@@ -158,9 +172,12 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IntParam intParam) {
-
+        //CREER TDS !!!!!
         LigneFonction entry = new LigneFonction(intParam, this.table);
         this.addLigne(entry);
+        listetds.add(this.table);
+        Tds TdsFonction = new Tds();
+        this.table=TdsFonction;
         return null;
     }
 

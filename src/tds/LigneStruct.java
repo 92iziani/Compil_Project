@@ -11,4 +11,7 @@ public class LigneStruct extends Ligne{
         this.name = declTyp.ident.name;
 
     }
+    public String toString() {
+        return null;
+    }
 }

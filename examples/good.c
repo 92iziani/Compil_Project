@@ -7,7 +7,6 @@ int x,y,z;
 
 
 /* test de commentaire */
-
 //gros test
 int basique(){
     return x;

@@ -16,8 +16,12 @@ import ast.AstCreator;
 import parser.*;
 import parser.circParser.ProgramContext;
 import tds.Parcours;
+import tds.Tables;
+import tds.Tds;
 
 public class Main {
+    public static Tables tb = new Tables();
+
 
     public static void main(String[] args){
 
@@ -62,10 +66,16 @@ public class Main {
         
             graphViz.dumpGraph("./out/tree.dot");
 
+
             Parcours par =  new Parcours();
             ast.accept(par);
            // par.toString();
-            System.out.println(par.table.toString());
+            for (Tds tds:par.listetds){
+                if(tds != null){
+                    System.out.println(tds.toString());
+
+                }
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
