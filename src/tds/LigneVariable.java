@@ -1,9 +1,6 @@
 package tds;
 
-import ast.DeclaAffect;
-import ast.DeclaList;
-import ast.Entier;
-import ast.Ident;
+import ast.*;
 
 import java.util.ArrayList;
 
@@ -15,11 +12,18 @@ public class LigneVariable extends Ligne{
     public ArrayList<Ident> id1 = new ArrayList<Ident>(); //pour declalist
     public Ident id2 = null ; //pour declaffect
     public Entier entier ; //pour stocker les affect
+    public Ident idparam=null;
 
    public LigneVariable(DeclaList dcl){
        this.id1.addAll(dcl.declaList);
         //father.addLigne(this); //ici?
    }
+
+    public LigneVariable(Paramint par){
+        //this.id1.addAll(par.declaList);
+        this.idparam = par.ident;
+        //father.addLigne(this); //ici?
+    }
    public LigneVariable(DeclaAffect dcl){
        this.id2=dcl.ident;
        //this.id2.addAll(dcl.ident);
@@ -39,6 +43,10 @@ public class LigneVariable extends Ligne{
        }
        if (id2 != null) {
            res += " Variable de type int, nom = " +id2.name + ", valeur = "+ entier.value ;
+       }
+
+       if (idparam != null) {
+           res += " Variable de type int, nom = " +idparam.name  ;
        }
         return res;
    }
