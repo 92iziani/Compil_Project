@@ -7,33 +7,44 @@ import java.util.Stack;
 
 public class Parcours implements AstVisitor<Void> {
     public static int i=1;
-    public Tds table;
+    //public Tds table;
     public  ArrayList<Tds> listetds;
     public Stack<Tds> stack;
 
     //constructeur de parcours
     public Parcours() {
-        this.table = new Tds(i);
-        i++;
+        //this.table = new Tds(i);
+        //i++;
         listetds = new ArrayList<Tds>();
+        stack = new Stack<>();
         //listetds.add(this.table); //not sure...
     }
 
     public void addLigne(Ligne ligne) {
-        this.table.addLigne(ligne);
+        stack.peek().addLigne(ligne);
     }
 
     public Tds getTable() {
-        return this.table;
+        return this.stack.peek();
     }
     public String toString() {
-        return table.toString();
+        return this.stack.peek().toString();
     }
 
 
     ////////////////////METHODES/////////////////
     @Override
     public Void visit(Program program) {
+        //listetds.add(this.table);
+        Tds tds = new Tds(i);
+        i++;
+        //this.table=tds;
+
+        //ajout à la pile
+        stack.push(tds);
+
+        //ajout à la liste
+        listetds.add(tds);
         for (Ast ast : program.declarations) {
             if (ast != null){
                 ast.accept(this);
@@ -44,27 +55,29 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IfThen ifThen) {
-        //CREER TDS !!!!!
-        LigneIf entry = new LigneIf(ifThen, this.table);
-        if (entry.thenBloc != null) {
-            //this.addEntry(entry.thenBloc);
-        }
+        //pas de creation de tds car je vais dans le thenBlock
+        LigneIf entry = new LigneIf(ifThen, stack.peek());
         this.addLigne(entry);
+        //listetds.add(this.table);
+        //creation de la tds pour le then block
+        ifThen.thenBlock.accept(this);
+        
+        stack.pop();
         return null;
     }
 
     @Override
     public Void visit(IfThenElse ifThenElse) {
-        //CREER TDS !!!!!
+        //pas de creation de tds mais accept des deux enfants
 
-        LigneIf entry = new LigneIf(ifThenElse, this.table);
-        if (entry.thenBloc != null) {
-            // this.addEntry(entry.thenBloc);
-        }
-        if (entry.elseBloc != null) {
-            //this.addEntry(entry.elseBloc);
-        }
+        LigneIf entry = new LigneIf(ifThenElse, stack.peek());
+        
         this.addLigne(entry);
+        
+        ifThenElse.thenBlock.accept(this);
+        ifThenElse.elseBlock.accept(this);
+
+        stack.pop();
         return null;
     }
 
@@ -76,7 +89,7 @@ public class Parcours implements AstVisitor<Void> {
         //LigneBloc ligne = new LigneBloc(whil, this.table);
 
         //this.addLigne(ligne);
-        LigneWhile entry = new LigneWhile(whil, this.table);
+        LigneWhile entry = new LigneWhile(whil, stack.peek());
         if (entry.bloc != null) {
             //this.addLigne(entry.bloc);
         }
@@ -123,8 +136,19 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Bloc bloc) {
         //CREER TDS !!!!!
-        //Tds tdsbloc = new Tds(this.table,i);
-       // this.addLigne(new LigneBloc(bloc));
+        
+        //depile
+
+        //pas de creation de ligne je pense
+        //listetds.add(this.table);
+        //stack.push(this.table);
+        Tds tds = new Tds(i);
+        i++;
+
+        //la table courante devient la tds créée
+        listetds.add(tds);
+        stack.push(tds);
+
         return null;
     }
 
@@ -157,7 +181,8 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(DeclTyp declTyp) {
         //REGLE POUR LA CREATION DE TYPE(STRUCT)
-        this.addLigne(new LigneStruct(declTyp, this.table));
+        this.addLigne(new LigneStruct(declTyp, this.stack.peek()));
+        
         return null;
     }
 
@@ -175,12 +200,14 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(IntParam intParam) {
         //CREER TDS !!!!!
-        LigneFonction entry = new LigneFonction(intParam, this.table);
+        LigneFonction entry = new LigneFonction(intParam, this.stack.peek());
         this.addLigne(entry);
-        listetds.add(this.table);
-        Tds TdsFonction = new Tds(i);
-        i++;
-        this.table=TdsFonction;
+        //listetds.add(this.table);
+        //Tds TdsFonction = new Tds(i);
+        //i++;
+        //la table courante devient la tds créée
+        //this.table=TdsFonction;
+        intParam.bloc.accept(this);
         return null;
     }
 
@@ -192,7 +219,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(StructParam structParam) {
-        LigneFonction entry = new LigneFonction(structParam, this.table);
+        LigneFonction entry = new LigneFonction(structParam, this.stack.peek());
         this.addLigne(entry);
         return null;
     }
