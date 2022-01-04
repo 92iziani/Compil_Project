@@ -7,11 +7,12 @@ public class LigneStruct extends Ligne{
     private String name;
     public LigneBloc bloc = null;
 
-    public LigneStruct(DeclTyp declTyp, Tds father) {
+    public LigneStruct(DeclTyp declTyp) {
         this.name = declTyp.ident.name;
 
     }
     public String toString() {
-        return null;
+
+        return "Struct "+name;
     }
 }

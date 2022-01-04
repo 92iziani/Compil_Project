@@ -186,8 +186,16 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(DeclTyp declTyp) {
-        //REGLE POUR LA CREATION DE TYPE(STRUCT)
-        this.addLigne(new LigneStruct(declTyp, this.stack.peek()));
+        this.addLigne(new LigneStruct(declTyp));
+
+        //creation d'une tds avec une liste de decl vars
+        Tds tds= new Tds(i);
+        i++;
+
+        listetds.add(tds);
+        stack.push(tds);
+
+        declTyp.listDeclVar.accept(this);
         
         return null;
     }
@@ -221,7 +229,11 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Struct struct) {
-        ////A REMPLIR
+        // pas de creation de tds
+        // creation d'une ligne ou plusieurs
+        //Ident type = struct.structList.get(0);
+        LigneVariable entry = new LigneVariable(struct);
+
         return null;
     }
 
