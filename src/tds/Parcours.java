@@ -14,6 +14,7 @@ public class Parcours implements AstVisitor<Void> {
     //constructeur de parcours
     public Parcours() {
         this.table = new Tds(i);
+        i++;
         listetds = new ArrayList<Tds>();
         //listetds.add(this.table); //not sure...
     }
