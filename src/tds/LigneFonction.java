@@ -15,7 +15,7 @@ public class LigneFonction extends Ligne{
         this.visitor = visitor;
     }*/
 
-    public LigneFonction(IntParam intparam, Tds father){
+    public LigneFonction(IntParam intparam){
         this.ident = intparam.ident;
         this.type = "INT";
        // this.bloc = new LigneBloc((Bloc)intparam.bloc);
@@ -25,7 +25,7 @@ public class LigneFonction extends Ligne{
         //intparam.bloc.accept(blocVisitor);
     }
 
-    public LigneFonction(StructParam fct, Tds father){
+    public LigneFonction(StructParam fct){
         this.ident1 = fct.ident1;
         this.ident2 = fct.ident2;
         this.type = "STRUCT";
