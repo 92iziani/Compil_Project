@@ -144,10 +144,14 @@ public class Parcours implements AstVisitor<Void> {
         //stack.push(this.table);
         Tds tds = new Tds(i);
         i++;
+        
 
         //la table courante devient la tds créée
         listetds.add(tds);
         stack.push(tds);
+
+        bloc.declarations.accept(this);
+        bloc.instructions.accept(this);
 
         return null;
     }
@@ -200,7 +204,7 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(IntParam intParam) {
         //CREER TDS !!!!!
-        LigneFonction entry = new LigneFonction(intParam, this.stack.peek());
+        LigneFonction entry = new LigneFonction(intParam);
         this.addLigne(entry);
         //listetds.add(this.table);
         //Tds TdsFonction = new Tds(i);
@@ -208,6 +212,8 @@ public class Parcours implements AstVisitor<Void> {
         //la table courante devient la tds créée
         //this.table=TdsFonction;
         intParam.bloc.accept(this);
+
+        this.stack.pop();
         return null;
     }
 
@@ -219,7 +225,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(StructParam structParam) {
-        LigneFonction entry = new LigneFonction(structParam, this.stack.peek());
+        LigneFonction entry = new LigneFonction(structParam);
         this.addLigne(entry);
         return null;
     }
