@@ -8,19 +8,19 @@ public class Tds{
 
     private int nv_imbrication;
    // private HashMap<String,Ligne> map;
-    private static int numero=0;
+    private  int numero;
     private ArrayList<Ligne> contenu;
     private Tds father=null;
 
-    public Tds() {
-        numero++;
+    public Tds(int i) {
+        this.numero=i;
         this.nv_imbrication=0; //car le pere
         this.contenu = new ArrayList<Ligne>();
     }
-    public Tds(Tds father){
+    public Tds(Tds father, int i){
         this.father=father;
         this.nv_imbrication=father.getNiveau()+1;
-        numero++;
+        this.numero=i;
         this.contenu = new ArrayList<Ligne>();
 
     }

@@ -4,11 +4,11 @@ import ast.*;
 
 public class LigneFonction extends Ligne{
 
-    private Parcours visitor;
+    //private Parcours visitor;
     private Ident ident=null,ident1=null,ident2=null;
     private String type;
 
-    public LigneBloc bloc;
+    //public LigneBloc bloc;
 
     /*public LigneFonction(Parcours visitor, String nomFonction, String typeRetour){
         super();
@@ -18,10 +18,10 @@ public class LigneFonction extends Ligne{
     public LigneFonction(IntParam intparam, Tds father){
         this.ident = intparam.ident;
         this.type = "INT";
-        this.bloc = new LigneBloc((Bloc)intparam.bloc);
+       // this.bloc = new LigneBloc((Bloc)intparam.bloc);
 
-        bloc.getTable().setFatherTDS(father);
-        Parcours blocVisitor = bloc.getVisitor();
+        //bloc.getTable().setFatherTDS(father);
+       // Parcours blocVisitor = bloc.getVisitor();
         //intparam.bloc.accept(blocVisitor);
     }
 
@@ -29,11 +29,11 @@ public class LigneFonction extends Ligne{
         this.ident1 = fct.ident1;
         this.ident2 = fct.ident2;
         this.type = "STRUCT";
-        this.bloc = new LigneBloc((Bloc)fct.bloc);
+       // this.bloc = new LigneBloc((Bloc)fct.bloc);
 
-        bloc.getTable().setFatherTDS(father);
-        Parcours blocVisitor = bloc.getVisitor();
-        fct.bloc.accept(blocVisitor);
+       // bloc.getTable().setFatherTDS(father);
+        //Parcours blocVisitor = bloc.getVisitor();
+        //fct.bloc.accept(blocVisitor);
 
     }
     public String toString() {

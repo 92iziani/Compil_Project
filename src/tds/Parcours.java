@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Parcours implements AstVisitor<Void> {
+    public static int i=1;
     public Tds table;
     public  ArrayList<Tds> listetds;
     public Stack<Tds> stack;
 
     //constructeur de parcours
     public Parcours() {
-        this.table = new Tds();
+        this.table = new Tds(i);
         listetds = new ArrayList<Tds>();
         //listetds.add(this.table); //not sure...
     }
@@ -121,8 +122,8 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Bloc bloc) {
         //CREER TDS !!!!!
-        Tds tdsbloc = new Tds(this.table);
-        this.addLigne(new LigneBloc(bloc));
+        //Tds tdsbloc = new Tds(this.table,i);
+       // this.addLigne(new LigneBloc(bloc));
         return null;
     }
 
@@ -176,7 +177,8 @@ public class Parcours implements AstVisitor<Void> {
         LigneFonction entry = new LigneFonction(intParam, this.table);
         this.addLigne(entry);
         listetds.add(this.table);
-        Tds TdsFonction = new Tds();
+        Tds TdsFonction = new Tds(i);
+        i++;
         this.table=TdsFonction;
         return null;
     }
