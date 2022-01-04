@@ -90,10 +90,12 @@ public class Parcours implements AstVisitor<Void> {
 
         //this.addLigne(ligne);
         LigneWhile entry = new LigneWhile(whil, stack.peek());
-        if (entry.bloc != null) {
-            //this.addLigne(entry.bloc);
-        }
+        
         this.addLigne(entry);
+
+        whil.instruction.accept(this);
+
+        //this.stack.pop();
         return null;
     }
 
