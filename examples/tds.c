@@ -2,13 +2,13 @@ int main(){
 int b=3;
 int a;
     while(b!=2){
-        a=4;
+        int a=4;
     }
 }
 int fork(){
-int a;
+int c=10;
+//int a=10;
+int c;
 }
 
-struct person* fork(){
-    int b;
-}
+

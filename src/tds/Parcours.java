@@ -263,6 +263,13 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(DeclaList declaList) {
+        //CONTROLE SEMANTIQUE CHECK SI UNE VAR EST DECLAREE PLUSIEURS FOIS
+        Ident id = (Ident)declaList.declaList.get(0);
+        if (getTable().ifExists(id.name)){
+            System.err.println("ERROR : Variable "+id.name +" déclarée plusieurs fois !");
+            System.exit(1);
+        }
+
         this.addLigne(new LigneVariable(declaList));
         return null;
     }
@@ -287,6 +294,12 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(DeclaAffect dAffect) {
+        Ident id = (Ident)dAffect.ident;
+        if (getTable().ifExists(id.name)){
+            System.err.println("ERROR : Variable "+id.name +" déclarée plusieurs fois !");
+            System.exit(1);
+        }
+
         this.addLigne(new LigneVariable(dAffect));
         return null;
     }
