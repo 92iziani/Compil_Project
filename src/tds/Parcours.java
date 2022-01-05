@@ -161,11 +161,45 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Plus plus) {
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (plus.left instanceof Ident){
+            Ident left = (Ident)plus.left;
+            if (!getTable().ifExists2(left.name)){
+                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
+        if (plus.right instanceof Ident){
+            Ident right = (Ident)plus.right;
+            if (!getTable().ifExists2(right.name)){
+                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                System.exit(1);
+            }
+        }
         return null;
     }
 
     @Override
     public Void visit(Minus minus) {
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (minus.left instanceof Ident){
+            Ident left = (Ident)minus.left;
+            if (!getTable().ifExists2(left.name)){
+                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
+        if (minus.right instanceof Ident){
+            Ident right = (Ident)minus.right;
+            if (!getTable().ifExists2(right.name)){
+                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                System.exit(1);
+            }
+        }
         return null;
     }
 
@@ -174,11 +208,47 @@ public class Parcours implements AstVisitor<Void> {
         // CONTROLE SEMANTIQUE : division par 0
         where = "divide";
         divide.right.accept(this);
+
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (divide.left instanceof Ident){
+            Ident left = (Ident)divide.left;
+            if (!getTable().ifExists2(left.name)){
+                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
+        if (divide.right instanceof Ident){
+            Ident right = (Ident)divide.right;
+            if (!getTable().ifExists2(right.name)){
+                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                System.exit(1);
+            }
+        }
+
         return null;
     }
 
     @Override
     public Void visit(Mult mult) {
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (mult.left instanceof Ident){
+            Ident left = (Ident)mult.left;
+            if (!getTable().ifExists2(left.name)){
+                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
+        if (mult.right instanceof Ident){
+            Ident right = (Ident)mult.right;
+            if (!getTable().ifExists2(right.name)){
+                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                System.exit(1);
+            }
+        }
         return null;
     }
 
