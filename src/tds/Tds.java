@@ -45,6 +45,49 @@ public class Tds{
 
     public void setFatherTDS(Tds father) { this.father = father;}
 
+        public boolean ifExists(String nom){
+
+        if (contenu==null){
+            return false;
+        }
+        for (Ligne lg : contenu){
+            if (lg instanceof LigneVariable){
+                LigneVariable var = (LigneVariable) lg;
+               if( var.id2 != null && var.id2.name.equals(nom) ){
+                   return true;
+               }
+               if (var.id1 != null){
+                   for(Ident id:var.id1){
+                       if (id.name.equals(nom)){
+                           return true;
+                       }
+                   }
+               }
+
+            }
+        }
+        return false;
+
+    }
+
+    public boolean ifExists2(String nom){
+        while (father != null){
+            if (ifExists(nom)){
+                return true;
+            }
+            else {
+                return father.ifExists2(nom);
+            }
+        }
+        if (ifExists(nom)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
 
     public String toString() {

@@ -107,6 +107,12 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Affectation affect) {
         where = "affectation";
         affect.expr.accept(this);
+         //CONTROLE SEMANTIQUE CHECK SI LA VARIBALE D'AFFECTATION EXISTE
+        Ident id = (Ident)affect.ident;
+        if (!getTable().ifExists2(id.name)){
+            System.err.println("ERROR : Variable "+id.name +" utilisée non déclarée !");
+            System.exit(1);
+        }
         return null;
     }
 
