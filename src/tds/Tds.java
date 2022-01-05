@@ -64,8 +64,21 @@ public class Tds{
                        }
                    }
                }
-
+               //ADDED
+                /*if( var.typeStruct != null && var.typeStruct.name.equals(nom)){
+                    return true;
+                    *//*for (Ligne l:contenu){
+                        if(l instanceof LigneStruct){
+                            LigneStruct ls = (LigneStruct) l;
+                            if(ls.name.equals(nom)){
+                                return true;
+                            }
+                        }
+                    }*//*
+                }*/
             }
+
+
             if (lg instanceof LigneFonction){
                 LigneFonction var = (LigneFonction) lg;
                 if (var.ident != null && var.ident.name.equals(nom)){
@@ -80,6 +93,7 @@ public class Tds{
         return false;
 
     }
+
 
     public boolean ifExists2(String nom){
         while (father != null){
@@ -97,6 +111,36 @@ public class Tds{
             return false;
         }
     }
+
+    public boolean ifExistsStruct(String nom){
+        for (Ligne lg : contenu){
+            if (lg instanceof LigneStruct){
+                LigneStruct st = (LigneStruct) lg;
+                if(st.name.equals(nom)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean ifExists3(String nom){
+        while (father != null){
+            if (ifExistsStruct(nom)){
+                return true;
+            }
+            else {
+                return father.ifExists3(nom);
+            }
+        }
+        if (ifExistsStruct(nom)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
 
 

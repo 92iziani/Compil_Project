@@ -38,20 +38,20 @@ public class LigneVariable extends Ligne{
        String res = "";
        if (id1 != null) {
            for (int i = 0; i < id1.size(); i++) {
-               res += " Variable de type int, nom = " + id1.get(i).name ;
+               res += " Variable de type: int, nom = " + id1.get(i).name ;
 
            }
        }
        if (id2 != null) {
-           res += " Variable de type int, nom = " +id2.name + ", valeur = "+ entier.value ;
+           res += " Variable de type: int, nom = " +id2.name + ", valeur = "+ entier.value ;
        }
 
        if (idparam != null) {
-           res += " Paramètre de type int, nom = " +idparam.name  ;
+           res += " Paramètre de type: int, nom = " +idparam.name  ;
        }
 
        if (struct != null) {
-           res += " Variable de type struct "+typeStruct.name+", nom = "+struct.name;
+           res += " Variable de type struct: "+typeStruct.name+" , nom = "+struct.name;
        }
 
         return res;

@@ -276,8 +276,13 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(DeclTyp declTyp) {
-        this.addLigne(new LigneStruct(declTyp));
+        //CONTROLE SEMANTIQUE CHECK SI UN TYPE EST DECLARE PLUSIEURS FOIS
+        if (getTable().ifExists3(declTyp.ident.name)){
+            System.out.println("ERROR : Type "+declTyp.ident.name+ " ne peut pas être défini plusieurs fois !");
+            System.exit(1);
+        }
 
+        this.addLigne(new LigneStruct(declTyp));
         //creation d'une tds avec une liste de decl vars
         Tds tds= new Tds(stack.peek(),i, "Struct");
         i++;
@@ -336,6 +341,11 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Struct struct) {
+        //CONTROLE SEMANTIQUE CHECK SI LE TYPE EXISTE
+        if (!getTable().ifExists3(struct.structList.get(0).name)){
+            System.out.println("ERROR : Type "+struct.structList.get(0).name+ " n'existe pas");
+            System.exit(1);
+        }
         // pas de creation de tds
         // creation de plusieurs lignes
         Ident type = struct.structList.get(0);

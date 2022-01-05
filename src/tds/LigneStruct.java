@@ -4,7 +4,7 @@ import ast.DeclTyp;
 import ast.Ident;
 
 public class LigneStruct extends Ligne{
-    private String name;
+    public String name;
     private Ident type;
     
 
