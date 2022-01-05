@@ -4,8 +4,8 @@ import ast.*;
 
 public class LigneFonction extends Ligne{
 
-    private Ident ident=null,ident1=null,ident2=null;
-    private String type;
+    public Ident ident=null,ident1=null,ident2=null; //ident: nom de fonction avec int en retour
+    public String type;
 
     public LigneFonction(IntParam intparam){
         this.ident = intparam.ident;
