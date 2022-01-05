@@ -228,7 +228,7 @@ public class Parcours implements AstVisitor<Void> {
         //la table courante devient la tds créée
         //this.table=TdsFonction;
         intParam.bloc.accept(this);
-
+        intParam.listParam.accept(this);
         this.stack.pop();
         return null;
     }
@@ -309,18 +309,27 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Paramint x) {
 
+        LigneVariable ligne = new LigneVariable(x);
+        this.addLigne(ligne);
         return null;
     }
 
     @Override
     public Void visit(Paramstruct x) {
 
+        LigneStructParam ligne = new LigneStructParam(x);
+        this.addLigne(ligne);
         return null;
     }
 
     @Override
     public Void visit(List x) {
 
+         for(Ast ast:x.astlist){
+            if(ast != null){
+                ast.accept(this);
+            }
+        }
         return null;
     }
 
