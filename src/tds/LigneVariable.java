@@ -18,21 +18,16 @@ public class LigneVariable extends Ligne{
 
    public LigneVariable(DeclaList dcl){
        this.id1.addAll(dcl.declaList);
-        //father.addLigne(this); //ici?
    }
 
     public LigneVariable(Paramint par){
-        //this.id1.addAll(par.declaList);
         this.idparam = par.ident;
-        //father.addLigne(this); //ici?
     }
    public LigneVariable(DeclaAffect dcl){
        this.id2=dcl.ident;
-       //this.id2.addAll(dcl.ident);
        if(dcl.entier instanceof Entier){
            this.entier=(Entier) dcl.entier;
        }
-        //father.addLigne(this); //on l'ajoute au père ici ?
    }
    public LigneVariable(Ident ident, Ident type){
         this.typeStruct = type;

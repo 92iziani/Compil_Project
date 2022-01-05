@@ -8,7 +8,6 @@ public class LigneStruct extends Ligne{
     private Ident type;
     
 
-
     public LigneStruct(DeclTyp declTyp) {
         this.name = declTyp.ident.name;
 

@@ -2,12 +2,8 @@ package tds;
 
 import ast.*;
 
-import java.util.ArrayList;
-
 public class LigneStructParam extends Ligne{
 
-    //public Parcours visitor;
-    //public String nom="variable";
     public Ident ident1,ident2;
 
 

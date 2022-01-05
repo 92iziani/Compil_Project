@@ -7,17 +7,13 @@ import java.util.Stack;
 
 public class Parcours implements AstVisitor<Void> {
     public static int i=1;
-    //public Tds table;
     public  ArrayList<Tds> listetds;
     public Stack<Tds> stack;
 
     //constructeur de parcours
     public Parcours() {
-        //this.table = new Tds(i);
-        //i++;
         listetds = new ArrayList<Tds>();
         stack = new Stack<>();
-        //listetds.add(this.table); //not sure...
     }
 
     public void addLigne(Ligne ligne) {
@@ -35,10 +31,8 @@ public class Parcours implements AstVisitor<Void> {
     ////////////////////METHODES/////////////////
     @Override
     public Void visit(Program program) {
-        //listetds.add(this.table);
         Tds tds = new Tds(i);
         i++;
-        //this.table=tds;
 
         //ajout à la pile
         stack.push(tds);
@@ -58,8 +52,8 @@ public class Parcours implements AstVisitor<Void> {
         //pas de creation de tds car je vais dans le thenBlock
         LigneIf entry = new LigneIf(ifThen, stack.peek());
         this.addLigne(entry);
-        //listetds.add(this.table);
-        //creation de la tds pour le then block
+
+        //creation de la tds par le then block
         ifThen.thenBlock.accept(this);
         
         stack.pop();
@@ -84,19 +78,13 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(While whil) {
-
         //CREER TDS !!!!!
 
-        //LigneBloc ligne = new LigneBloc(whil, this.table);
-
-        //this.addLigne(ligne);
-        LigneWhile entry = new LigneWhile(whil, stack.peek());
-        
+        LigneWhile entry = new LigneWhile(whil, stack.peek());        
         this.addLigne(entry);
 
         whil.instruction.accept(this);
 
-        //this.stack.pop();
         return null;
     }
 
@@ -139,25 +127,16 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Bloc bloc) {
         //CREER TDS !!!!!
-        
-        //depile
-
-        //pas de creation de ligne je pense
-        //listetds.add(this.table);
-        //stack.push(this.table);
         Tds tds = new Tds(stack.peek(),i);
         i++;
-        
 
-        //la table courante devient la tds créée
         listetds.add(tds);
         stack.push(tds);
 
-        //ca peut etre un probleme
+        //ca peut etre un probleme 
         bloc.declarations.accept(this);
-        bloc.instructions.accept(this);
-
         //stack.pop();
+        bloc.instructions.accept(this);
 
         return null;
     }
@@ -222,11 +201,6 @@ public class Parcours implements AstVisitor<Void> {
         //CREER TDS !!!!!
         LigneFonction entry = new LigneFonction(intParam);
         this.addLigne(entry);
-        //listetds.add(this.table);
-        //Tds TdsFonction = new Tds(i);
-        //i++;
-        //la table courante devient la tds créée
-        //this.table=TdsFonction;
         intParam.bloc.accept(this);
         intParam.listParam.accept(this);
         this.stack.pop();
@@ -236,7 +210,7 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Struct struct) {
         // pas de creation de tds
-        // creation d'une ligne ou plusieurs
+        // creation de plusieurs lignes
         Ident type = struct.structList.get(0);
         for (int i=1; i<struct.structList.size(); i++){
             LigneVariable entry = new LigneVariable(struct.structList.get(i),type);
@@ -251,7 +225,6 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
         
         //creer une tds avec bloc
-
         structParam.bloc.accept(this);
 
         stack.pop();
@@ -316,7 +289,6 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Paramstruct x) {
-
         LigneStructParam ligne = new LigneStructParam(x);
         this.addLigne(ligne);
         return null;
@@ -337,10 +309,6 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Vide x) {
         return null;
     }
-
-
-    //en paramètre la tds que je dois remplir
-    // ici ça va être la tds parent
 
 }
 

@@ -1,12 +1,9 @@
 package tds;
-
-import ast.Bloc;
 import ast.While;
 
 public class LigneWhile extends Ligne{
 
     public LigneWhile(While whil, Tds father){
-        
     }
 
     public String toString(){

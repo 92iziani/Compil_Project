@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public abstract class Ligne {
 
-    //private static int numero= 0; //num de la ligne
     private String type; //type = int, fonction, struct, param..
     private HashMap<String, Ident> map;
 
