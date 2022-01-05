@@ -66,6 +66,16 @@ public class Tds{
                }
 
             }
+            if (lg instanceof LigneFonction){
+                LigneFonction var = (LigneFonction) lg;
+                if (var.ident != null && var.ident.name.equals(nom)){
+                    return true;
+                }
+                if (var.ident2 != null && var.ident2.name.equals(nom)){
+                    return true;
+                }
+
+            }
         }
         return false;
 

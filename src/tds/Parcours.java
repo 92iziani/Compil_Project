@@ -88,6 +88,8 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(While whil) {
         //CREER TDS !!!!!
+        whil.condition.accept(this); //ADDED
+
 
         LigneWhile entry = new LigneWhile(whil, stack.peek());        
         this.addLigne(entry);
@@ -95,6 +97,7 @@ public class Parcours implements AstVisitor<Void> {
         name = "While";
         whil.instruction.accept(this);
 
+        stack.pop(); //ADDED
         return null;
     }
 
