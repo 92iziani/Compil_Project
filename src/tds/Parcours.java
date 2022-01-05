@@ -10,6 +10,7 @@ public class Parcours implements AstVisitor<Void> {
     public  ArrayList<Tds> listetds;
     public Stack<Tds> stack;
     private String name;
+    private String where;
 
     //constructeur de parcours
     public Parcours() {
@@ -50,6 +51,10 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IfThen ifThen) {
+        //CONTROLE SEMANTIQUE : verifier si c'est un booleen dans la condition
+        ifThen.condition.accept(this);
+
+
         //pas de creation de tds car je vais dans le thenBlock
         LigneIf entry = new LigneIf(ifThen, stack.peek());
         this.addLigne(entry);
@@ -100,6 +105,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Affectation affect) {
+        where = "affectation";
         affect.expr.accept(this);
         return null;
     }
@@ -160,6 +166,7 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Divide divide) {
         // CONTROLE SEMANTIQUE : division par 0
+        where = "divide";
         divide.right.accept(this);
         return null;
     }
@@ -202,10 +209,13 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Entier entier) {
         //CONTROLE SEMANTIQUE DE DIVIDE
-        if (entier.value.equals("0")){
-            printError("ATTENTION DIVISION PAR 0 ligne 4");
-            
+        if (where == "divide"){
+            if (entier.value.equals("0")){
+                printError("DIVISION PAR 0");
+                
+            }
         }
+        
         return null;
     }
 
