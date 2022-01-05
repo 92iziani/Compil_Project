@@ -3,6 +3,7 @@ package tds;
 import java.util.ArrayList;
 import java.util.HashMap;
 import ast.Ast;
+import ast.Ident;
 
 public class Tds{
 
