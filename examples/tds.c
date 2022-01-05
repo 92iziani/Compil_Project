@@ -9,6 +9,6 @@ int fork(){
 int a;
 }
 
-int fork(){
+struct person* fork(){
     int b;
 }

@@ -335,15 +335,17 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(StructParam structParam) {
+        //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
+        if (getTable().ifExists2(structParam.ident2.name)){
+            System.out.println("ERROR : Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois");
+            System.exit(1);
+        }
         LigneFonction entry = new LigneFonction(structParam);
         this.addLigne(entry);
-        
         //creer une tds avec bloc
         name = "Fonction "+structParam.ident2.name;
         structParam.bloc.accept(this);
-
         stack.pop();
-        
         return null;
     }
 
