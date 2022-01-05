@@ -335,6 +335,16 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ExclaExpr x) {
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (x.expr instanceof Ident){
+            Ident e = (Ident)x.expr;
+            if (!getTable().ifExists2(e.name)){
+                System.err.println("ERROR : Variable "+e.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
         return null;
     }
 
@@ -361,6 +371,16 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ParenthExpr x) {
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (x.expr instanceof Ident){
+            Ident e = (Ident)x.expr;
+            if (!getTable().ifExists2(e.name)){
+                System.err.println("ERROR : Variable "+e.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
         return null;
     }
 
@@ -371,6 +391,16 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(TiretExpr x) {
+        //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (x.expr instanceof Ident){
+            Ident e = (Ident)x.expr;
+            if (!getTable().ifExists2(e.name)){
+                System.err.println("ERROR : Variable "+e.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        }
         return null;
     }
 
