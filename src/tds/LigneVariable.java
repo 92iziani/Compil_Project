@@ -47,7 +47,7 @@ public class LigneVariable extends Ligne{
        }
 
        if (idparam != null) {
-           res += " Variable de type int, nom = " +idparam.name  ;
+           res += " Paramètre de type int, nom = " +idparam.name  ;
        }
 
        if (struct != null) {

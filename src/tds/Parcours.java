@@ -384,6 +384,10 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IdentExprPointeur x) {
+        if (!getTable().ifExists2(x.ident.name)){
+            System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
+            System.exit(1);
+        }
 
         return null;
     }

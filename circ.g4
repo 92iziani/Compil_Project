@@ -31,7 +31,7 @@ decl_fct :
 //liste_param :
   //  param;
 
-liste_expr : (expr',')* ;
+liste_expr : (expr',')* expr ;    //EXPR ADDED
 
 param : 'int' IDENT    #Paramint
         | 'struct' IDENT '*' IDENT      #Paramstruct;

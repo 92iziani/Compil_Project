@@ -5,10 +5,9 @@ int a;
         int a=4;
     }
 }
-int fork(){
+int fork(int x){
 int c=10;
-//int a=10;
-int c;
+main(c);
 }
 
 
