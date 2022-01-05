@@ -9,6 +9,7 @@ public class Parcours implements AstVisitor<Void> {
     public static int i=1;
     public  ArrayList<Tds> listetds;
     public Stack<Tds> stack;
+    private String name;
 
     //constructeur de parcours
     public Parcours() {
@@ -31,7 +32,7 @@ public class Parcours implements AstVisitor<Void> {
     ////////////////////METHODES/////////////////
     @Override
     public Void visit(Program program) {
-        Tds tds = new Tds(i);
+        Tds tds = new Tds(i, "Program");
         i++;
 
         //ajout à la pile
@@ -54,6 +55,7 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
 
         //creation de la tds par le then block
+        name = "Then block";
         ifThen.thenBlock.accept(this);
         
         stack.pop();
@@ -68,8 +70,10 @@ public class Parcours implements AstVisitor<Void> {
         
         this.addLigne(entry);
         
+        name = "Then block";
         ifThenElse.thenBlock.accept(this);
         stack.pop();
+        name = "Else block";
         ifThenElse.elseBlock.accept(this);
 
         stack.pop();
@@ -83,6 +87,7 @@ public class Parcours implements AstVisitor<Void> {
         LigneWhile entry = new LigneWhile(whil, stack.peek());        
         this.addLigne(entry);
 
+        name = "While";
         whil.instruction.accept(this);
 
         return null;
@@ -127,7 +132,7 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Bloc bloc) {
         //CREER TDS !!!!!
-        Tds tds = new Tds(stack.peek(),i);
+        Tds tds = new Tds(stack.peek(),i, name);
         i++;
 
         listetds.add(tds);
@@ -172,7 +177,7 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(new LigneStruct(declTyp));
 
         //creation d'une tds avec une liste de decl vars
-        Tds tds= new Tds(stack.peek(),i);
+        Tds tds= new Tds(stack.peek(),i, "Struct");
         i++;
 
         listetds.add(tds);
@@ -201,6 +206,7 @@ public class Parcours implements AstVisitor<Void> {
         //CREER TDS !!!!!
         LigneFonction entry = new LigneFonction(intParam);
         this.addLigne(entry);
+        name = "Fonction "+intParam.ident.name;
         intParam.bloc.accept(this);
         intParam.listParam.accept(this);
         this.stack.pop();
@@ -225,6 +231,7 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
         
         //creer une tds avec bloc
+        name = "Fonction "+structParam.ident2.name;
         structParam.bloc.accept(this);
 
         stack.pop();

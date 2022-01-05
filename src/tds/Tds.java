@@ -11,26 +11,26 @@ public class Tds{
     private  int numero;
     private ArrayList<Ligne> contenu;
     private Tds father=null;
+    private String name;
 
-    public Tds(int i) {
+    public Tds(int i, String name) {
         this.numero=i;
         this.nv_imbrication=0; //car le pere
         this.contenu = new ArrayList<Ligne>();
+        this.name = name;
     }
-    public Tds(Tds father, int i){
+    public Tds(Tds father, int i, String name){
         this.father=father;
         this.nv_imbrication=father.getNiveau()+1;
         this.numero=i;
         this.contenu = new ArrayList<Ligne>();
+        this.name=name;
     }
 
     public int addEntry(Ligne entry) {
         contenu.add(entry);
         return contenu.size();
     }
-
-
-
 
     private int getNiveau() {
         return this.nv_imbrication;
@@ -48,7 +48,7 @@ public class Tds{
 
 
     public String toString() {
-        String result = "TDS | Numéro: "+ numero+" | Nv imbrication: "+ this.nv_imbrication+"\n";
+        String result = "TDS "+name+" | Numéro: "+ numero+" | Nv imbrication: "+ this.nv_imbrication+"\n";
         result += "______________________________________\n";
         for (Ligne lg : contenu) {
             result += "Entry: "+lg.toString() + "\n";
