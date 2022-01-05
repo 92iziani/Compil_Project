@@ -303,6 +303,11 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IntParam intParam) {
+         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
+        if (getTable().ifExists2(intParam.ident.name)){
+            System.out.println("ERROR : Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois");
+            System.exit(1);
+        }
         //CREER TDS !!!!!
         LigneFonction entry = new LigneFonction(intParam);
         this.addLigne(entry);
