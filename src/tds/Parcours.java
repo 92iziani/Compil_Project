@@ -100,6 +100,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Affectation affect) {
+        affect.expr.accept(this);
         return null;
     }
 
@@ -158,6 +159,8 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Divide divide) {
+        // CONTROLE SEMANTIQUE : division par 0
+        divide.right.accept(this);
         return null;
     }
 
@@ -198,6 +201,11 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Entier entier) {
+        //CONTROLE SEMANTIQUE DE DIVIDE
+        if (entier.value.equals("0")){
+            printError("ATTENTION DIVISION PAR 0 ligne 4");
+            
+        }
         return null;
     }
 
@@ -317,5 +325,9 @@ public class Parcours implements AstVisitor<Void> {
         return null;
     }
 
+    public static void printError(String msg) {
+        System.out.println("Error! " + msg);
+        System.exit(1);
+    }
 }
 
