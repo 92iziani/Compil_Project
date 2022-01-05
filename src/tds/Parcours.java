@@ -118,6 +118,12 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Ident ident) {
+        //CONTROLE SEMANTIQUE CHECK SI La variable EXISTE
+            if (!getTable().ifExists2(ident.name)){
+                System.err.println("ERROR : Variable "+ident.name +" utilisée non déclarée !");
+                System.exit(1);
+            } 
+        
         return null;
     }
 
