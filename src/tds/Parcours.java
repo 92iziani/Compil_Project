@@ -409,6 +409,24 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(OpExpr x) {
+         //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
+
+        //je veux des ident pas des entiers
+        if (x.expr1 instanceof Ident){
+            System.out.println("Saaaallutt");
+            Ident left = (Ident)x.expr1;
+            
+            if (!getTable().ifExists2(left.name)){
+                printError("Variable "+left.name+" utilisée non déclarée !");
+            } 
+        }
+        if (x.expr2 instanceof Ident){
+            Ident right = (Ident)x.expr2;
+            if (!getTable().ifExists2(right.name)){
+                printError("Variable "+right.name+" utilisée non déclarée !");
+
+            }
+        }
         return null;
     }
 
