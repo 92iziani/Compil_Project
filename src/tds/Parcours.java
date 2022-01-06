@@ -59,6 +59,8 @@ public class Parcours implements AstVisitor<Void> {
         LigneIf entry = new LigneIf(ifThen, stack.peek());
         this.addLigne(entry);
 
+        ifThen.condition.accept(this);
+
         //creation de la tds par le then block
         name = "Then block";
         ifThen.thenBlock.accept(this);
@@ -74,6 +76,8 @@ public class Parcours implements AstVisitor<Void> {
         LigneIf entry = new LigneIf(ifThenElse, stack.peek());
         
         this.addLigne(entry);
+
+        ifThenElse.condition.accept(this);
         
         name = "Then block";
         ifThenElse.thenBlock.accept(this);
@@ -413,17 +417,16 @@ public class Parcours implements AstVisitor<Void> {
 
         //je veux des ident pas des entiers
         if (x.expr1 instanceof Ident){
-            System.out.println("Saaaallutt");
             Ident left = (Ident)x.expr1;
-            
+
             if (!getTable().ifExists2(left.name)){
-                printError("Variable "+left.name+" utilisée non déclarée !");
+                printError("Variable "+left.name+" utilisée dans la condition non déclarée !");
             } 
         }
         if (x.expr2 instanceof Ident){
             Ident right = (Ident)x.expr2;
             if (!getTable().ifExists2(right.name)){
-                printError("Variable "+right.name+" utilisée non déclarée !");
+                printError("Variable "+right.name+" utilisée dans la condition non déclarée !");
 
             }
         }
