@@ -12,6 +12,8 @@ public class Parcours implements AstVisitor<Void> {
     private String name;
     private String where;
 
+    public ArrayList<String> listerror= new ArrayList<String>();  //POUR STOCKER LES ERREURS
+
     //constructeur de parcours
     public Parcours() {
         listetds = new ArrayList<Tds>();
@@ -117,8 +119,9 @@ public class Parcours implements AstVisitor<Void> {
          //CONTROLE SEMANTIQUE CHECK SI LA VARIBALE D'AFFECTATION EXISTE
         Ident id = (Ident)affect.ident;
         if (!getTable().ifExists2(id.name)){
-            System.err.println("ERROR : Variable "+id.name +" utilisée non déclarée !");
-            System.exit(1);
+            listerror.add("ERROR : Variable "+id.name +" utilisée non déclarée !");
+            /*System.err.println("ERROR : Variable "+id.name +" utilisée non déclarée !");
+            System.exit(1);*/
         }
         return null;
     }
@@ -127,8 +130,8 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Ident ident) {
         //CONTROLE SEMANTIQUE CHECK SI La variable EXISTE
             if (!getTable().ifExists2(ident.name)){
-                System.err.println("ERROR : Variable "+ident.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+ident.name +" utilisée non déclarée !");
+               // System.exit(1);
             } 
         
         return null;
@@ -180,15 +183,15 @@ public class Parcours implements AstVisitor<Void> {
         if (plus.left instanceof Ident){
             Ident left = (Ident)plus.left;
             if (!getTable().ifExists2(left.name)){
-                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                //System.exit(1);
             } 
         }
         if (plus.right instanceof Ident){
             Ident right = (Ident)plus.right;
             if (!getTable().ifExists2(right.name)){
-                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                //System.exit(1);
             }
         }
         return null;
@@ -202,15 +205,15 @@ public class Parcours implements AstVisitor<Void> {
         if (minus.left instanceof Ident){
             Ident left = (Ident)minus.left;
             if (!getTable().ifExists2(left.name)){
-                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                //System.exit(1);
             } 
         }
         if (minus.right instanceof Ident){
             Ident right = (Ident)minus.right;
             if (!getTable().ifExists2(right.name)){
-                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+right.name +" utilisée non déclarée !");
+               // System.exit(1);
             }
         }
         return null;
@@ -228,15 +231,15 @@ public class Parcours implements AstVisitor<Void> {
         if (divide.left instanceof Ident){
             Ident left = (Ident)divide.left;
             if (!getTable().ifExists2(left.name)){
-                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+left.name +" utilisée non déclarée !");
+                //System.exit(1);
             } 
         }
         if (divide.right instanceof Ident){
             Ident right = (Ident)divide.right;
             if (!getTable().ifExists2(right.name)){
-                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                //System.exit(1);
             }
         }
 
@@ -251,15 +254,15 @@ public class Parcours implements AstVisitor<Void> {
         if (mult.left instanceof Ident){
             Ident left = (Ident)mult.left;
             if (!getTable().ifExists2(left.name)){
-                System.err.println("ERROR : Variable "+left.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+left.name +" utilisée non déclarée !");
+               // System.exit(1);
             } 
         }
         if (mult.right instanceof Ident){
             Ident right = (Ident)mult.right;
             if (!getTable().ifExists2(right.name)){
-                System.err.println("ERROR : Variable "+right.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+right.name +" utilisée non déclarée !");
+                //System.exit(1);
             }
         }
         return null;
@@ -267,23 +270,29 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(DeclaList declaList) {
-        //CONTROLE SEMANTIQUE CHECK SI UNE VAR EST DECLAREE PLUSIEURS FOIS
-        Ident id = (Ident)declaList.declaList.get(0);
-        if (getTable().ifExists(id.name)){
-            System.err.println("ERROR : Variable "+id.name +" déclarée plusieurs fois !");
-            System.exit(1);
+        for(int i=0 ; i<declaList.declaList.size();i++) {
+            //CONTROLE SEMANTIQUE CHECK SI UNE VAR EST DECLAREE PLUSIEURS FOIS
+            Ident id = (Ident) declaList.declaList.get(i);
+            if (getTable().ifExists(id.name)) {
+                listerror.add("ERROR : Variable " + id.name + " déclarée plusieurs fois !");
+                //System.exit(1);
+            }
+            //this.addLigne(new LigneVariable(declaList));
+            ArrayList<Ident> lvar = new ArrayList<Ident>();
+            lvar.add(id);
+            DeclaList dcl = new DeclaList(lvar);
+            this.addLigne(new LigneVariable(dcl));
         }
-
-        this.addLigne(new LigneVariable(declaList));
         return null;
+
     }
 
     @Override
     public Void visit(DeclTyp declTyp) {
         //CONTROLE SEMANTIQUE CHECK SI UN TYPE EST DECLARE PLUSIEURS FOIS
         if (getTable().ifExists3(declTyp.ident.name)){
-            System.out.println("ERROR : Type "+declTyp.ident.name+ " ne peut pas être défini plusieurs fois !");
-            System.exit(1);
+            listerror.add("ERROR : Type "+declTyp.ident.name+ " ne peut pas être défini plusieurs fois !");
+            //System.exit(1);
         }
 
         this.addLigne(new LigneStruct(declTyp));
@@ -305,8 +314,8 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(DeclaAffect dAffect) {
         Ident id = (Ident)dAffect.ident;
         if (getTable().ifExists(id.name)){
-            System.err.println("ERROR : Variable "+id.name +" déclarée plusieurs fois !");
-            System.exit(1);
+            listerror.add("ERROR : Variable "+id.name +" déclarée plusieurs fois !");
+            //System.exit(1);
         }
 
         this.addLigne(new LigneVariable(dAffect));
@@ -318,7 +327,8 @@ public class Parcours implements AstVisitor<Void> {
         //CONTROLE SEMANTIQUE DE DIVIDE
         if (where == "divide"){
             if (entier.value.equals("0")){
-                printError("DIVISION PAR 0");
+                //printError("DIVISION PAR 0");
+                listerror.add("ERROR : Divison par 0 !");
                 
             }
         }
@@ -330,8 +340,8 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(IntParam intParam) {
          //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(intParam.ident.name)){
-            System.out.println("ERROR : Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois");
-            System.exit(1);
+            listerror.add("ERROR : Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois");
+            //System.exit(1);
         }
         //CREER TDS !!!!!
         LigneFonction entry = new LigneFonction(intParam);
@@ -347,8 +357,8 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Struct struct) {
         //CONTROLE SEMANTIQUE CHECK SI LE TYPE EXISTE
         if (!getTable().ifExists3(struct.structList.get(0).name)){
-            System.out.println("ERROR : Type "+struct.structList.get(0).name+ " n'existe pas");
-            System.exit(1);
+            listerror.add("ERROR : Type "+struct.structList.get(0).name+ " n'existe pas !");
+            //System.exit(1);
         }
         // pas de creation de tds
         // creation de plusieurs lignes
@@ -364,8 +374,8 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(StructParam structParam) {
         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(structParam.ident2.name)){
-            System.out.println("ERROR : Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois");
-            System.exit(1);
+            listerror.add("ERROR : Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois");
+            //System.exit(1);
         }
         LigneFonction entry = new LigneFonction(structParam);
         this.addLigne(entry);
@@ -384,8 +394,8 @@ public class Parcours implements AstVisitor<Void> {
         if (x.expr instanceof Ident){
             Ident e = (Ident)x.expr;
             if (!getTable().ifExists2(e.name)){
-                System.err.println("ERROR : Variable "+e.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+e.name +" utilisée non déclarée !");
+                //System.exit(1);
             } 
         }
         return null;
@@ -399,8 +409,9 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(IdentExprPointeur x) {
         if (!getTable().ifExists2(x.ident.name)){
-            System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
-            System.exit(1);
+            listerror.add("ERROR : Fonction "+x.ident.name+ " n'existe pas");
+            /*System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
+            System.exit(1);*/
         }
 
         return null;
@@ -420,13 +431,13 @@ public class Parcours implements AstVisitor<Void> {
             Ident left = (Ident)x.expr1;
 
             if (!getTable().ifExists2(left.name)){
-                printError("Variable "+left.name+" utilisée dans la condition non déclarée !");
+                listerror.add("ERROR : Variable "+left.name+" utilisée dans la condition non déclarée !");
             } 
         }
         if (x.expr2 instanceof Ident){
             Ident right = (Ident)x.expr2;
             if (!getTable().ifExists2(right.name)){
-                printError("Variable "+right.name+" utilisée dans la condition non déclarée !");
+                listerror.add("ERROR : Variable "+right.name+" utilisée dans la condition non déclarée !");
 
             }
         }
@@ -441,8 +452,8 @@ public class Parcours implements AstVisitor<Void> {
         if (x.expr instanceof Ident){
             Ident e = (Ident)x.expr;
             if (!getTable().ifExists2(e.name)){
-                System.err.println("ERROR : Variable "+e.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+e.name +" utilisée non déclarée !");
+                //System.exit(1);
             } 
         }
         return null;
@@ -461,8 +472,8 @@ public class Parcours implements AstVisitor<Void> {
         if (x.expr instanceof Ident){
             Ident e = (Ident)x.expr;
             if (!getTable().ifExists2(e.name)){
-                System.err.println("ERROR : Variable "+e.name +" utilisée non déclarée !");
-                System.exit(1);
+                listerror.add("ERROR : Variable "+e.name +" utilisée non déclarée !");
+                //System.exit(1);
             } 
         }
         return null;

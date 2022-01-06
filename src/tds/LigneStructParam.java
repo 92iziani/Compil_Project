@@ -16,7 +16,7 @@ public class LigneStructParam extends Ligne{
     public String toString() {
         //afficher les infos
         String res="";
-        res += " Paramètre de type: "+ident1.name+" , nom = " +ident1.name ;
+        res += " Paramètre de type: "+ident1.name+" , nom = " +ident2.name ;
         return res;
     }
 

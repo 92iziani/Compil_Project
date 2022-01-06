@@ -70,12 +70,23 @@ public class Main {
             Parcours par =  new Parcours();
             ast.accept(par);
            // par.toString();
-            for (Tds tds:par.listetds){
-                if(tds != null){
-                    System.out.println(tds.toString());
+            if(par.listerror.size() > 0){
+                System.out.println("\t"); //c plus jolie avec des \t ;)
+                for (String erreur: par.listerror){
+                    System.err.println(erreur);
+                }
+                System.out.println("\t"); //c plus jolie avec des \t ;)
 
+            }
+            else {
+                for (Tds tds : par.listetds) {
+                    if (tds != null) {
+                        System.out.println(tds.toString());
+
+                    }
                 }
             }
+
         }
         catch (IOException e) {
             e.printStackTrace();

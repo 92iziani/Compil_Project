@@ -1,61 +1,114 @@
 grammar circ;
 
-@header {
+@header{
 package parser;
 }
 
-program: decl* EOF;
+program :
+    decl* EOF;
 
-decl: decl_typ | decl_fct;
+decl :
+    decl_typ                //SUPPRIMER DECL VARS
+    | decl_fct      
+    ;
 
-decl_vars:
-	'int' (IDENT ',')* IDENT ';'					# Decla
-	| 'struct' IDENT ('*' IDENT ',')* '*' IDENT ';'	# Struct
-	| 'int' IDENT '=' ENTIER ';'					# DeclaAffect;
+decl_vars :
+      'int' (IDENT',')* IDENT ';'                       #Decla
+    | 'struct' IDENT ('*' IDENT ',')* '*' IDENT  ';'    #Struct //MODIFIED
+    | 'int' IDENT '=' ENTIER';'                         #DeclaAffect ;
+//'int' (IDENT,',')+ ';'
+decl_typ :
+    'struct' IDENT '{' liste_decl_vars '}' ';';
 
-decl_typ: 'struct' IDENT '{' liste_decl_vars '}' ';';
+// struct ident * ident , * ident , * ident ;   size = 11
+// struct ident * ident ; size = 4
 
-decl_fct:
-	'int' IDENT '(' liste_param ')' bloc				# IntParam
-	| 'struct' IDENT '*' IDENT '(' liste_param ')' bloc	# StructParam;
+decl_fct :
+    'int' IDENT '(' liste_param ')' bloc    #IntParam
+    | 'struct' IDENT '*' IDENT '(' liste_param ')' bloc    #StructParam ;
 
-liste_expr: (expr ',')* expr;
+//MODIFIED
+//liste_param :
+  //  param;
 
-param:
-	'int' IDENT					# Paramint
-	| 'struct' IDENT '*' IDENT	# Paramstruct;
+liste_expr : (expr',')* expr ;    //EXPR ADDED
 
-liste_param: (param ',')* param # List | # Vide;
+param : 'int' IDENT    #Paramint
+        | 'struct' IDENT '*' IDENT      #Paramstruct;
 
-expr:
-	ENTIER								# Entier
-	| IDENT								# Ident
-	| IDENT '(' liste_expr ')'			# IdentExprPointeur
-	| '!' expr							# ExclaExpr
-	| '-' expr							# TiretExpr
-	| 'sizeof' '(' 'struct' IDENT ')'	# Sizeof
-	| '(' expr ')'						# ParenthExpr
-	| expr OPERATEUR expr				# OpExpr
-	| expr '->' IDENT					# Fleche;
+liste_param :   (param ',')* param  #List       // param , param , param
+                |                   #Vide
+                ;      //RESTE A MODIFIER
 
-instruction:
-	expr ';'											# ExprSeule
-	| 'if' '(' expr ')' instruction						# IfThen
-	| 'if' '(' expr ')' instruction 'else' instruction	# IfThenElse
-	| 'while' '(' expr ')' instruction					# While
-	| bloc												# BlocInstruct
-	| affectation										# AffectInstruct
-	| 'return' expr ';'									# Return;
+//list : liste_param* ; //ADDED
 
-affectation: IDENT '=' expr2 ';';
+//MODIFIED param
+/*liste_param :
+    ('int' IDENT ',' )* ('int' IDENT)                        #Paramint
+    | 'struct' IDENT  '*' IDENT   */      /*#Paramstruct;*/
 
-liste_decl_vars: decl_vars*;
+//int ident , int ident , int ident
+//int ident
+// int ident , int ident
+/*expr :  ENTIER expr1                            #EntierExpr
+        |IDENT expr1                             #IdentExpr
+        | IDENT '(' liste_expr ')' expr1          #IdentExprPointeurExpr
+        | '!' expr expr1                        #ExclaExprExpr
+        | '-' expr expr1                        #TiretExprExpr
+        | 'sizeof' '(' 'struct' IDENT ')' expr1 #SizeofExpr
+        | '(' expr ')' expr1                    #ParenthExprExpr
+        | ENTIER                                #Entier
+        | IDENT                                 #Ident
+        | IDENT '(' liste_expr ')'              #IdentExprPointeur
+        | '!' expr                              #ExclaExpr
+        | '-' expr                              #TiretExpr
+        | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
+        | '(' expr ')'                          #ParenthExpr
+        ;*/
 
-liste_instruction: instruction*;
+expr :           ENTIER                                #Entier
+               | IDENT                                 #Ident
+               | IDENT '(' liste_expr ')'              #IdentExprPointeur
+               | '!' expr                              #ExclaExpr
+               | '-' expr                              #TiretExpr
+               | 'sizeof' '(' 'struct' IDENT ')'       #Sizeof
+               | '(' expr ')'                          #ParenthExpr
+               |  expr OPERATEUR expr                   #OpExpr
+               | expr '->' IDENT                        #Fleche
+               ;
 
-bloc: '{' liste_decl_vars liste_instruction '}';
+
+
+/*expr1 : '->' IDENT expr1    #FlecheExpr
+        |   '->' IDENT         #Fleche
+        | OPERATEUR expr expr1     #OpExprExpr
+        | OPERATEUR expr    #OpExpr
+        ;*/
+
+//deleted ; in instruction
+instruction :
+     expr ';' #ExprSeule
+    | 'if' '(' expr ')' instruction #IfThen
+    | 'if' '(' expr ')' instruction 'else' instruction #IfThenElse
+    | 'while' '(' expr ')' instruction #While
+    | bloc  #BlocInstruct
+    | affectation #AffectInstruct
+    | 'return' expr ';'    #Return ;
+
+affectation : IDENT '=' expr2 ';' ;
+// donc il faut obligatoirement déclarer les vars au début
+
+liste_decl_vars :
+    decl_vars*;
+
+liste_instruction :
+    instruction*;
+
+bloc :
+    '{' liste_decl_vars liste_instruction '}';
 
 OPERATEUR : '=' | '==' | '!=' | '<' | '<=' | '>' | '>=' | '+' | '-' | '*' | '/' | '&&' | '||';
+
 
 ENTIER : '0' | ('1'..'9') ('0'..'9')* | CARACTERE;
 IDENT : ('a'..'z'|'A'..'Z')('a'..'z'|'A'..'Z'|'0'..'9'|'_')*;
@@ -65,8 +118,11 @@ CARACTERE : '\''('!'|'#'|'$'|'%'|'('|')'|';'|'+'|','|'-'|'.'|'&'
             ;
 WS : ('\n'|' '|'\t'|'\r'|'/*' .*? '*/' | '//' ~[\r\n]*)+ -> skip;
 
+
 expr2 : plus;
 
 plus:  mult (('+'|'-') mult)*;
 
 mult : expr (('*'|'/') expr)*;
+
+//BlockComment :   '/*' .*? '*/' -> skip;

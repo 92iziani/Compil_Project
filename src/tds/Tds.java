@@ -147,7 +147,7 @@ public class Tds{
 
     public String toString() {
         String result = "TDS "+name+" | Numéro: "+ numero+" | Nv imbrication: "+ this.nv_imbrication+"\n";
-        result += "______________________________________\n";
+        result += "__________________________________________________\n";
         for (Ligne lg : contenu) {
             result += "Entry: "+lg.toString() + "\n";
         }
