@@ -1,6 +1,7 @@
 package tds;
 
 import ast.*;
+import parser.circParser.ExprSeuleContext;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -11,6 +12,7 @@ public class Parcours implements AstVisitor<Void> {
     public Stack<Tds> stack;
     private String name;
     private String where;
+    private String retour;
 
     public ArrayList<String> listerror= new ArrayList<String>();  //POUR STOCKER LES ERREURS
 
@@ -190,7 +192,19 @@ public class Parcours implements AstVisitor<Void> {
         //ca peut etre un probleme 
         bloc.declarations.accept(this);
         //stack.pop();
+        
         bloc.instructions.accept(this);
+        retour ="non";
+        if (bloc.instructions instanceof Return){
+            retour="oui";
+        }
+
+        if (retour=="non"){
+            String error = "ERROR : Il manque le return";
+            if (!listerror.contains(error)){
+                listerror.add(error);
+            }
+        }
 
         return null;
     }
