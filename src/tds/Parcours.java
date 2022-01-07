@@ -150,7 +150,7 @@ public class Parcours implements AstVisitor<Void> {
          //CONTROLE SEMANTIQUE CHECK SI LA VARIBALE D'AFFECTATION EXISTE
         Ident id = (Ident)affect.ident;
         if (!getTable().ifExists2(id.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Variable "+id.name +" utilisée non déclarée !");
+            listerror.add(rouge+"ERROR :"+blanc+" Variable "+id.name +" utilisée dans l'affectation non déclarée !");
             /*System.err.println("ERROR : Variable "+id.name +" utilisée non déclarée !");
             System.exit(1);*/
         }
