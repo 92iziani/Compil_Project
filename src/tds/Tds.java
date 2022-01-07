@@ -64,6 +64,10 @@ public class Tds{
                        }
                    }
                }
+               //verif des paramètres
+               if (var.idparam != null && var.idparam.equals(nom)){
+                    return true;
+               }
                //ADDED
                 /*if( var.typeStruct != null && var.typeStruct.name.equals(nom)){
                     return true;

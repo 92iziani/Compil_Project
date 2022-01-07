@@ -12,7 +12,7 @@ int main(){
 int fork(){
 int a;
 a = 5;
-if (b==4){
+if (x==4){
     a=0;
 }else {
     

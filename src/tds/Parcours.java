@@ -11,6 +11,7 @@ public class Parcours implements AstVisitor<Void> {
     public Stack<Tds> stack;
     private String name;
     private String where;
+    private Ast liste;
 
     public ArrayList<String> listerror= new ArrayList<String>();  //POUR STOCKER LES ERREURS
 
@@ -93,6 +94,8 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(While whil) {
+        where ="while";
+        
         //CREER TDS !!!!!
         whil.condition.accept(this); //ADDED
 
@@ -166,6 +169,9 @@ public class Parcours implements AstVisitor<Void> {
 
         listetds.add(tds);
         stack.push(tds);
+        if (where == "fonction"){
+            liste.accept(this);
+        }
 
         //ca peut etre un probleme 
         bloc.declarations.accept(this);
@@ -338,17 +344,21 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IntParam intParam) {
-         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
+        //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(intParam.ident.name)){
             listerror.add("ERROR : Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois");
-            //System.exit(1);
         }
+
         //CREER TDS !!!!!
+        
         LigneFonction entry = new LigneFonction(intParam);
         this.addLigne(entry);
         name = "Fonction "+intParam.ident.name;
+        //intParam.listParam.accept(this);
+        where = "fonction";
+        liste=intParam.listParam;
         intParam.bloc.accept(this);
-        intParam.listParam.accept(this);
+        
         this.stack.pop();
         return null;
     }
