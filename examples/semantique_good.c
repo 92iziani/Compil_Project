@@ -1,6 +1,45 @@
-int main(){
-    int a=3;    
-    if(b!=2){
-        a=2;
+/**
+ * Exemple permettant d'afficher des tds
+ **/
+
+int recherche(int t){
+    int p=0;
+    
+    if (t==2){
+        p=8;
     }
-    }   
+    return p;
+}
+
+
+
+int controle(int test){
+    int condition = 8;
+    int result = 0;
+    if (condition == 8){
+        //variable result utilisee non declaree
+        result = test;
+    }
+    return result;
+}
+
+struct person_t
+{
+    int nom;
+    int tel;
+};
+
+int main(){
+    int a,b;
+    a = 8/1;
+
+    recherche(2,);
+
+    while(b != 2){
+        int result;
+        a = b+2;
+        b = a-1;
+        result = a+b;
+    }
+    return a;
+}
