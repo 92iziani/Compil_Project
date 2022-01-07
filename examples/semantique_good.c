@@ -11,29 +11,31 @@ int recherche(int t){
     return p;
 }
 
-
+struct person_t
+{
+    int nom;
+    int tel;
+    int nom;
+};
 
 int controle(int test){
+    struct person_t *p;
     int condition = 8;
+    struct person_t *p;
     int result = 0;
     if (condition == 8){
-        //variable result utilisee non declaree
         result = test;
     }
     return result;
 }
 
-struct person_t
-{
-    int nom;
-    int tel;
-};
+
 
 int main(){
     int a,b;
     a = 8/1;
 
-    recherche(2,);
+    recherche(2);
 
     while(b != 2){
         int result;

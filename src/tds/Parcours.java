@@ -15,8 +15,11 @@ public class Parcours implements AstVisitor<Void> {
     private String name;
     private String where;
     private String retour;
+    private String type_retour;
     private static final String rouge = "\033[31m";
     private static final String blanc = "\033[0m";
+    private static final String bold = "\033[1m";
+    private static final String normal = "\033[0m";
 
     public ArrayList<String> listerror= new ArrayList<String>();  //POUR STOCKER LES ERREURS
 
@@ -116,8 +119,6 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(While whil) {
         
-        
-
         whil.condition.accept(this); //ADDED
 
 
@@ -139,7 +140,8 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Return retur) {
-        //je check dans la tds père genre program si le type de retour correspond bien à ce qui est donné
+        where = "return";
+        retur.retour.accept(this);
         return null;
     }
 
@@ -163,7 +165,14 @@ public class Parcours implements AstVisitor<Void> {
             if (!getTable().ifExists2(ident.name)){
                 listerror.add(rouge+"ERROR :"+blanc+" Variable "+ident.name +" utilisée non déclarée !");
                // System.exit(1);
-            } 
+            }
+
+
+            /*String type = stack.peek().find_type2(ident.name);
+            if (!type_retour.equals(type)){
+                listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable "+type +" ne correspond pas au type de retour de la fonction : "+type_retour+" !");
+
+            }*/
         
         return null;
     }
@@ -381,11 +390,12 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
         name = "Fonction "+intParam.ident.name;
         //intParam.listParam.accept(this);
-        where = "fonction";
+        where = "fonction int";
         //CREER TDS !!!!!
         Tds tds = new Tds(stack.peek(),i, name);
         i++;
-
+        //je stocke le type de retour
+        type_retour="int";
         listetds.add(tds);
         stack.push(tds);
         intParam.listParam.accept(this);
@@ -408,11 +418,17 @@ public class Parcours implements AstVisitor<Void> {
         }
         // pas de creation de tds
         // creation de plusieurs lignes
-        Ident type = struct.structList.get(0);
+        // verif si ça existe deja
+        if (getTable().ifExists2(struct.structList.get(1).name)){
+            listerror.add(rouge+"ERROR : "+blanc+"La variable struct "+struct.structList.get(1).name+ " est deja definie !");
+        } else {
+            Ident type = struct.structList.get(0);
         for (int i=1; i<struct.structList.size(); i++){
             LigneVariable entry = new LigneVariable(struct.structList.get(i),type);
             this.addLigne(entry);
         }
+        }
+        
         return null;
     }
 
@@ -430,10 +446,18 @@ public class Parcours implements AstVisitor<Void> {
          //CREER TDS !!!!!
          Tds tds = new Tds(stack.peek(),i, name);
          i++;
+
+         //je stocke le type de retour
+         type_retour=structParam.ident1.name; //je suis pas sure ident1 ou 2
  
          listetds.add(tds);
          stack.push(tds);
         structParam.bloc.accept(this);
+
+        if (retour == "non"){
+            listerror.add(rouge+"ERROR : "+blanc+"Il n'y a pas de return !");
+        }
+
         stack.pop();
         return null;
     }

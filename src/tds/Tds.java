@@ -68,18 +68,11 @@ public class Tds{
                if (var.idparam != null && var.idparam.name.equals(nom)){
                     return true;
                }
-               //ADDED
-                /*if( var.typeStruct != null && var.typeStruct.name.equals(nom)){
+               
+               //je dois vérifier si le struct n'existe pas deja (plus loin pour le type)
+                if( var.struct != null && var.struct.name.equals(nom)){
                     return true;
-                    *//*for (Ligne l:contenu){
-                        if(l instanceof LigneStruct){
-                            LigneStruct ls = (LigneStruct) l;
-                            if(ls.name.equals(nom)){
-                                return true;
-                            }
-                        }
-                    }*//*
-                }*/
+                }
             }
 
 
@@ -144,6 +137,56 @@ public class Tds{
         }
     }
 
+    public String find_type(String nom){
+
+        
+        for (Ligne lg : contenu){
+            if (lg instanceof LigneVariable){
+                LigneVariable var = (LigneVariable) lg;
+
+                //verif des variables
+                if(var.id2 != null && var.id2.name.equals(nom) ){
+                   return "int";
+                }
+                if (var.id1 != null){
+                   for(Ident id:var.id1){
+                       if (id.name.equals(nom)){
+                           return "int";
+                       }
+                   }
+                }
+                //verif des paramètres
+                if (var.idparam != null && var.idparam.name.equals(nom)){
+                    return "int";
+                }
+
+                //verif des struct
+                if (var.struct != null && var.struct.name.equals(nom)){
+
+                }
+            } 
+        }
+        return "error";
+
+    }
+
+
+    public String find_type2(String nom){
+        while (father != null){
+            if (ifExists(nom)){
+                return find_type(nom);
+            }
+            else {
+                return father.find_type(nom);
+            }
+        }
+        if (ifExists(nom)){
+            return find_type(nom);
+        }
+        else {
+            return find_type(nom);
+        }
+    }
 
 
 

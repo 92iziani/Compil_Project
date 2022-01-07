@@ -70,10 +70,12 @@ public class Main {
             Parcours par =  new Parcours();
             ast.accept(par);
            // par.toString();
+           int numero = 1;
             if(par.listerror.size() > 0){
                 System.out.println("\t"); //c plus jolie avec des \t ;)
                 for (String erreur: par.listerror){
-                    System.err.println(erreur);
+                    System.err.println(numero+" "+erreur);
+                    numero++;
                 }
                 System.out.println("\t"); //c plus jolie avec des \t ;)
 
