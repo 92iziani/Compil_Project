@@ -11,7 +11,6 @@ public class Parcours implements AstVisitor<Void> {
     public Stack<Tds> stack;
     private String name;
     private String where;
-    private Ast liste;
 
     public ArrayList<String> listerror= new ArrayList<String>();  //POUR STOCKER LES ERREURS
 
@@ -66,6 +65,12 @@ public class Parcours implements AstVisitor<Void> {
 
         //creation de la tds par le then block
         name = "Then block";
+         //CREER TDS !!!!!
+         Tds tds = new Tds(stack.peek(),i, name);
+         i++;
+ 
+         listetds.add(tds);
+         stack.push(tds);
         ifThen.thenBlock.accept(this);
         
         stack.pop();
@@ -83,9 +88,21 @@ public class Parcours implements AstVisitor<Void> {
         ifThenElse.condition.accept(this);
         
         name = "Then block";
+         //CREER TDS !!!!!
+         Tds tds = new Tds(stack.peek(),i, name);
+         i++;
+ 
+         listetds.add(tds);
+         stack.push(tds);
         ifThenElse.thenBlock.accept(this);
         stack.pop();
         name = "Else block";
+         //CREER TDS !!!!!
+         Tds tds2 = new Tds(stack.peek(),i, name);
+         i++;
+ 
+         listetds.add(tds);
+         stack.push(tds);
         ifThenElse.elseBlock.accept(this);
 
         stack.pop();
@@ -94,9 +111,9 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(While whil) {
-        where ="while";
         
-        //CREER TDS !!!!!
+        
+
         whil.condition.accept(this); //ADDED
 
 
@@ -104,6 +121,12 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
 
         name = "While";
+        //CREER TDS !!!!!
+        Tds tds = new Tds(stack.peek(),i, name);
+        i++;
+
+        listetds.add(tds);
+        stack.push(tds);
         whil.instruction.accept(this);
 
         stack.pop(); //ADDED
@@ -163,15 +186,6 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Bloc bloc) {
-        //CREER TDS !!!!!
-        Tds tds = new Tds(stack.peek(),i, name);
-        i++;
-
-        listetds.add(tds);
-        stack.push(tds);
-        if (where == "fonction"){
-            liste.accept(this);
-        }
 
         //ca peut etre un probleme 
         bloc.declarations.accept(this);
@@ -356,7 +370,13 @@ public class Parcours implements AstVisitor<Void> {
         name = "Fonction "+intParam.ident.name;
         //intParam.listParam.accept(this);
         where = "fonction";
-        liste=intParam.listParam;
+        //CREER TDS !!!!!
+        Tds tds = new Tds(stack.peek(),i, name);
+        i++;
+
+        listetds.add(tds);
+        stack.push(tds);
+        intParam.listParam.accept(this);
         intParam.bloc.accept(this);
         
         this.stack.pop();
@@ -389,8 +409,14 @@ public class Parcours implements AstVisitor<Void> {
         }
         LigneFonction entry = new LigneFonction(structParam);
         this.addLigne(entry);
-        //creer une tds avec bloc
+        
         name = "Fonction "+structParam.ident2.name;
+         //CREER TDS !!!!!
+         Tds tds = new Tds(stack.peek(),i, name);
+         i++;
+ 
+         listetds.add(tds);
+         stack.push(tds);
         structParam.bloc.accept(this);
         stack.pop();
         return null;
@@ -491,13 +517,11 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ListeExpr listexpr) {
-
         return null;
     }
 
     @Override
     public Void visit(Paramint x) {
-
         LigneVariable ligne = new LigneVariable(x);
         this.addLigne(ligne);
         return null;

@@ -65,7 +65,7 @@ public class Tds{
                    }
                }
                //verif des paramètres
-               if (var.idparam != null && var.idparam.equals(nom)){
+               if (var.idparam != null && var.idparam.name.equals(nom)){
                     return true;
                }
                //ADDED
