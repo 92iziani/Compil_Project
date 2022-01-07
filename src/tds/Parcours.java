@@ -167,12 +167,14 @@ public class Parcours implements AstVisitor<Void> {
                // System.exit(1);
             }
 
+            //dans le cas où je suis dans le return
+            //verifier si type_retour (int ou le struct) correspond au find_type de ident.name
+            if (where=="return"){
 
-            /*String type = stack.peek().find_type2(ident.name);
-            if (!type_retour.equals(type)){
-                listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable "+type +" ne correspond pas au type de retour de la fonction : "+type_retour+" !");
-
-            }*/
+                if(!getTable().find_type2(ident.name).equals(type_retour)){
+                    listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+getTable().find_type2(ident.name)+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
+                }
+            }
         
         return null;
     }
@@ -390,7 +392,7 @@ public class Parcours implements AstVisitor<Void> {
         this.addLigne(entry);
         name = "Fonction "+intParam.ident.name;
         //intParam.listParam.accept(this);
-        where = "fonction int";
+        //where = "fonction int";
         //CREER TDS !!!!!
         Tds tds = new Tds(stack.peek(),i, name);
         i++;
@@ -448,7 +450,7 @@ public class Parcours implements AstVisitor<Void> {
          i++;
 
          //je stocke le type de retour
-         type_retour=structParam.ident1.name; //je suis pas sure ident1 ou 2
+         type_retour=structParam.ident2.name; //je suis pas sure ident1 ou 2
  
          listetds.add(tds);
          stack.push(tds);

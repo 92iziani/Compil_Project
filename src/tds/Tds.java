@@ -138,35 +138,21 @@ public class Tds{
     }
 
     public String find_type(String nom){
-
-        
+        //je parcours le contenu
+        String type = "int";
         for (Ligne lg : contenu){
+            //je vérifie si c'est une instance de LigneVariable
             if (lg instanceof LigneVariable){
                 LigneVariable var = (LigneVariable) lg;
 
-                //verif des variables
-                if(var.id2 != null && var.id2.name.equals(nom) ){
-                   return "int";
-                }
-                if (var.id1 != null){
-                   for(Ident id:var.id1){
-                       if (id.name.equals(nom)){
-                           return "int";
-                       }
-                   }
-                }
-                //verif des paramètres
-                if (var.idparam != null && var.idparam.name.equals(nom)){
-                    return "int";
-                }
-
+                
                 //verif des struct
                 if (var.struct != null && var.struct.name.equals(nom)){
-
+                    type=var.typeStruct.name;
                 }
             } 
         }
-        return "error";
+        return type;
 
     }
 
