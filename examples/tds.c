@@ -3,12 +3,11 @@ int main(int a, int b){
     /*while(b!=2){
         int a=4;
     }*/
-    return a;
+    return 1;
 }
 
 int fork(int c, struct person* t){
     //int a,b;
-    main(s);
-    return c;
+    main(x);
+    return 1;
 }
-

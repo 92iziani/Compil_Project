@@ -465,6 +465,7 @@ public class Parcours implements AstVisitor<Void> {
             /*System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
             System.exit(1);*/
         }
+        x.listexpr.accept(this);
 
         return null;
     }
