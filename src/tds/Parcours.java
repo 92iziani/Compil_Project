@@ -489,6 +489,7 @@ public class Parcours implements AstVisitor<Void> {
             /*System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
             System.exit(1);*/
         }
+        x.listexpr.accept(this);
 
         return null;
     }
@@ -557,6 +558,20 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(ListeExpr listexpr) {
+        //PAS FINI
+        //CONTROLE SEMANTIQUE CHECK SI LES PARAMETRES DE LA FCT ONT ETE DECLAREE (APPEL DE FCT)
+        ArrayList<Ident> id = new ArrayList<Ident>();
+        for(Ast ast: listexpr.list) {
+            if(ast instanceof Ident) {
+                Ident ident = (Ident) ast;
+                id.add(ident);
+                if (!getTable().ifExists2(ident.name)) {
+                    listerror.add("ERROR : Variable " + ident.name + " utilisée non déclarée !");
+                    // System.exit(1);
+                }
+            }
+
+        }
         return null;
     }
 
