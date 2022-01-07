@@ -144,6 +144,25 @@ public class Tds{
         }
     }
 
+    //FONCTION QUI DONNE LA LISTE DES TYPES DES PARAM D'UNE FCT DANS L'ORDRE (DECLARATION DE FONCTION) : CHERCHE UNIQUEMENT DANS LA TABLE COURANTE
+    public ArrayList<String> listParam(){
+        ArrayList<String> listtypeparam = new ArrayList<String>();
+        for(Ligne lg:contenu){
+            if (lg instanceof LigneStructParam){
+                LigneStructParam par = (LigneStructParam)lg;
+                if (par.ident1 != null){
+                    listtypeparam.add(par.ident1.name);
+                }
+            }
+            if (lg instanceof LigneVariable){
+                LigneVariable par = (LigneVariable)lg;
+                if(par.idparam != null){
+                    listtypeparam.add("int");
+                }
+            }
+        }
+        return listtypeparam;
+    }
 
 
 
