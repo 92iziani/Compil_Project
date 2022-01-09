@@ -10,8 +10,9 @@ int age;
 }*/
 
 int main(){
-int a,b;
-print(a,b);
+int a;
+print(a,3);
+malloc(3,a);
 //int x,y;
 //print(x,y);
 

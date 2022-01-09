@@ -69,12 +69,18 @@ public class Main {
 
 
             Parcours par =  new Parcours();
-            ast.accept(par);
+            //ast.accept(par);
            // par.toString();
             //Ajoute print aux fonctions
             ArrayList<String> printparam = new ArrayList<String>();
             printparam.add("int");
             par.listeparam.put("print",printparam);
+            //Ajout malloc aux fonctions
+            ArrayList<String> mallocparam = new ArrayList<String>();
+            mallocparam.add("int");
+            par.listeparam.put("malloc",mallocparam);
+
+            ast.accept(par);
 
             String rouge = "\033[31m";
             String blanc = "\033[0m";
