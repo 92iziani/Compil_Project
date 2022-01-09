@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -70,7 +71,19 @@ public class Main {
             Parcours par =  new Parcours();
             ast.accept(par);
            // par.toString();
-           int numero = 1;
+            //Ajoute print aux fonctions
+            ArrayList<String> printparam = new ArrayList<String>();
+            printparam.add("int");
+            par.listeparam.put("print",printparam);
+
+            String rouge = "\033[31m";
+            String blanc = "\033[0m";
+            String bold = "\033[1m";
+            String normal = "\033[0m";
+            int numero = 1;
+            if(!par.listeparam.containsKey("main")){
+                par.listerror.add(0,rouge+"ERROR :"+blanc+" Fonction"+bold+ " int main()"+normal +" manquante !");
+            }
             if(par.listerror.size() > 0){
                 System.out.println("\t"); //c plus jolie avec des \t ;)
                 for (String erreur: par.listerror){

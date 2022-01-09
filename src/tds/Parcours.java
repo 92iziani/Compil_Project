@@ -26,7 +26,7 @@ public class Parcours implements AstVisitor<Void> {
     public String fonctionappele; //utile pour check les params
     public String fonctionencours;
 
-    HashMap<String, ArrayList<String>> listeparam = new HashMap<String, ArrayList<String>>();
+    public HashMap<String, ArrayList<String>> listeparam = new HashMap<String, ArrayList<String>>(); //key:name of function value:arraylist of string(type of params)
     //ArrayList<String> value = new ArrayList<String>(); //value field of the hashmap
 
 
@@ -457,6 +457,12 @@ public class Parcours implements AstVisitor<Void> {
             listerror.add(rouge+"ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois !");
             //System.exit(1);
         }
+        //CHECK SI MAIN() RETURN UN STRUCT
+        if(structParam.ident2.name.equals("main")){
+            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " doit retourner un int !");
+
+        }
+
         LigneFonction entry = new LigneFonction(structParam);
         this.addLigne(entry);
         
@@ -508,7 +514,7 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(IdentExprPointeur x) {
-        if (!getTable().ifExists2(x.ident.name)){
+        if (!getTable().ifExists2(x.ident.name) && !x.ident.name.equals("print")){
             listerror.add(rouge+"ERROR : "+blanc+"Fonction "+x.ident.name+ " n'existe pas !");
             /*System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
             System.exit(1);*/
@@ -608,7 +614,12 @@ public class Parcours implements AstVisitor<Void> {
                 params.add("int");
             }
         }
+
+
         if( getTable().ifExists2(fonctionappele) &&!params.equals(listeparam.get(fonctionappele))){
+            listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
+        }
+        if( fonctionappele.equals("print") &&!params.equals(listeparam.get(fonctionappele))){
             listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
         return null;
@@ -618,8 +629,11 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Paramint x) {
         LigneVariable ligne = new LigneVariable(x);
         this.addLigne(ligne);
-
         listeparam.get(fonctionencours).add("int");
+        //CONTROLE SEMANTIQUE MAIN
+        if(fonctionencours.equals("main")){
+            listerror.add(rouge + "ERROR :" + blanc + " Fonction main ne peut pas avoir des paramètres !");
+        }
         return null;
     }
 
@@ -628,6 +642,10 @@ public class Parcours implements AstVisitor<Void> {
         LigneStructParam ligne = new LigneStructParam(x);
         this.addLigne(ligne);
         listeparam.get(fonctionencours).add(x.ident1.name);
+        //CONTROLE SEMANTIQUE MAIN
+        if(fonctionencours.equals("main")){
+            listerror.add(rouge + "ERROR :" + blanc + " Fonction main ne peut pas avoir des paramètres !");
+        }
         return null;
     }
 
