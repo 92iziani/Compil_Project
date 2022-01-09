@@ -86,6 +86,15 @@ public class Tds{
                 }
 
             }
+
+            if (lg instanceof LigneStructParam){
+                LigneStructParam var = (LigneStructParam) lg;
+                if (var.ident2 != null && var.ident2.name.equals(nom)){
+                    return true;
+                }
+
+            }
+
         }
         return false;
 
@@ -150,7 +159,11 @@ public class Tds{
                 if (var.struct != null && var.struct.name.equals(nom)){
                     type=var.typeStruct.name;
                 }
-            } 
+            }
+            /*if (lg instanceof LigneStructParam){
+                LigneStructParam var = (LigneStructParam) lg;
+                type=var.ident1.name;
+            }*/
         }
         return type;
 
