@@ -4,6 +4,7 @@ import ast.*;
 import parser.circParser.ExprSeuleContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 import org.antlr.v4.codegen.model.decl.Decl;
@@ -22,6 +23,12 @@ public class Parcours implements AstVisitor<Void> {
     private static final String normal = "\033[0m";
 
     public ArrayList<String> listerror= new ArrayList<String>();  //POUR STOCKER LES ERREURS
+    public String fonctionappele; //utile pour check les params
+    public String fonctionencours;
+
+    HashMap<String, ArrayList<String>> listeparam = new HashMap<String, ArrayList<String>>();
+    //ArrayList<String> value = new ArrayList<String>(); //value field of the hashmap
+
 
     //constructeur de parcours
     public Parcours() {
@@ -172,7 +179,7 @@ public class Parcours implements AstVisitor<Void> {
             if (where=="return"){
 
                 if(!getTable().find_type2(ident.name).equals(type_retour)){
-                    listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+getTable().find_type2(ident.name)+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
+                    listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
                 }
             }
         
@@ -375,6 +382,8 @@ public class Parcours implements AstVisitor<Void> {
                 
             }
         }
+        //(int)entier.value;
+        //Integer.parseInt(entier.value);
         
         return null;
     }
@@ -383,7 +392,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(IntParam intParam) {
         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(intParam.ident.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois");
+            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois !");
         }
 
         //CREER TDS !!!!!
@@ -400,6 +409,11 @@ public class Parcours implements AstVisitor<Void> {
         type_retour="int";
         listetds.add(tds);
         stack.push(tds);
+
+        fonctionencours=intParam.ident.name;
+        ArrayList<String> values = new ArrayList<String>();
+        listeparam.put(fonctionencours,values);
+
         intParam.listParam.accept(this);
         intParam.bloc.accept(this);
 
@@ -407,6 +421,8 @@ public class Parcours implements AstVisitor<Void> {
         if (retour == "non"){
             listerror.add(rouge+"ERROR : "+blanc+"Il n'y a pas de return !");
         }
+
+        //System.out.println(listeparam.get(fonctionencours));
         
         this.stack.pop();
         return null;
@@ -438,7 +454,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(StructParam structParam) {
         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(structParam.ident2.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois");
+            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois !");
             //System.exit(1);
         }
         LigneFonction entry = new LigneFonction(structParam);
@@ -450,10 +466,16 @@ public class Parcours implements AstVisitor<Void> {
          i++;
 
          //je stocke le type de retour
-         type_retour=structParam.ident2.name; //je suis pas sure ident1 ou 2
+         type_retour=structParam.ident1.name; //je suis pas sure ident1 ou 2
  
          listetds.add(tds);
          stack.push(tds);
+
+        fonctionencours=structParam.ident2.name;
+        ArrayList<String> values = new ArrayList<String>();
+        listeparam.put(fonctionencours,values);
+
+        structParam.listParam.accept(this);
         structParam.bloc.accept(this);
 
         if (retour == "non"){
@@ -487,10 +509,11 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(IdentExprPointeur x) {
         if (!getTable().ifExists2(x.ident.name)){
-            listerror.add(rouge+"ERROR : "+blanc+"Fonction "+x.ident.name+ " n'existe pas");
+            listerror.add(rouge+"ERROR : "+blanc+"Fonction "+x.ident.name+ " n'existe pas !");
             /*System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
             System.exit(1);*/
         }
+        fonctionappele = x.ident.name;
         x.listexpr.accept(this);
 
         return null;
@@ -563,16 +586,30 @@ public class Parcours implements AstVisitor<Void> {
         //PAS FINI
         //CONTROLE SEMANTIQUE CHECK SI LES PARAMETRES DE LA FCT ONT ETE DECLAREE (APPEL DE FCT)
         ArrayList<Ident> id = new ArrayList<Ident>();
-        for(Ast ast: listexpr.list) {
-            if(ast instanceof Ident) {
+        for (Ast ast : listexpr.list) {
+            if (ast instanceof Ident) {
                 Ident ident = (Ident) ast;
                 id.add(ident);
                 if (!getTable().ifExists2(ident.name)) {
-                    listerror.add("ERROR : Variable " + ident.name + " utilisée non déclarée !");
+                    listerror.add(rouge + "ERROR :" + blanc + " Variable " + ident.name + " utilisée non déclarée !");
                     // System.exit(1);
                 }
             }
 
+        }
+        //CONTROLE SEMANTIQUE CHECK LE TYPE DES PARAM
+        ArrayList<String> params = new ArrayList<String>(); //pour stocker le types des params dans l'ordre
+        for (Ast ast : listexpr.list) {
+            if (ast instanceof Ident) {
+                Ident ident = (Ident) ast;
+                params.add(getTable().find_type2(ident.name));
+            }
+            if(ast instanceof Entier){
+                params.add("int");
+            }
+        }
+        if( getTable().ifExists2(fonctionappele) &&!params.equals(listeparam.get(fonctionappele))){
+            listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
         return null;
     }
@@ -581,6 +618,8 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Paramint x) {
         LigneVariable ligne = new LigneVariable(x);
         this.addLigne(ligne);
+
+        listeparam.get(fonctionencours).add("int");
         return null;
     }
 
@@ -588,6 +627,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Paramstruct x) {
         LigneStructParam ligne = new LigneStructParam(x);
         this.addLigne(ligne);
+        listeparam.get(fonctionencours).add(x.ident1.name);
         return null;
     }
 
@@ -604,6 +644,8 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Vide x) {
+        ArrayList<String> listevide = new ArrayList<String>();
+        listeparam.put(fonctionencours,listevide);
         return null;
     }
 

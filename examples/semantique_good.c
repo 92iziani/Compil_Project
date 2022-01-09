@@ -13,7 +13,6 @@ int recherche(int t){
 
 struct person_t
 {
-    int nom;
     int tel;
     int nom;
 };
@@ -21,7 +20,6 @@ struct person_t
 int controle(int test){
     struct person_t *p;
     int condition = 8;
-    struct person_t *p;
     int result = 0;
     if (condition == 8){
         result = test;

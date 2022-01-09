@@ -20,11 +20,11 @@ public class LigneFonction extends Ligne{
     
     public String toString() {
         if (ident !=null){
-            return "function " +" nom: "+ ident.name + " type retour: " + type;
+            return "function " +" nom: "+ ident.name + ", type retour: " + type;
         }
         else {
             if (ident1 != null && ident2 != null){
-                return "function " + "nom:" +ident2.name + " retour : "+ident1.name  +" type retour: " + type;
+                return "function " + "nom:" +ident2.name +", type retour: " + type+" "+ident1.name;
             }
         }
         return null;
