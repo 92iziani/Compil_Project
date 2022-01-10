@@ -1,5 +1,6 @@
 package ast;
 
+
 public class Return implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -11,4 +12,5 @@ public class Return implements Ast {
     public Return(Ast cond){
         this.retour = cond;
     }
+
 }

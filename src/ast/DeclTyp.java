@@ -13,4 +13,5 @@ public class DeclTyp implements Ast{
         this.ident = ident;
         this.listDeclVar = listDeclVar;
     }
+
 }

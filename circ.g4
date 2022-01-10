@@ -8,9 +8,9 @@ program :
     decl* EOF;
 
 decl :
-    decl_typ        
+    decl_typ                //SUPPRIMER DECL VARS
     | decl_fct      
-    | decl_vars     ;
+    ;
 
 decl_vars :
       'int' (IDENT',')* IDENT ';'                       #Decla
@@ -31,7 +31,7 @@ decl_fct :
 //liste_param :
   //  param;
 
-liste_expr : (expr',')* ;
+liste_expr : (expr',')* expr? ;    //EXPR ADDED
 
 param : 'int' IDENT    #Paramint
         | 'struct' IDENT '*' IDENT      #Paramstruct;

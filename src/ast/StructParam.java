@@ -1,5 +1,6 @@
 package ast;
 
+
 public class StructParam implements Ast{
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -17,4 +18,5 @@ public class StructParam implements Ast{
         this.listParam = listParam;
         this.bloc = bloc;
     }
+
 }
