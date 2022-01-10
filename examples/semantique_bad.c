@@ -35,6 +35,19 @@ int controle(int test){
     return p;
 }
 
+struct person_t* my_function (int x, int y) {
+    struct person_t *p1;
+    //6. la variable struct p1 est deja definie
+    struct person_t *p1, *p2, *p3;
+    //7. Le type de struct person n'existe pas
+    struct person *p;
+
+    
+    int test=0;
+
+    return sizeof(struct person_t);
+}
+
 
 
 int main(){
@@ -42,7 +55,7 @@ int main(){
     //6. division par zero
     a = 2/0;
 
-    //7. manque un parametre dans la fonction
+    //7. manque un parametre dans la fonction 
     recherche();
 
     //8. la fonction rechercher n'existe pas
@@ -53,9 +66,10 @@ int main(){
         int resultat;
         //10. la variable b n'est pas definie
         a = b+2;
+        //11. la variable b n'est pas definie
         b = a-1;
-        resultat = a+b;
+        resultat = 3;
     }
-    //11. n'a pas accès a resultat
+    //12. n'a pas accès a resultat
     return resultat;
 }
