@@ -626,9 +626,6 @@ public class Parcours implements AstVisitor<Void> {
             listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
         if( fonctionappele.equals("print") &&!params.equals(listeparam.get(fonctionappele))){
-            System.out.println(params);
-            System.out.println(listeparam.containsKey("print"));
-            System.out.println(listeparam.get(fonctionappele));
 
             listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
