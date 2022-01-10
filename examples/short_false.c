@@ -6,18 +6,26 @@ int main(){
         int c=1;
         b=5;
         result = b+c;
+
+        b = fonction_surprise(c);
+
     }
     return result;
 }
 int fork(){
 int a;
 a = 5;
-if (x==4){
+if (a==4){
     a=0;
 }else {
     
     int test=25;
     a=1;
+
 }
 return a;
 }
+
+
+
+
