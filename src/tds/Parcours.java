@@ -509,6 +509,12 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Fleche x) {
+        if (!getTable().ifExists2(x.ident.name)){
+            listerror.add(rouge+"ERROR : "+blanc+"La variable struct "+x.ident.name+ " n'est pas definie !");
+        }
+
+        x.ident.accept(this); //ident
+        x.expr.accept(this); //expr
         return null;
     }
 
