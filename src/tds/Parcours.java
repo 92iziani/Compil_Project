@@ -113,12 +113,14 @@ public class Parcours implements AstVisitor<Void> {
         ifThenElse.thenBlock.accept(this);
         stack.pop();
         name = "Else block";
+
+
          //CREER TDS !!!!!
          Tds tds2 = new Tds(stack.peek(),i, name);
          i++;
  
-         listetds.add(tds);
-         stack.push(tds);
+         listetds.add(tds2);
+         stack.push(tds2);
         ifThenElse.elseBlock.accept(this);
         stack.pop();
         return null;
@@ -252,10 +254,8 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Bloc bloc) {
 
-        //ca peut etre un probleme 
-        bloc.declarations.accept(this);
-        //stack.pop();
         
+        bloc.declarations.accept(this);
         bloc.instructions.accept(this);
 
         return null;

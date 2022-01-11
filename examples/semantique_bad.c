@@ -2,21 +2,19 @@
  * Exemple permettant de lister tous les contrôles semantiques 
  **/
 
-int recherche(int t){
+int recherche(int t){  //manque le return
     int p=0;
-    
     if (t==2){
         p=8;
     }
-    //1. manque le return
 }
 
 struct person_t
 {
     int nom;
     int tel;
-    //2. variable déjà définie
-    int nom;
+    int nom;   //variable déjà définie
+
 };
 
 
@@ -24,61 +22,55 @@ int controle(int test){
     struct person_t *p;
 
     int condition = 8;
+    struct person_t *p1;
+    struct person_t *p1, *p2, *p3; //la variable struct p1 est deja definie
 
-    //3. variable p deja definie
-    struct person_t *p;
+
+    struct person_t *p;   //variable p deja definie
+
     p->nom=2;
     if (condition == 8){
-        //4. variable result utilisee non declaree
-        result = test;
+        result = test;   //A REFAIRE variable result utilisee non declaree
+
     }
-    //5. mauvais type de retour
-    return p;
+   
+    return p; //mauvais type de retour
 }
 
 struct person_t* my_function (int x, int y) {
+    struct person_t *p1;
     int test=0;
-    struct person_t *p2;
-    //6. la variable struct p1 est deja definie
-    struct person_t *p1, *p2, *p3;
-    //7. Le type de struct person n'existe pas
-    struct person *p;
+    struct person *p; //Le type de struct person n'existe pas
 
     p1->nom = 1;
-    //8. Le champ téléphone n'existe pas dans la struct p2 de type person_t
-    p1->telephone = 123456;
+    p1->telephone = 123456; //Le champ téléphone n'existe pas dans la struct p1 de type person_t
 
-
-    return sizeof(struct person_t);
+    return test; //mauvais type de retour
 }
 
 struct person_t* test_retour(){
-    //9. Le type de retour n'est pas int donc un entier ne peut pas être retourné
-    return 5;
+    return 5;  //Le type de retour n'est pas int donc un entier ne peut pas être retourné
 }
 
 
 
 int main(){
     int a;
-    //6. division par zero
-    a = 2/0;
+    a = 2/0;  //division par zero
 
-    //7. manque un parametre dans la fonction 
-    recherche();
+    recherche(); //manque un parametre dans la fonction 
 
-    //8. la fonction rechercher n'existe pas
-    rechercher(); 
+    rechercher();  //la fonction rechercher n'existe pas
 
-    //9. la variable b n'est pas définie
-    while(b != 2){
+    while(b != 2){   //la variable b n'est pas définie
+
         int resultat;
-        //10. la variable b n'est pas definie
-        a = b+2;
-        //11. la variable b n'est pas definie
-        b = a-1;
+         
+        a = b+2; //la variable b n'est pas definie
+        
+        b = a-1; //la variable b n'est pas definie
         resultat = 3;
     }
-    //12. n'a pas accès a resultat
-    return resultat;
+    
+    return resultat; //n'a pas accès a resultat
 }

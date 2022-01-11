@@ -27,7 +27,7 @@ struct person_t* my_function (int x, int y) {
     p2->tel = 123456;
 
 
-    return sizeof(struct person_t);
+    return p1;
 }
 
 int controle(int test){
@@ -37,6 +37,8 @@ int controle(int test){
     
     if (condition == 8){
         result = test;
+    } else {
+        int a = 5;
     }
     return result;
 }
