@@ -25,7 +25,7 @@ int controle(int test){
 
     int condition = 8;
 
-    //3. variable deja definie
+    //3. variable p deja definie
     struct person_t *p;
     if (condition == 8){
         //4. variable result utilisee non declaree
@@ -37,19 +37,24 @@ int controle(int test){
 
 struct person_t* my_function (int x, int y) {
     int test=0;
-    struct person_t *p1;
+    struct person_t *p2;
     //6. la variable struct p1 est deja definie
     struct person_t *p1, *p2, *p3;
     //7. Le type de struct person n'existe pas
     struct person *p;
 
-    p2->nom = 1;
+    p1->nom = 1;
     //8. Le champ téléphone n'existe pas dans la struct p2 de type person_t
-    p2->telephone = 123456;
-
+    p1->telephone = 123456;
+    p1->aaaaa = 5;
     
 
     return sizeof(struct person_t);
+}
+
+struct person_t* test_retour(){
+    //9. Le type de retour n'est pas int donc un entier ne peut pas être retourné
+    return 5;
 }
 
 

@@ -17,6 +17,7 @@ public class Parcours implements AstVisitor<Void> {
     private String where;
     private String retour;
     private String type_retour;
+    private String fleche_droite;
     private static final String rouge = "\033[31m";
     private static final String blanc = "\033[0m";
     private static final String bold = "\033[1m";
@@ -169,18 +170,50 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Ident ident) {
         //CONTROLE SEMANTIQUE CHECK SI La variable EXISTE
+        if (where != "fleche droite"){
             if (!getTable().ifExists2(ident.name)){
                 listerror.add(rouge+"ERROR :"+blanc+" Variable "+ident.name +" utilisée non déclarée !");
                // System.exit(1);
             }
+        }    
+        
 
             //dans le cas où je suis dans le return
             //verifier si type_retour (int ou le struct) correspond au find_type de ident.name
             if (where=="return"){
-
-                if(!getTable().find_type2(ident.name).equals(type_retour)){
+                String type = getTable().find_type2(ident.name);
+                if(!type.equals(type_retour)){
                     listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
                 }
+            }
+
+            if (where=="fleche"){
+                //je dois trouver le type de ident.name
+                String type = findTypeStruct(ident.name);
+                for (int i =0 ; i<listetds.size(); i++){
+                    if (listetds.get(i).getName().equals("Struct "+type)){
+                        //je parcours le contenu ?
+                        ArrayList<Ligne> liste = listetds.get(i).getContenu();
+                        for (int j =0; j<liste.size();j++){
+                            LigneVariable lv = (LigneVariable) liste.get(j);
+                            for (int k =0 ; k<lv.id1.size(); k++){
+                                //System.out.println(fleche_droite);
+                                String variable = lv.id1.get(k).name;
+                                System.out.println(variable.equals(fleche_droite));
+                                if (variable != fleche_droite){
+                                    //System.out.println("lv id "+lv.id1.get(k).name);
+
+                                    String tmp = rouge+"\033[31mERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+type+"!";
+                                    if (!listerror.contains(tmp)){
+                                        listerror.add(rouge+"ERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+type+"!");  
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+               
+
             }
         
         return null;
@@ -382,6 +415,11 @@ public class Parcours implements AstVisitor<Void> {
                 
             }
         }
+        if (where== "return"){
+            if(!type_retour.equals("int")){
+                listerror.add(rouge+"ERROR :"+blanc+" Le type de retour n'est pas int donc un entier ne peut pas être retourné : !");
+            }
+        }
         //(int)entier.value;
         //Integer.parseInt(entier.value);
         
@@ -510,19 +548,29 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(Fleche x) {
         where = "fleche";
-        //je cherche dans toutes les tds si une a le nom qui correspond a x.ident.name
-        for (int i =0 ; i<listetds.size();i++){
+        fleche_droite = x.ident.name; // je stocke la partie droite
+
+        x.expr.accept(this); //expr
+        where="fleche droite"; // pour pas tester le ident à droite de la fleche
+        x.ident.accept(this); //ident
+
+
+        //je cherche dans toutes les tds si une a le nom qui correspond a expr
+        
+        //je dois trouver le type de x.expr et ensuite regarder si la tds correspondante a une ligne avec x.nom
+
+        /*for (int i =0 ; i<listetds.size();i++){
             //System.out.println(listetds.get(i).getName());
             String type = findTypeStruct(x.ident.name);
             System.out.println(type);
             if (listetds.get(i).getName().equals("Struct "+x.ident.name)){
                 System.out.println("Boujoue");
-                x.ident.accept(this); //ident
                 x.expr.accept(this); //expr
+                x.ident.accept(this); //ident
             } else {
                 //System.out.println("SALUT");
             }
-        }
+        }*/
         return null;
     }
 
@@ -690,11 +738,20 @@ public class Parcours implements AstVisitor<Void> {
         String res = null;
         for (int i = 0; i< listetds.size(); i++){
             ArrayList<Ligne> liste = listetds.get(i).getContenu();
+            //je parcours le contenu de chaque tds
             for (int j=0 ; j< liste.size();j++){
-                if (liste.get(j) instanceof LigneStruct){
-                    LigneStruct ls = (LigneStruct) liste.get(j);
-                    if (ls.getName().equals(nom)){
-                        res = ls.getType();
+                //chaque j correspond a une ligne
+                //je regarde que les LigneStruct
+                if (liste.get(j) instanceof LigneVariable){
+                    LigneVariable ls = (LigneVariable) liste.get(j);
+                    //System.out.println("Test ls.getName() : "+ls.getName());
+                    //System.out.println("Test nom : "+nom);
+                   
+
+                    if (ls.struct!=null){
+                        if (ls.struct.name.equals(nom)){
+                            res = ls.typeStruct.name;
+                        }
                     }
                 }
             }
