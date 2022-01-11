@@ -47,7 +47,7 @@ struct person_t* my_function (int x, int y) {
     //8. Le champ téléphone n'existe pas dans la struct p2 de type person_t
     p1->telephone = 123456;
     p1->aaaaa = 5;
-    
+
 
     return sizeof(struct person_t);
 }

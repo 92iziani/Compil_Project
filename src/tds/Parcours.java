@@ -180,44 +180,43 @@ public class Parcours implements AstVisitor<Void> {
 
             //dans le cas où je suis dans le return
             //verifier si type_retour (int ou le struct) correspond au find_type de ident.name
-            if (where=="return"){
-                String type = getTable().find_type2(ident.name);
-                if(!type.equals(type_retour)){
-                    listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
+        if (where=="return"){
+            String type = getTable().find_type2(ident.name);
+            if(!type.equals(type_retour)){
+                listerror.add("Ligne : "+ident.ligne+rouge+" ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
+        }
+    }
 
-                if(!getTable().find_type2(ident.name).equals(type_retour)){
-                    listerror.add("Ligne : "+ident.ligne+rouge+" ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
-                }
-            }
+            
+        if (where=="fleche"){
+            //je dois trouver le type de ident.name
+            System.out.println("Je suis ici");
+            String typee = findTypeStruct(ident.name);
+            for (int i =0 ; i<listetds.size(); i++){
+                if (listetds.get(i).getName().equals("Struct "+typee)){
+                    //je parcours le contenu ?
+                    ArrayList<Ligne> liste = listetds.get(i).getContenu();
+                    for (int j =0; j<liste.size();j++){
+                        LigneVariable lv = (LigneVariable) liste.get(j);
+                        for (int k =0 ; k<lv.id1.size(); k++){
+                            //System.out.println(fleche_droite);
+                            String variable = lv.id1.get(k).name;
+                            System.out.println(variable.equals(fleche_droite));
+                            if (variable != fleche_droite){
+                                //System.out.println("lv id "+lv.id1.get(k).name);
 
-            if (where=="fleche"){
-                //je dois trouver le type de ident.name
-                String typee = findTypeStruct(ident.name);
-                for (int i =0 ; i<listetds.size(); i++){
-                    if (listetds.get(i).getName().equals("Struct "+typee)){
-                        //je parcours le contenu ?
-                        ArrayList<Ligne> liste = listetds.get(i).getContenu();
-                        for (int j =0; j<liste.size();j++){
-                            LigneVariable lv = (LigneVariable) liste.get(j);
-                            for (int k =0 ; k<lv.id1.size(); k++){
-                                //System.out.println(fleche_droite);
-                                String variable = lv.id1.get(k).name;
-                                System.out.println(variable.equals(fleche_droite));
-                                if (variable != fleche_droite){
-                                    //System.out.println("lv id "+lv.id1.get(k).name);
-
-                                    String tmp = rouge+"\033[31mERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!";
-                                    if (!listerror.contains(tmp)){
-                                        listerror.add(rouge+"ERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!");  
-                                    }
+                                String tmp = rouge+"\033[31mERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!";
+                                if (!listerror.contains(tmp)){
+                                    listerror.add(rouge+"ERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!");  
                                 }
                             }
                         }
                     }
                 }
+            }
                
-            }
-            }
+        }
+        
         
         return null;
     }
@@ -420,7 +419,7 @@ public class Parcours implements AstVisitor<Void> {
         }
         if (where== "return"){
             if(!type_retour.equals("int")){
-                listerror.add(rouge+"ERROR :"+blanc+" Le type de retour n'est pas int donc un entier ne peut pas être retourné : !");
+                listerror.add("Ligne : "+entier.ligne+rouge+" ERROR :"+blanc+" Le type de retour n'est pas int donc un entier ne peut pas être retourné : !");
             }
         }
         //(int)entier.value;
@@ -567,15 +566,7 @@ public class Parcours implements AstVisitor<Void> {
             String type = findTypeStruct(x.ident.name);
             //System.out.println(type);
             if (listetds.get(i).getName().equals("Struct "+x.ident.name)){
-<<<<<<< HEAD
                 System.out.println("Boujoue");
-||||||| 7a64a1b
-                System.out.println("Boujoue");
-                x.ident.accept(this); //ident
-=======
-                //System.out.println("Boujoue");
-                x.ident.accept(this); //ident
->>>>>>> 3d95f44a71bab84239f9eebd96b88fd195632491
                 x.expr.accept(this); //expr
                 x.ident.accept(this); //ident
             } else {
@@ -622,6 +613,7 @@ public class Parcours implements AstVisitor<Void> {
 
             }
         }
+        
         return null;
     }
 

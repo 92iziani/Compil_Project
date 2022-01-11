@@ -47,4 +47,6 @@ public interface AstVisitor<T> {
     public T visit(List x); //ADDED
 
     public T visit(Vide x); //ADDED
+
+    //public T visit(AffectExpr x);
 }
