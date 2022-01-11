@@ -45,7 +45,7 @@ public class Main {
             //CommonTree tree = (CommonTree)parser.program().getTree();
 
             // code d'affichage de l'arbre syntaxique
-            /*JFrame frame = new JFrame("Antlr AST");
+            JFrame frame = new JFrame("Antlr AST");
             JPanel panel = new JPanel();
             TreeViewer viewer = new TreeViewer(Arrays.asList(
                     parser.getRuleNames()),program);
@@ -54,7 +54,7 @@ public class Main {
             frame.add(panel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setVisible(true);*/
+            frame.setVisible(true);
 
 
             // Visiteur de création de l'AST + création de l'AST
@@ -93,7 +93,7 @@ public class Main {
             if(par.listerror.size() > 0){
                 System.out.println("\t"); //c plus jolie avec des \t ;)
                 for (String erreur: par.listerror){
-                    System.err.println(numero+" "+erreur);
+                    System.err.println(" "+erreur);
                     numero++;
                 }
                 System.out.println("\t"); //c plus jolie avec des \t ;)

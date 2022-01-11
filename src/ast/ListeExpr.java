@@ -9,10 +9,12 @@ public class ListeExpr implements Ast{
     }
 
     public ArrayList<Ast> list;
+    public int ligne;
 
-    public ListeExpr(ArrayList<Ast> list){
+    public ListeExpr(int ligne, ArrayList<Ast> list){
 
         this.list = list;
+        this.ligne=ligne;
     }
 
 }

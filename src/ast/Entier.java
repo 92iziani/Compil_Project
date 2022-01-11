@@ -8,9 +8,11 @@ public class Entier implements Ast {
     }
 
     public String value;
+    public int ligne;
 
-    public Entier(String val){
+    public Entier(int ligne,String val){
         this.value = val;
+        this.ligne = ligne;
     }
 
 }

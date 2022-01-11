@@ -7,9 +7,11 @@ public class ExclaExpr implements Ast {
     }
 
     public Ast expr;
+    public int ligne;
 
-    public ExclaExpr(Ast expr){
+    public ExclaExpr(int ligne, Ast expr){
         this.expr = expr;
+        this.ligne = ligne;
     }
 
 }

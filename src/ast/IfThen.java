@@ -11,10 +11,12 @@ public class IfThen implements Ast{
 
     public Ast condition;
     public Ast thenBlock;
+    public int ligne;
 
-    public IfThen(Ast cond, Ast then){
+    public IfThen(int ligne, Ast cond, Ast then){
         this.condition = cond;
         this.thenBlock = then;
+        this.ligne = ligne;
     }
 
 }

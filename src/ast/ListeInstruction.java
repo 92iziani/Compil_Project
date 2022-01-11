@@ -9,9 +9,11 @@ public class ListeInstruction implements Ast{
     }
 
     public ArrayList<Ast> instrList;
+    public int ligne;
 
-    public ListeInstruction(ArrayList<Ast> instrList){
+    public ListeInstruction(int ligne, ArrayList<Ast> instrList){
         this.instrList = instrList;
+        this.ligne = ligne;
     }
 
 }

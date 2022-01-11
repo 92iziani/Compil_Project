@@ -8,10 +8,12 @@ public class Affectation implements Ast{
 
     public Ast ident;
     public Ast expr;
+    public int ligne;
 
-    public Affectation(Ast ident, Ast expr){
+    public Affectation(int ligne,Ast ident, Ast expr){
         this.ident = ident;
         this.expr = expr;
+        this.ligne = ligne;
     }
 
 }

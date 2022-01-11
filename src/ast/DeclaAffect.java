@@ -8,10 +8,12 @@ public class DeclaAffect implements Ast{
 
     public Ident ident;
     public Ast entier;
+    public int ligne;
 
-    public DeclaAffect(Ident ident, Ast entier){
+    public DeclaAffect(int ligne, Ident ident, Ast entier){
         this.ident = ident;
         this.entier = entier;
+        this.ligne = ligne;
     }
 
 }

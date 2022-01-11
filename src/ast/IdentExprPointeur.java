@@ -8,10 +8,12 @@ public class IdentExprPointeur implements Ast {
 
     public Ident ident;
     public Ast listexpr;
+    public int ligne;
 
-    public IdentExprPointeur(Ident ident,Ast listexpr) {
+    public IdentExprPointeur(int ligne, Ident ident,Ast listexpr) {
         this.ident = ident;
         this.listexpr = listexpr;
+        this.ligne = ligne;
     }
 
 }

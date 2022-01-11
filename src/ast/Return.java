@@ -8,9 +8,11 @@ public class Return implements Ast {
     }
 
     public Ast retour;
+    public int ligne;
 
-    public Return(Ast cond){
+    public Return(int ligne,Ast cond){
         this.retour = cond;
+        this.ligne=ligne;
     }
 
 }

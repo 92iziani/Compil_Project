@@ -10,9 +10,11 @@ public class Struct implements Ast {
     }
 
     public ArrayList<Ident> structList;
+    public int ligne;
 
-    public Struct(ArrayList<Ident> structList) {
+    public Struct(int ligne, ArrayList<Ident> structList) {
         this.structList = structList;
+        this.ligne=ligne;
 
     }
 

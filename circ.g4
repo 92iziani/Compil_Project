@@ -84,9 +84,9 @@ expr :           ENTIER                                #Entier
         | OPERATEUR expr expr1     #OpExprExpr
         | OPERATEUR expr    #OpExpr
         ;*/
-
+//expr '=' expr2 ';' #AffectExpr
 //deleted ; in instruction
-instruction :
+instruction : expr '=' expr ';' #AffectExpr |
      expr ';' #ExprSeule
     | 'if' '(' expr ')' instruction #IfThen
     | 'if' '(' expr ')' instruction 'else' instruction #IfThenElse
