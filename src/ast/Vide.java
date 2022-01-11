@@ -7,9 +7,10 @@ public class Vide implements Ast {
         return visitor.visit(this);
     }
 
+    public int ligne;
 
-    public Vide(){
-
+    public Vide(int ligne){
+        this.ligne=ligne;
     }
 
 }

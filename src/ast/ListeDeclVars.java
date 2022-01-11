@@ -9,9 +9,11 @@ public class ListeDeclVars implements Ast{
     }
 
     public ArrayList<Ast> instrList;
+    public int ligne;
 
-    public ListeDeclVars(ArrayList<Ast> instrList){
+    public ListeDeclVars(int ligne, ArrayList<Ast> instrList){
         this.instrList = instrList;
+        this.ligne = ligne;
     }
 
 }

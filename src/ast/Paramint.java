@@ -7,9 +7,10 @@ public class Paramint implements Ast{
     }
 
     public Ident ident;
+    public int ligne;
 
-    public Paramint(Ident ident){
-
+    public Paramint(int ligne, Ident ident){
+        this.ligne=ligne;
         this.ident = ident;
     }
 

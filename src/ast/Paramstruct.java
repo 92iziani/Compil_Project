@@ -8,11 +8,13 @@ public class Paramstruct implements Ast {
 
     public Ident ident1;
     public Ident ident2;
+    public int ligne;
 
 
-    public Paramstruct(Ident ident1,Ident ident2) {
+    public Paramstruct(int ligne, Ident ident1,Ident ident2) {
         this.ident1 = ident1;
         this.ident2 = ident2;
+        this.ligne = ligne;
 
     }
 }

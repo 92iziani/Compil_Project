@@ -8,9 +8,11 @@ public class TiretExpr implements Ast {
     }
 
     public Ast expr;
+    public int ligne;
 
-    public TiretExpr(Ast expr){
+    public TiretExpr(int ligne, Ast expr){
         this.expr = expr;
+        this.ligne=ligne;
     }
 
 }

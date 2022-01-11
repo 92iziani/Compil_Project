@@ -93,7 +93,7 @@ public class Main {
             if(par.listerror.size() > 0){
                 System.out.println("\t"); //c plus jolie avec des \t ;)
                 for (String erreur: par.listerror){
-                    System.err.println(numero+" "+erreur);
+                    System.err.println(" "+erreur);
                     numero++;
                 }
                 System.out.println("\t"); //c plus jolie avec des \t ;)

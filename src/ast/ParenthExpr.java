@@ -7,8 +7,10 @@ public class ParenthExpr implements Ast {
     }
 
     public Ast expr;
+    public int ligne;
 
-    public ParenthExpr(Ast expr){
+    public ParenthExpr(int ligne, Ast expr){
         this.expr = expr;
+        this.ligne = ligne;
     }
 }

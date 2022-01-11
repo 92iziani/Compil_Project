@@ -8,10 +8,12 @@ public class While implements Ast {
 
     public Ast condition;
     public Ast instruction;
+    public int ligne;
 
-    public While(Ast cond, Ast inst){
+    public While(int ligne,Ast cond, Ast inst){
         this.condition = cond;
         this.instruction = inst;
+        this.ligne = ligne;
     }
 
 }

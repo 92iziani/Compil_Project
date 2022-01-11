@@ -8,10 +8,12 @@ public class DeclTyp implements Ast{
 
     public Ident ident ;
     public Ast listDeclVar;
+    public int ligne;
 
-    public DeclTyp(Ident ident, Ast listDeclVar){
+    public DeclTyp(int ligne, Ident ident, Ast listDeclVar){
         this.ident = ident;
         this.listDeclVar = listDeclVar;
+        this.ligne=ligne;
     }
 
 }

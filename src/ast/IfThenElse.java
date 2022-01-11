@@ -9,11 +9,13 @@ public class IfThenElse implements Ast {
     public Ast condition;
     public Ast thenBlock;
     public Ast elseBlock;
+    public int ligne;
 
-    public IfThenElse(Ast cond, Ast thenB, Ast elseB){
+    public IfThenElse(int ligne, Ast cond, Ast thenB, Ast elseB){
         this.condition = cond;
         this.thenBlock = thenB;
         this.elseBlock = elseB;
+        this.ligne = ligne;
     }
 
 }

@@ -7,9 +7,11 @@ public class Sizeof implements Ast {
     }
 
     public Ident ident;
+    public int ligne;
 
-    public Sizeof(Ident ident){
+    public Sizeof(int ligne, Ident ident){
         this.ident = ident;
+        this.ligne=ligne;
     }
 
 }

@@ -9,11 +9,13 @@ public class IntParam implements Ast{
     public Ident ident ;
     public Ast listParam;
     public Ast bloc;
+    public int ligne;
 
-    public IntParam(Ident ident, Ast listParam, Ast bloc){
+    public IntParam(int ligne, Ident ident, Ast listParam, Ast bloc){
         this.ident = ident;
         this.listParam = listParam;
         this.bloc=bloc;
+        this.ligne = ligne;
     }
 
 }

@@ -10,9 +10,11 @@ public class DeclaList implements Ast {
     }
 
     public ArrayList<Ident> declaList;
+    public int ligne;
 
-    public DeclaList(ArrayList<Ident> declaList) {
+    public DeclaList(int ligne,ArrayList<Ident> declaList) {
         this.declaList = declaList;
+        this.ligne = ligne;
 
     }
 

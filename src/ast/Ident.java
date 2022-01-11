@@ -7,9 +7,11 @@ public class Ident implements Ast {
     }
 
     public String name;
+    public int ligne;
 
-    public Ident(String name){
+    public Ident(int ligne, String name){
         this.name = name;
+        this.ligne = ligne;
     }
 
 }

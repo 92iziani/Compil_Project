@@ -45,7 +45,7 @@ struct person_t* my_function (int x, int y) {
 
     p2->nom = 1;
     //8. Le champ téléphone n'existe pas dans la struct p2 de type person_t
-    p2->telephone = 123456;
+   // p2->telephone = 123456;
 
     
 

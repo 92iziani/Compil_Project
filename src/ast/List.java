@@ -11,10 +11,12 @@ public class List implements Ast {
     }
 
     public ArrayList<Ast> astlist;
+    public int ligne;
 
-    public List(ArrayList<Ast> astlist){
+    public List(int ligne, ArrayList<Ast> astlist){
 
         this.astlist = astlist;
+        this.ligne = ligne;
     }
 
 }

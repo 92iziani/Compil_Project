@@ -7,9 +7,11 @@ public class Operateur implements Ast {
     }
 
     public String name;
+    public int ligne;
 
-    public Operateur(String name){
+    public Operateur(int ligne, String name){
         this.name = name;
+        this.ligne = ligne;
     }
 
 }

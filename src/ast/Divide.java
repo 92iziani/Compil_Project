@@ -9,10 +9,12 @@ public class Divide implements Ast{
 
     public Ast left;
     public Ast right;
+    public int ligne;
 
-    public Divide(Ast left, Ast right){
+    public Divide(int ligne, Ast left, Ast right){
         this.left = left;
         this.right = right;
+        this.ligne = ligne;
     }
 
 }

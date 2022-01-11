@@ -8,10 +8,12 @@ public class Fleche implements Ast {
 
     public Ident ident;
     public Ast expr;
+    public int ligne;
 
-    public Fleche(Ast expr, Ident ident){
+    public Fleche(int ligne, Ast expr, Ident ident){
         this.expr = expr;
         this.ident = ident;
+        this.ligne = ligne;
     }
 
 }

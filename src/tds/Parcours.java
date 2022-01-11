@@ -159,7 +159,7 @@ public class Parcours implements AstVisitor<Void> {
          //CONTROLE SEMANTIQUE CHECK SI LA VARIBALE D'AFFECTATION EXISTE
         Ident id = (Ident)affect.ident;
         if (!getTable().ifExists2(id.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Variable "+id.name +" utilisée dans l'affectation non déclarée !");
+            listerror.add("Ligne : "+affect.ligne+rouge+" ERROR :"+blanc+" Variable "+id.name +" utilisée dans l'affectation non déclarée !");
             /*System.err.println("ERROR : Variable "+id.name +" utilisée non déclarée !");
             System.exit(1);*/
         }
@@ -170,7 +170,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Ident ident) {
         //CONTROLE SEMANTIQUE CHECK SI La variable EXISTE
             if (!getTable().ifExists2(ident.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+ident.name +" utilisée non déclarée !");
+                listerror.add("Ligne : "+ident.ligne+rouge+" ERROR :"+blanc+" Variable "+ident.name +" utilisée non déclarée !");
                // System.exit(1);
             }
 
@@ -179,7 +179,7 @@ public class Parcours implements AstVisitor<Void> {
             if (where=="return"){
 
                 if(!getTable().find_type2(ident.name).equals(type_retour)){
-                    listerror.add(rouge+"ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
+                    listerror.add("Ligne : "+ident.ligne+rouge+" ERROR :"+blanc+" Le type de la variable  "+bold+ident.name+normal+" : "+bold+getTable().find_type2(ident.name)+normal+" ne correspond pas au type de retour :"+bold+type_retour+normal+" !");
                 }
             }
         
@@ -233,14 +233,14 @@ public class Parcours implements AstVisitor<Void> {
         if (plus.left instanceof Ident){
             Ident left = (Ident)plus.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add(rouge+"ERROR : "+blanc+"Variable "+left.name +" utilisée dans l'addition non déclarée !");
+                listerror.add("Ligne : "+plus.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name +" utilisée dans l'addition non déclarée !");
                 //System.exit(1);
             } 
         }
         if (plus.right instanceof Ident){
             Ident right = (Ident)plus.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+right.name +" utilisée dans l'addition non déclarée !");
+                listerror.add("Ligne : "+plus.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans l'addition non déclarée !");
                 //System.exit(1);
             }
         }
@@ -255,14 +255,14 @@ public class Parcours implements AstVisitor<Void> {
         if (minus.left instanceof Ident){
             Ident left = (Ident)minus.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add(rouge+"ERROR : "+blanc+"Variable "+left.name +" utilisée dans la soustraction non déclarée !");
+                listerror.add("Ligne : "+minus.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name +" utilisée dans la soustraction non déclarée !");
                 //System.exit(1);
             } 
         }
         if (minus.right instanceof Ident){
             Ident right = (Ident)minus.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+right.name +" utilisée dans la soustraction non déclarée !");
+                listerror.add("Ligne : "+minus.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans la soustraction non déclarée !");
                // System.exit(1);
             }
         }
@@ -281,14 +281,14 @@ public class Parcours implements AstVisitor<Void> {
         if (divide.left instanceof Ident){
             Ident left = (Ident)divide.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+left.name +" utilisée dans la division non déclarée !");
+                listerror.add("Ligne : "+divide.ligne+rouge+" ERROR :"+blanc+" Variable "+left.name +" utilisée dans la division non déclarée !");
                 //System.exit(1);
             } 
         }
         if (divide.right instanceof Ident){
             Ident right = (Ident)divide.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add(rouge+"ERROR : "+blanc+"Variable "+right.name +" utilisée dans la division non déclarée !");
+                listerror.add("Ligne : "+divide.ligne+rouge+" ERROR : "+blanc+"Variable "+right.name +" utilisée dans la division non déclarée !");
                 //System.exit(1);
             }
         }
@@ -304,14 +304,14 @@ public class Parcours implements AstVisitor<Void> {
         if (mult.left instanceof Ident){
             Ident left = (Ident)mult.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+left.name +" utilisée dans la multiplication non déclarée !");
+                listerror.add("Ligne : "+mult.ligne+rouge+" ERROR :"+blanc+" Variable "+left.name +" utilisée dans la multiplication non déclarée !");
                // System.exit(1);
             } 
         }
         if (mult.right instanceof Ident){
             Ident right = (Ident)mult.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+right.name +" utilisée dans la multiplication non déclarée !");
+                listerror.add("Ligne : "+mult.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans la multiplication non déclarée !");
                 //System.exit(1);
             }
         }
@@ -324,13 +324,13 @@ public class Parcours implements AstVisitor<Void> {
             //CONTROLE SEMANTIQUE CHECK SI UNE VAR EST DECLAREE PLUSIEURS FOIS
             Ident id = (Ident) declaList.declaList.get(i);
             if (getTable().ifExists(id.name)) {
-                listerror.add(rouge+"ERROR :"+blanc+" Variable " + id.name + " déclarée plusieurs fois !");
+                listerror.add("Ligne : "+declaList.ligne+rouge+" ERROR :"+blanc+" Variable " + id.name + " déclarée plusieurs fois !");
                 //System.exit(1);
             }
             //this.addLigne(new LigneVariable(declaList));
             ArrayList<Ident> lvar = new ArrayList<Ident>();
             lvar.add(id);
-            DeclaList dcl = new DeclaList(lvar);
+            DeclaList dcl = new DeclaList(declaList.ligne, lvar);
             this.addLigne(new LigneVariable(dcl));
         }
         return null;
@@ -341,7 +341,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(DeclTyp declTyp) {
         //CONTROLE SEMANTIQUE CHECK SI UN TYPE EST DECLARE PLUSIEURS FOIS
         if (getTable().ifExists3(declTyp.ident.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Type "+declTyp.ident.name+ " ne peut pas être défini plusieurs fois !");
+            listerror.add("Ligne : "+declTyp.ligne+rouge+" ERROR :"+blanc+" Type "+declTyp.ident.name+ " ne peut pas être défini plusieurs fois !");
             //System.exit(1);
         }
 
@@ -364,7 +364,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(DeclaAffect dAffect) {
         Ident id = (Ident)dAffect.ident;
         if (getTable().ifExists(id.name)){
-            listerror.add(rouge+"ERROR : "+blanc+"Variable "+id.name +" déclarée plusieurs fois !");
+            listerror.add("Ligne : "+dAffect.ligne+rouge+" ERROR : "+blanc+"Variable "+id.name +" déclarée plusieurs fois !");
             //System.exit(1);
         }
 
@@ -378,7 +378,7 @@ public class Parcours implements AstVisitor<Void> {
         if (where == "divide"){
             if (entier.value.equals("0")){
                 //printError("DIVISION PAR 0");
-                listerror.add(rouge+"ERROR :"+blanc+" Divison par 0 !");
+                listerror.add("Ligne : "+entier.ligne+rouge+" ERROR :"+blanc+" Divison par 0 !");
                 
             }
         }
@@ -392,7 +392,7 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(IntParam intParam) {
         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(intParam.ident.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois !");
+            listerror.add("Ligne : "+intParam.ligne+rouge+" ERROR :"+blanc+" Fonction "+intParam.ident.name+ " ne peut pas être déclarée deux fois !");
         }
 
         //CREER TDS !!!!!
@@ -419,7 +419,7 @@ public class Parcours implements AstVisitor<Void> {
 
         
         if (retour == "non"){
-            listerror.add(rouge+"ERROR : "+blanc+"Il n'y a pas de return !");
+            listerror.add("Ligne : "+intParam.ligne+rouge+" ERROR : "+blanc+"Il n'y a pas de return !");
         }
 
         //System.out.println(listeparam.get(fonctionencours));
@@ -432,13 +432,13 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(Struct struct) {
         //CONTROLE SEMANTIQUE CHECK SI LE TYPE EXISTE
         if (!getTable().ifExists3(struct.structList.get(0).name)){
-            listerror.add(rouge+"ERROR : "+blanc+"Type "+struct.structList.get(0).name+ " n'existe pas !");
+            listerror.add("Ligne : "+struct.ligne+rouge+" ERROR : "+blanc+"Type "+struct.structList.get(0).name+ " n'existe pas !");
         }
         // pas de creation de tds
         // creation de plusieurs lignes
         // verif si ça existe deja
         if (getTable().ifExists2(struct.structList.get(1).name)){
-            listerror.add(rouge+"ERROR : "+blanc+"La variable struct "+struct.structList.get(1).name+ " est deja definie !");
+            listerror.add("Ligne : "+struct.ligne+rouge+" ERROR : "+blanc+"La variable struct "+struct.structList.get(1).name+ " est deja definie !");
         } else {
             Ident type = struct.structList.get(0);
         for (int i=1; i<struct.structList.size(); i++){
@@ -454,12 +454,12 @@ public class Parcours implements AstVisitor<Void> {
     public Void visit(StructParam structParam) {
         //CONTROLE SEMANTIQUE CHECK SI LA FONCTION A ETE Déjà déclarée
         if (getTable().ifExists2(structParam.ident2.name)){
-            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois !");
+            listerror.add("Ligne : "+structParam.ligne+rouge+" ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " ne peut pas être déclarée deux fois !");
             //System.exit(1);
         }
         //CHECK SI MAIN() RETURN UN STRUCT
         if(structParam.ident2.name.equals("main")){
-            listerror.add(rouge+"ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " doit retourner un int !");
+            listerror.add("Ligne : "+structParam.ligne+rouge+" ERROR :"+blanc+" Fonction "+structParam.ident2.name+ " doit retourner un int !");
 
         }
 
@@ -485,7 +485,7 @@ public class Parcours implements AstVisitor<Void> {
         structParam.bloc.accept(this);
 
         if (retour == "non"){
-            listerror.add(rouge+"ERROR : "+blanc+"Il n'y a pas de return !");
+            listerror.add("Ligne : "+structParam.ligne+rouge+" ERROR : "+blanc+"Il n'y a pas de return !");
         }
 
         stack.pop();
@@ -500,7 +500,7 @@ public class Parcours implements AstVisitor<Void> {
         if (x.expr instanceof Ident){
             Ident e = (Ident)x.expr;
             if (!getTable().ifExists2(e.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+e.name +" utilisée non déclarée !");
+                listerror.add("Ligne : "+x.ligne+rouge+" ERROR :"+blanc+" Variable "+e.name +" utilisée non déclarée !");
                 //System.exit(1);
             } 
         }
@@ -514,9 +514,9 @@ public class Parcours implements AstVisitor<Void> {
         for (int i =0 ; i<listetds.size();i++){
             //System.out.println(listetds.get(i).getName());
             String type = findTypeStruct(x.ident.name);
-            System.out.println(type);
+            //System.out.println(type);
             if (listetds.get(i).getName().equals("Struct "+x.ident.name)){
-                System.out.println("Boujoue");
+                //System.out.println("Boujoue");
                 x.ident.accept(this); //ident
                 x.expr.accept(this); //expr
             } else {
@@ -529,7 +529,7 @@ public class Parcours implements AstVisitor<Void> {
     @Override
     public Void visit(IdentExprPointeur x) {
         if (!getTable().ifExists2(x.ident.name) && !x.ident.name.equals("print") && !x.ident.name.equals("malloc") ){
-            listerror.add(rouge+"ERROR : "+blanc+"Fonction "+x.ident.name+ " n'existe pas !");
+            listerror.add("Ligne : "+x.ligne+rouge+" ERROR : "+blanc+"Fonction "+x.ident.name+ " n'existe pas !");
             /*System.err.println("ERROR : Fonction "+x.ident.name+ " n'existe pas");
             System.exit(1);*/
         }
@@ -553,13 +553,13 @@ public class Parcours implements AstVisitor<Void> {
             Ident left = (Ident)x.expr1;
 
             if (!getTable().ifExists2(left.name)){
-                listerror.add(rouge+"ERROR : "+blanc+"Variable "+left.name+" utilisée dans la condition non déclarée !");
+                listerror.add("Ligne : "+x.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name+" utilisée dans la condition non déclarée !");
             } 
         }
         if (x.expr2 instanceof Ident){
             Ident right = (Ident)x.expr2;
             if (!getTable().ifExists2(right.name)){
-                listerror.add(rouge+"ERROR : "+blanc+" Variable "+right.name+" utilisée dans la condition non déclarée !");
+                listerror.add("Ligne : "+x.ligne+rouge+" ERROR : "+blanc+" Variable "+right.name+" utilisée dans la condition non déclarée !");
 
             }
         }
@@ -574,7 +574,7 @@ public class Parcours implements AstVisitor<Void> {
         if (x.expr instanceof Ident){
             Ident e = (Ident)x.expr;
             if (!getTable().ifExists2(e.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+e.name +" utilisée non déclarée !");
+                listerror.add("Ligne : "+x.ligne+rouge+" ERROR :"+blanc+" Variable "+e.name +" utilisée non déclarée !");
                 //System.exit(1);
             } 
         }
@@ -594,7 +594,7 @@ public class Parcours implements AstVisitor<Void> {
         if (x.expr instanceof Ident){
             Ident e = (Ident)x.expr;
             if (!getTable().ifExists2(e.name)){
-                listerror.add(rouge+"ERROR :"+blanc+" Variable "+e.name +" utilisée non déclarée !");
+                listerror.add("Ligne : "+x.ligne+rouge+" ERROR :"+blanc+" Variable "+e.name +" utilisée non déclarée !");
                 //System.exit(1);
             } 
         }
@@ -611,7 +611,7 @@ public class Parcours implements AstVisitor<Void> {
                 Ident ident = (Ident) ast;
                 id.add(ident);
                 if (!getTable().ifExists2(ident.name)) {
-                    listerror.add(rouge + "ERROR :" + blanc + " Variable " + ident.name + " utilisée non déclarée !");
+                    listerror.add("Ligne : "+listexpr.ligne+rouge + " ERROR :" + blanc + " Variable " + ident.name + " utilisée non déclarée !");
                     // System.exit(1);
                 }
             }
@@ -631,14 +631,14 @@ public class Parcours implements AstVisitor<Void> {
 
 
         if( getTable().ifExists2(fonctionappele) &&!params.equals(listeparam.get(fonctionappele))){
-            listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
+            listerror.add("Ligne : "+listexpr.ligne+rouge + " ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
         if( fonctionappele.equals("print") &&!params.equals(listeparam.get(fonctionappele))){
 
-            listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
+            listerror.add("Ligne : "+listexpr.ligne+rouge + " ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
         if( fonctionappele.equals("malloc") &&!params.equals(listeparam.get(fonctionappele))){
-            listerror.add(rouge + "ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
+            listerror.add("Ligne : "+listexpr.ligne+rouge + " ERROR :" + blanc + " Appel de "+fonctionappele+" avec des mauvais paramètres !");
         }
         return null;
     }
@@ -650,7 +650,7 @@ public class Parcours implements AstVisitor<Void> {
         listeparam.get(fonctionencours).add("int");
         //CONTROLE SEMANTIQUE MAIN
         if(fonctionencours.equals("main")){
-            listerror.add(rouge + "ERROR :" + blanc + " Fonction main ne peut pas avoir des paramètres !");
+            listerror.add("Ligne : "+x.ligne+rouge + " ERROR :" + blanc + " Fonction main ne peut pas avoir des paramètres !");
         }
         return null;
     }
@@ -662,7 +662,7 @@ public class Parcours implements AstVisitor<Void> {
         listeparam.get(fonctionencours).add(x.ident1.name);
         //CONTROLE SEMANTIQUE MAIN
         if(fonctionencours.equals("main")){
-            listerror.add(rouge + "ERROR :" + blanc + " Fonction main ne peut pas avoir des paramètres !");
+            listerror.add("Ligne : "+x.ligne+rouge + " ERROR :" + blanc + " Fonction main ne peut pas avoir des paramètres !");
         }
         return null;
     }
