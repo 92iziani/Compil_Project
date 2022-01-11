@@ -619,6 +619,17 @@ public class Parcours implements AstVisitor<Void> {
     }
 
     @Override
+    public Void visit(AffectExpr x){
+        if(x.exprg != null){
+            x.exprg.accept(this);
+        }
+        if(x.exprd != null){
+            x.exprd.accept(this);
+        }
+        return null;
+    }
+
+    @Override
     public Void visit(ParenthExpr x) {
         //CONTROLE SEMANTIQUE CHECK SI Les variables EXISTEnt
 
@@ -635,6 +646,12 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Sizeof x) {
+        //CONTROLE SEMANTIQUE CHECK SI LE TYPE APPELE PAR STRUCT EXISTE
+        if (!getTable().ifExists3(x.ident.name)){
+            listerror.add("Ligne : "+x.ligne+rouge+" ERROR :"+blanc+" Type "+x.ident.name+ " n'existe pas !");
+            //System.exit(1);
+        }
+
         return null;
     }
 

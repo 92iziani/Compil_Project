@@ -598,6 +598,20 @@ public String visit(ListeExpr listexpr) {
         return nodeIdentifier;
     }
 
+    @Override
+    public String visit(AffectExpr x) {
+        String nodeIdentifier = this.nextState();
+        this.addNode(nodeIdentifier, "AffectExpr");
+
+        String a = x.exprg.accept(this);
+        String c = x.exprd.accept(this);
+
+        this.addTransition(nodeIdentifier, a);
+        this.addTransition(nodeIdentifier, c);
+
+        return nodeIdentifier;
+    }
+
 
 
 }

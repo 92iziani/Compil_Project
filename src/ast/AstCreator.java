@@ -74,9 +74,10 @@ public class AstCreator extends circBaseVisitor<Ast> {
 
 	@Override
 	public Ast visitAffectExpr(circParser.AffectExprContext ctx) {
-		return ctx.getChild(0).accept(this);
+		Ast a = ctx.getChild(0).accept(this);
+		Ast b = ctx.getChild(2).accept(this);
+		return new AffectExpr(ctx.start.getLine(),a,b);
 	}
-
 
 	//DONE
 	@Override
