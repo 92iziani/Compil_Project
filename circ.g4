@@ -86,7 +86,7 @@ expr :           ENTIER                                #Entier
         ;*/
 //expr '=' expr2 ';' #AffectExpr
 //deleted ; in instruction
-instruction : expr '=' expr2 ';' #AffectExpr |
+instruction : expr '=' expr ';' #AffectExpr |
      expr ';' #ExprSeule
     | 'if' '(' expr ')' instruction #IfThen
     | 'if' '(' expr ')' instruction 'else' instruction #IfThenElse
