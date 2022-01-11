@@ -12,6 +12,15 @@ public class LigneStruct extends Ligne{
         this.name = declTyp.ident.name;
 
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getType(){
+        return this.type.name;
+    }
+
     public String toString() {
 
         return "Struct "+name;

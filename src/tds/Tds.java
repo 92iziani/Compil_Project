@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import ast.Ast;
 import ast.Ident;
+import ast.List;
 
 public class Tds{
 
@@ -42,6 +43,14 @@ public class Tds{
     }
 
     public Tds getFather() { return this.father;}
+
+    public String getName(){
+        return this.name;
+    }
+
+    public ArrayList<Ligne> getContenu(){
+        return this.contenu;
+    }
 
 
     public void setFatherTDS(Tds father) { this.father = father;}
@@ -206,6 +215,15 @@ public class Tds{
         return listtypeparam;
     }
 
+    /**
+    * Renvoie le type struct de la variable nom
+    * @param nom du struct a trouvé
+     * @return
+     */
+    /*public String findTypeStruct(String nom){
+        
+    }*/
+
 
 
 
@@ -219,47 +237,6 @@ public class Tds{
         return result;
     }
 
-
-/*
-    public String toString() {
-        return toString2(0);
-    }
-*/
-
-    /*public String toString2(int ind) {
-        String strind = "";
-        for (int i = 0 ; i < ind ; i++) {
-            strind += " |";
-        }
-        String ret = strind + "TDS :";
-        if (this.father == null) ret += "root\n";
-        else ret += "son of another\n";
-        for (Ligne entry : contenu) {
-            ret += strind + "Entry: ";
-            ret += entry.toString() + "\n";
-        }
-
-        for (Ligne entry: contenu) {
-            if (entry instanceof LigneWhile) {
-                ret += strind + "Nouvelle TDS (While):\n";
-                LigneWhile fentry = (LigneWhile)entry;
-                if (fentry.bloc != null && fentry.bloc.getTable().toString() != null) {
-                    ret += strind + fentry.bloc.getTable().toString2(ind + 1);
-                }
-            }
-        }
-
-
-        for (Ligne entry: contenu) {
-            if (entry instanceof LigneFonction) {
-                ret += strind + "Nouvelle table de Fonction : \n";
-                LigneFonction fentry = (LigneFonction)entry;
-                if (fentry.bloc != null && fentry.bloc.getTable().toString() != null) {
-                    ret += strind + fentry.bloc.getTable().toString2(ind + 1);
-                }
-            }
-        }
-        return ret;*/
-    //}
+    
 
 }

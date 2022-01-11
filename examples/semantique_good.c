@@ -20,20 +20,21 @@ struct person_t
 struct person_t* my_function (int x, int y) {
     struct person_t *p1;
     struct person_t *p2, *p3;
+    int test=0;
+
 
     p2->nom = 1;
     p2->tel = 123456;
 
-    int test=0;
 
     return sizeof(struct person_t);
 }
 
 int controle(int test){
+    int result = 0;
     struct person_t *p;
     int condition = 8;
-    struct person_t *p;
-    int result = 0;
+    
     if (condition == 8){
         result = test;
     }

@@ -347,7 +347,7 @@ public class Parcours implements AstVisitor<Void> {
 
         this.addLigne(new LigneStruct(declTyp));
         //creation d'une tds avec une liste de decl vars
-        Tds tds= new Tds(stack.peek(),i, "Struct");
+        Tds tds= new Tds(stack.peek(),i, "Struct "+declTyp.ident.name);
         i++;
 
         listetds.add(tds);
@@ -509,12 +509,20 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(Fleche x) {
-        if (!getTable().ifExists2(x.ident.name)){
-            listerror.add(rouge+"ERROR : "+blanc+"La variable struct "+x.ident.name+ " n'est pas definie !");
+        where = "fleche";
+        //je cherche dans toutes les tds si une a le nom qui correspond a x.ident.name
+        for (int i =0 ; i<listetds.size();i++){
+            //System.out.println(listetds.get(i).getName());
+            String type = findTypeStruct(x.ident.name);
+            System.out.println(type);
+            if (listetds.get(i).getName().equals("Struct "+x.ident.name)){
+                System.out.println("Boujoue");
+                x.ident.accept(this); //ident
+                x.expr.accept(this); //expr
+            } else {
+                //System.out.println("SALUT");
+            }
         }
-
-        x.ident.accept(this); //ident
-        x.expr.accept(this); //expr
         return null;
     }
 
@@ -676,6 +684,24 @@ public class Parcours implements AstVisitor<Void> {
         listeparam.put(fonctionencours,listevide);
         return null;
     }
+
+    //troouve le type d'une variable struct, 
+    public String findTypeStruct(String nom){
+        String res = null;
+        for (int i = 0; i< listetds.size(); i++){
+            ArrayList<Ligne> liste = listetds.get(i).getContenu();
+            for (int j=0 ; j< liste.size();j++){
+                if (liste.get(j) instanceof LigneStruct){
+                    LigneStruct ls = (LigneStruct) liste.get(j);
+                    if (ls.getName().equals(nom)){
+                        res = ls.getType();
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
 
 }
 

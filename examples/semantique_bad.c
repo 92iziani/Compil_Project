@@ -36,17 +36,18 @@ int controle(int test){
 }
 
 struct person_t* my_function (int x, int y) {
+    int test=0;
     struct person_t *p1;
     //6. la variable struct p1 est deja definie
     struct person_t *p1, *p2, *p3;
     //7. Le type de struct person n'existe pas
     struct person *p;
 
-    p2->nom ;
+    p2->nom = 1;
     //8. Le champ téléphone n'existe pas dans la struct p2 de type person_t
-    p2->telephone ;
+    p2->telephone = 123456;
 
-    int test=0;
+    
 
     return sizeof(struct person_t);
 }
