@@ -13,5 +13,6 @@ public class IdentExprPointeur implements Ast {
         this.ident = ident;
         this.listexpr = listexpr;
     }
+
 }
 

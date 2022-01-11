@@ -1,5 +1,6 @@
 package ast;
 
+
 public class TiretExpr implements Ast {
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -11,5 +12,6 @@ public class TiretExpr implements Ast {
     public TiretExpr(Ast expr){
         this.expr = expr;
     }
+
 }
 

@@ -11,5 +11,6 @@ public class Sizeof implements Ast {
     public Sizeof(Ident ident){
         this.ident = ident;
     }
+
 }
 

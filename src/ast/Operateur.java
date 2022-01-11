@@ -11,4 +11,5 @@ public class Operateur implements Ast {
     public Operateur(String name){
         this.name = name;
     }
+
 }

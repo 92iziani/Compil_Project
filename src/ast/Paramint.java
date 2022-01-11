@@ -1,7 +1,5 @@
 package ast;
 
-import java.util.ArrayList;
-
 public class Paramint implements Ast{
 
     public <T> T accept(AstVisitor<T> visitor){
@@ -14,4 +12,5 @@ public class Paramint implements Ast{
 
         this.ident = ident;
     }
+
 }

@@ -1,7 +1,5 @@
 package ast;
 
-import java.util.ArrayList;
-
 public class Vide implements Ast {
 
     // Utile pour la dernière partie
