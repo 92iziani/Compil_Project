@@ -27,6 +27,7 @@ int controle(int test){
 
     //3. variable p deja definie
     struct person_t *p;
+    p->nom=2;
     if (condition == 8){
         //4. variable result utilisee non declaree
         result = test;
@@ -46,7 +47,6 @@ struct person_t* my_function (int x, int y) {
     p1->nom = 1;
     //8. Le champ téléphone n'existe pas dans la struct p2 de type person_t
     p1->telephone = 123456;
-    p1->aaaaa = 5;
 
 
     return sizeof(struct person_t);

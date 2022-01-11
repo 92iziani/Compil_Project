@@ -190,27 +190,28 @@ public class Parcours implements AstVisitor<Void> {
             
         if (where=="fleche"){
             //je dois trouver le type de ident.name
-            System.out.println("Je suis ici");
             String typee = findTypeStruct(ident.name);
+            //je parcours les TDS à la recherche de la TDS égale à Struct person_t
             for (int i =0 ; i<listetds.size(); i++){
                 if (listetds.get(i).getName().equals("Struct "+typee)){
-                    //je parcours le contenu ?
                     ArrayList<Ligne> liste = listetds.get(i).getContenu();
+                    
+                    //je parcours le contenu de la TDS
+                    String trouve ="non";
                     for (int j =0; j<liste.size();j++){
                         LigneVariable lv = (LigneVariable) liste.get(j);
+                        
+                        //je parcours la liste des variables du struct et je verifie si je trouve fleche_droite
                         for (int k =0 ; k<lv.id1.size(); k++){
-                            //System.out.println(fleche_droite);
-                            String variable = lv.id1.get(k).name;
-                            System.out.println(variable.equals(fleche_droite));
-                            if (variable != fleche_droite){
-                                //System.out.println("lv id "+lv.id1.get(k).name);
-
-                                String tmp = rouge+"\033[31mERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!";
-                                if (!listerror.contains(tmp)){
-                                    listerror.add(rouge+"ERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!");  
-                                }
+                            
+                            if (lv.id1.get(k).name.equals(fleche_droite)){
+                                trouve="oui";
                             }
                         }
+
+                    }
+                    if (trouve == "non"){
+                        listerror.add("Ligne : "+ident.ligne+rouge+" ERROR :"+blanc+" La variable "+fleche_droite+" n'est pas définie dans le struct de type "+typee+"!");  
                     }
                 }
             }
