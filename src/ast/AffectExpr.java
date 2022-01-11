@@ -1,8 +1,8 @@
 package ast;
 
-/*public class AffectExpr implements Ast{
+public class AffectExpr implements Ast{
 
-    /*public <T> T accept(AstVisitor<T> visitor){
+    public <T> T accept(AstVisitor<T> visitor){
         return visitor.visit(this);
     }
 
@@ -15,5 +15,5 @@ package ast;
         this.exprd = exprd;
         this.ligne = ligne;
     }
-    
-}*/
+
+}

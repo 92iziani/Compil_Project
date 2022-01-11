@@ -48,5 +48,5 @@ public interface AstVisitor<T> {
 
     public T visit(Vide x); //ADDED
 
-    //public T visit(AffectExpr x);
+    public T visit(AffectExpr x);
 }
