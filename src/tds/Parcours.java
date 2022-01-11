@@ -620,6 +620,8 @@ public class Parcours implements AstVisitor<Void> {
 
     @Override
     public Void visit(AffectExpr x){
+        where="affectexpr";
+
         if(x.exprg != null){
             x.exprg.accept(this);
         }
