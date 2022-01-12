@@ -1,7 +1,6 @@
 /**
  * Exemple permettant de lister tous les contrôles semantiques 
  **/
-// Il n'y a pas de main dans le fichier
 
 int recherche(int t){  //manque le return
     int p=0;
@@ -43,6 +42,8 @@ struct person_t* my_function (int x, int y) {
     int test=0;
     struct person *p; //Le type de struct person n'existe pas
 
+    test = a*5; //La variable a n'est pas définie
+
     print(p); //Print ne prend que des int
 
     p1->nom = 1;
@@ -72,9 +73,10 @@ int maine(){
          
         a = b+2; //la variable b n'est pas definie
         
-        b = a-1; //la variable b n'est pas definie
+        c = a-1; //la variable b n'est pas definie
         resultat = 3;
     }
     
     return resultat; //n'a pas accès a resultat
 }
+// Il n'y a pas de main dans le fichier
