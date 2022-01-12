@@ -1,6 +1,7 @@
 /**
  * Exemple permettant de lister tous les contrôles semantiques 
  **/
+// Il n'y a pas de main dans le fichier
 
 int recherche(int t){  //manque le return
     int p=0;
@@ -55,7 +56,7 @@ struct person_t* test_retour(){
 
 
 
-int main(){
+int maine(){
     int a;
     a = 2/0;  //division par zero
 
