@@ -1,4 +1,3 @@
-
 .idea
 .vscode
 .antlr
@@ -11,5 +10,4 @@ src/parser
 ./bin 
 ./.antlr
 
-out
-./out
+*.iuml
