@@ -11,3 +11,6 @@ src/parser
 ./.antlr
 
 *.iml
+
+out/tree.dot
+out/tree.svg
