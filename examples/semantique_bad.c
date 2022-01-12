@@ -29,8 +29,8 @@ int controle(int test){
     struct person_t *p;   //variable p deja definie
 
     p->nom=2;
-    if (condition == 8){
-        result = test;   //A REFAIRE variable result utilisee non declaree
+    if (cond == 8){ //cond n'est pas declarée
+        result = test;   //variable result utilisee non declaree
 
     }
    
@@ -47,7 +47,7 @@ struct person_t* my_function (int x, int y) {
     print(p); //Print ne prend que des int
 
     p1->nom = 1;
-    p1->telephone = 123456; //Le champ téléphone n'existe pas dans la struct p1 de type person_t
+    p1->telephone = 123456; //Le champs téléphone n'existe pas dans la struct p1 de type person_t
 
     test = sizeof(struct aa); // Le type n'exsite pas
     return test; //mauvais type de retour

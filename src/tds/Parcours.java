@@ -604,7 +604,10 @@ public class Parcours implements AstVisitor<Void> {
             Ident left = (Ident)x.expr1;
 
             if (!getTable().ifExists2(left.name)){
-                listerror.add("Ligne : "+x.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name+" utilisée dans la condition non déclarée !");
+                if (!listerror.contains("Ligne : "+x.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name+" utilisée dans la condition non déclarée !")){
+                    listerror.add("Ligne : "+x.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name+" utilisée dans la condition non déclarée !");
+
+                }
             } 
         }
         if (x.expr2 instanceof Ident){
