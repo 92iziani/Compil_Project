@@ -88,7 +88,7 @@ public class Main {
             String normal = "\033[0m";
             int numero = 1;
             if(!par.listeparam.containsKey("main")){
-                par.listerror.add(0,rouge+"ERROR :"+blanc+" Fonction"+bold+ " int main()"+normal +" manquante !");
+                par.listerror.add(rouge+"ERROR :"+blanc+" Fonction"+bold+ " int main()"+normal +" manquante !");
             }
             if(par.listerror.size() > 0){
                 System.out.println("\t"); //c plus jolie avec des \t ;)
