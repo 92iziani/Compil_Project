@@ -269,14 +269,14 @@ public class Parcours implements AstVisitor<Void> {
         if (plus.left instanceof Ident){
             Ident left = (Ident)plus.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add("Ligne : "+plus.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name +" utilisée dans l'addition non déclarée !");
+                listerror.add("Ligne : "+plus.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name +" utilisée dans non déclarée !");
                 //System.exit(1);
             } 
         }
         if (plus.right instanceof Ident){
             Ident right = (Ident)plus.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add("Ligne : "+plus.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans l'addition non déclarée !");
+                listerror.add("Ligne : "+plus.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans non déclarée !");
                 //System.exit(1);
             }
         }
@@ -291,14 +291,14 @@ public class Parcours implements AstVisitor<Void> {
         if (minus.left instanceof Ident){
             Ident left = (Ident)minus.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add("Ligne : "+minus.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name +" utilisée dans la soustraction non déclarée !");
+                listerror.add("Ligne : "+minus.ligne+rouge+" ERROR : "+blanc+"Variable "+left.name +" utilisée non déclarée !");
                 //System.exit(1);
             } 
         }
         if (minus.right instanceof Ident){
             Ident right = (Ident)minus.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add("Ligne : "+minus.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans la soustraction non déclarée !");
+                listerror.add("Ligne : "+minus.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée non déclarée !");
                // System.exit(1);
             }
         }
@@ -317,14 +317,14 @@ public class Parcours implements AstVisitor<Void> {
         if (divide.left instanceof Ident){
             Ident left = (Ident)divide.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add("Ligne : "+divide.ligne+rouge+" ERROR :"+blanc+" Variable "+left.name +" utilisée dans la division non déclarée !");
+                listerror.add("Ligne : "+divide.ligne+rouge+" ERROR :"+blanc+" Variable "+left.name +" utilisée non déclarée !");
                 //System.exit(1);
             } 
         }
         if (divide.right instanceof Ident){
             Ident right = (Ident)divide.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add("Ligne : "+divide.ligne+rouge+" ERROR : "+blanc+"Variable "+right.name +" utilisée dans la division non déclarée !");
+                listerror.add("Ligne : "+divide.ligne+rouge+" ERROR : "+blanc+"Variable "+right.name +" utilisée non déclarée !");
                 //System.exit(1);
             }
         }
@@ -340,14 +340,14 @@ public class Parcours implements AstVisitor<Void> {
         if (mult.left instanceof Ident){
             Ident left = (Ident)mult.left;
             if (!getTable().ifExists2(left.name)){
-                listerror.add("Ligne : "+mult.ligne+rouge+" ERROR :"+blanc+" Variable "+left.name +" utilisée dans la multiplication non déclarée !");
+                listerror.add("Ligne : "+mult.ligne+rouge+" ERROR :"+blanc+" Variable "+left.name +" utilisée non déclarée !");
                // System.exit(1);
             } 
         }
         if (mult.right instanceof Ident){
             Ident right = (Ident)mult.right;
             if (!getTable().ifExists2(right.name)){
-                listerror.add("Ligne : "+mult.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée dans la multiplication non déclarée !");
+                listerror.add("Ligne : "+mult.ligne+rouge+" ERROR :"+blanc+" Variable "+right.name +" utilisée non déclarée !");
                 //System.exit(1);
             }
         }
