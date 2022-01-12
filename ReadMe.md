@@ -26,7 +26,7 @@ make soutenance target=examples/semantique.c
 make parser
 ```
 
-## b - TDS et contrôles sémantiques
+### b - TDS et contrôles sémantiques
 Il s'agit dans un premier temps de la compilation et de l'execution du Main sur un exemple. La première commande n'est à faire que la première fois, ou si le main a été modifié.
 
 ```bash
@@ -39,7 +39,7 @@ make run target=examples/semantique.c
 
 
 
-## c - Affichage de l'arbre
+### c - Affichage de l'arbre
 
 L'AST se trouve dans le dossier out, sous format svg
 ```bash
