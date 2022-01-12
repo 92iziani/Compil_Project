@@ -7,6 +7,7 @@ int recherche(int t){
     
     if (t==2){
         p=8;
+        print(p);
     }
     return p;
 }
