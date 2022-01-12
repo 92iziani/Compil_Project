@@ -10,4 +10,4 @@ src/parser
 ./bin 
 ./.antlr
 
-*.iuml
+*.iml
