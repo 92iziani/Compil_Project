@@ -42,6 +42,8 @@ struct person_t* my_function (int x, int y) {
     int test=0;
     struct person *p; //Le type de struct person n'existe pas
 
+    print(p); //Print ne prend que des int
+
     p1->nom = 1;
     p1->telephone = 123456; //Le champ téléphone n'existe pas dans la struct p1 de type person_t
 
