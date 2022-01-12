@@ -594,14 +594,14 @@ public String visit(ListeExpr listexpr) {
     @Override
     public String visit(Vide x) {
         String nodeIdentifier = this.nextState();
-        this.addNode(nodeIdentifier, "Vide");
+        this.addNode(nodeIdentifier, "Pas de paramètre");
         return nodeIdentifier;
     }
 
     @Override
     public String visit(AffectExpr x) {
         String nodeIdentifier = this.nextState();
-        this.addNode(nodeIdentifier, "AffectExpr");
+        this.addNode(nodeIdentifier, "Affect");
 
         String a = x.exprg.accept(this);
         String c = x.exprd.accept(this);
